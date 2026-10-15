@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="300" viewBox="0 0 820 300" role="img">
+  <title>Por que mv es instantaneo dentro del mismo disco y lento entre discos distintos</title>
+
+  <rect width="820" height="300" fill="#0d1117"/>
+
+  <text x="205" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#f0f6fc" font-weight="600">Mismo disco</text>
+
+  <rect x="80" y="60" width="250" height="60" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="205" y="85" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#3fb950">inodo 500 (contenido, 10 GB)</text>
+  <text x="205" y="102" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="11" fill="#8b949e">nombre: "viejo.bin"</text>
+
+  <line x1="205" y1="130" x2="205" y2="160" stroke="#8b949e" stroke-width="2" marker-end="url(#a1)"/>
+  <text x="280" y="148" font-family="system-ui,sans-serif" font-size="11" fill="#e3b341">mv (solo reasigna nombre)</text>
+
+  <rect x="80" y="166" width="250" height="60" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="205" y="191" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#3fb950">inodo 500 (mismo contenido)</text>
+  <text x="205" y="208" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="11" fill="#8b949e">nombre: "nuevo.bin"</text>
+
+  <text x="205" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#3fb950" font-weight="600">Instantaneo, sin importar el tamano</text>
+
+  <line x1="410" y1="20" x2="410" y2="280" stroke="#30363d" stroke-width="1"/>
+
+  <text x="615" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#f0f6fc" font-weight="600">Disco distinto</text>
+
+  <rect x="490" y="60" width="250" height="60" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="615" y="85" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#58a6ff">Disco A: inodo 500 (10 GB)</text>
+  <text x="615" y="102" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="11" fill="#8b949e">nombre: "viejo.bin"</text>
+
+  <line x1="615" y1="130" x2="615" y2="160" stroke="#8b949e" stroke-width="2" marker-end="url(#a1)"/>
+  <text x="705" y="148" font-family="system-ui,sans-serif" font-size="11" fill="#f85149">copiar + borrar</text>
+
+  <rect x="490" y="166" width="250" height="60" rx="8" fill="#161b22" stroke="#d2a8ff" stroke-width="1.5"/>
+  <text x="615" y="191" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#d2a8ff">Disco B: inodo nuevo (10 GB copiados)</text>
+  <text x="615" y="208" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="11" fill="#8b949e">nombre: "nuevo.bin"</text>
+
+  <text x="615" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#f85149" font-weight="600">Tarda proporcional al tamano</text>
+
+  <defs>
+    <marker id="a1" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#8b949e"/>
+    </marker>
+  </defs>
+</svg>

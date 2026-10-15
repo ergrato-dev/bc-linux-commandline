@@ -29,6 +29,17 @@ primero).
 - `dircolors --print-database` vuelca la paleta completa que interpreta
   `LS_COLORS`, por si un color inesperado te genera dudas.
 
+## Semana 03 — Manipulación de archivos y directorios
+
+- `cp --backup=numbered` respalda el destino existente antes de
+  sobrescribirlo, en vez de perderlo sin rastro.
+- `rm -I` pregunta una sola vez en borrados masivos — más seguro que `-f`,
+  menos tedioso que `-i`.
+- `touch -r modelo destino` copia la fecha de un archivo a otro sin
+  calcularla a mano.
+- `stat -c '%Y %n' * | sort -rn` ordena archivos por fecha real de
+  modificación, más preciso que fiarse del orden visual de `ls -lt`.
+
 ---
 
 [← Volver al índice de documentación](README.md)

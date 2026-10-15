@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="260" viewBox="0 0 820 260" role="img">
+  <title>Patron de seguridad: dry-run por defecto, --apply para el cambio real</title>
+
+  <rect width="820" height="260" fill="#0d1117"/>
+
+  <rect x="40" y="30" width="320" height="200" rx="10" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="200" y="60" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#e3b341" font-weight="600">toolkit organize carpeta/</text>
+  <text x="200" y="88" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#8b949e">(sin --apply)</text>
+
+  <text x="60" y="120" font-family="'SFMono-Regular',monospace" font-size="12" fill="#f0f6fc">plan: mkdir sh/</text>
+  <text x="60" y="140" font-family="'SFMono-Regular',monospace" font-size="12" fill="#f0f6fc">plan: mv a.sh sh/a.sh</text>
+  <text x="60" y="160" font-family="'SFMono-Regular',monospace" font-size="12" fill="#f0f6fc">plan: mv b.sh sh/b.sh</text>
+
+  <text x="200" y="200" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#3fb950" font-weight="600">nada se mueve todavia</text>
+
+  <line x1="380" y1="130" x2="440" y2="130" stroke="#8b949e" stroke-width="2" marker-end="url(#a2)"/>
+  <text x="410" y="118" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e">revisas el plan</text>
+  <text x="410" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e">y agregas --apply</text>
+
+  <rect x="460" y="30" width="320" height="200" rx="10" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="620" y="60" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#f85149" font-weight="600">toolkit organize carpeta/ --apply</text>
+  <text x="620" y="88" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#8b949e">(mismo plan, ahora ejecutado)</text>
+
+  <text x="480" y="120" font-family="'SFMono-Regular',monospace" font-size="12" fill="#f0f6fc">mkdir sh/ ✓</text>
+  <text x="480" y="140" font-family="'SFMono-Regular',monospace" font-size="12" fill="#f0f6fc">mv a.sh sh/a.sh ✓</text>
+  <text x="480" y="160" font-family="'SFMono-Regular',monospace" font-size="12" fill="#f0f6fc">mv b.sh sh/b.sh ✓</text>
+
+  <text x="620" y="200" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#f85149" font-weight="600">cambio real, irreversible</text>
+
+  <defs>
+    <marker id="a2" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#8b949e"/>
+    </marker>
+  </defs>
+</svg>

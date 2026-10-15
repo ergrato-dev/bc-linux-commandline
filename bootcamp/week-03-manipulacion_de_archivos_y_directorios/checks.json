@@ -1,0 +1,69 @@
+{
+  "semana": "03",
+  "titulo": "Manipulacion de archivos y directorios",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-dry-run-no-modifica",
+      "descripcion": "organize sin --apply no mueve ningun archivo",
+      "cmd": "rm -rf /tmp/wk03-fixture && mkdir -p /tmp/wk03-fixture && touch /tmp/wk03-fixture/a.sh && ~/bin/toolkit.sh organize /tmp/wk03-fixture >/dev/null && test -f /tmp/wk03-fixture/a.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/04-operaciones-seguras-por-lotes.md"
+    },
+    {
+      "id": "organize-reporta-modo-dry-run",
+      "descripcion": "organize sin --apply reporta explicitamente que esta en modo dry-run",
+      "cmd": "rm -rf /tmp/wk03-fixture && mkdir -p /tmp/wk03-fixture && touch /tmp/wk03-fixture/a.sh && ~/bin/toolkit.sh organize /tmp/wk03-fixture",
+      "assert": "stdout~dry-run",
+      "pista": "2-practicas/04-operaciones-seguras-por-lotes.md"
+    },
+    {
+      "id": "organize-agrupa-por-extension",
+      "descripcion": "organize --apply agrupa archivos de la misma extension en su propia carpeta",
+      "cmd": "rm -rf /tmp/wk03-fixture && mkdir -p /tmp/wk03-fixture && touch /tmp/wk03-fixture/a.sh /tmp/wk03-fixture/b.sh /tmp/wk03-fixture/c.txt && ~/bin/toolkit.sh organize /tmp/wk03-fixture --apply >/dev/null && find /tmp/wk03-fixture/sh -type f | wc -l",
+      "assert": "stdout~^2$",
+      "pista": "2-practicas/02-copiar-archivos-y-directorios.md"
+    },
+    {
+      "id": "organize-maneja-archivos-sin-extension",
+      "descripcion": "organize --apply agrupa archivos sin extension en una carpeta propia",
+      "cmd": "rm -rf /tmp/wk03-fixture && mkdir -p /tmp/wk03-fixture && touch /tmp/wk03-fixture/README && ~/bin/toolkit.sh organize /tmp/wk03-fixture --apply >/dev/null && test -f /tmp/wk03-fixture/sin-extension/README",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "organize-es-idempotente",
+      "descripcion": "Correr organize --apply dos veces seguidas no falla ni vuelve a mover nada",
+      "cmd": "rm -rf /tmp/wk03-fixture && mkdir -p /tmp/wk03-fixture && touch /tmp/wk03-fixture/a.sh && ~/bin/toolkit.sh organize /tmp/wk03-fixture --apply >/dev/null && test -f /tmp/wk03-fixture/sh/a.sh && ~/bin/toolkit.sh organize /tmp/wk03-fixture --apply",
+      "assert": "stdout~planeados: 0",
+      "pista": "2-practicas/04-operaciones-seguras-por-lotes.md"
+    },
+    {
+      "id": "organize-falla-en-ruta-inexistente",
+      "descripcion": "organize sale con codigo distinto de 0 si la ruta no existe",
+      "cmd": "~/bin/toolkit.sh organize /no/existe/wk03",
+      "assert": "exit!=0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    }
+  ]
+}
