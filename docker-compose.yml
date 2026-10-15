@@ -1,0 +1,46 @@
+services:
+  ubuntu-lab:
+    image: ubuntu:24.04
+    container_name: ubuntu-lab
+    hostname: ubuntu-lab
+    command: sleep infinity
+    tty: true
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - lab
+
+  debian-lab:
+    image: debian:12
+    container_name: debian-lab
+    hostname: debian-lab
+    command: sleep infinity
+    tty: true
+    networks:
+      - lab
+
+  rhel-lab:
+    image: rockylinux:9
+    container_name: rhel-lab
+    hostname: rhel-lab
+    command: sleep infinity
+    tty: true
+    networks:
+      - lab
+
+  arch-lab:
+    # Arch es rolling release: no hay version fija que no quede vieja. "base"
+    # es el alias estable de la imagen oficial (no "latest", que ademas
+    # trae menos paquetes base). Si el repositorio de Docker Hub cambia este
+    # alias, se nota en el primer `pacman -Syu` de la Semana 11.
+    image: archlinux:base
+    container_name: arch-lab
+    hostname: arch-lab
+    command: sleep infinity
+    tty: true
+    networks:
+      - lab
+
+networks:
+  lab:
+    driver: bridge

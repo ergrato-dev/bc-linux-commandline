@@ -1,0 +1,75 @@
+# ============================================
+# VARIABLES DE ENTORNO Y SECRETOS
+# ============================================
+
+.env
+.env.*
+!.env.example
+
+# Configuracion local del alumno para el autograding
+.bc-linux-commandline
+
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+*.secret
+credentials.yml
+
+.netrc
+
+# ============================================
+# LOGS Y CACHE
+# ============================================
+
+logs/
+*.log
+log/
+.cache/
+*.cache
+
+# ============================================
+# IDEs Y EDITORES
+# ============================================
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.idea/
+*.swp
+*.swo
+*~
+
+# ============================================
+# SISTEMA OPERATIVO
+# ============================================
+
+.DS_Store
+Thumbs.db
+
+# ============================================
+# BOOTCAMP ESPECIFICO
+# ============================================
+
+# Trabajo del alumno: se entrega en su propio repositorio, no en este
+temp/
+tmp/
+scratch/
+notas-personales/
+respuestas.md
+**/respuestas.md
+
+# Soluciones y material de instructor
+**/3-proyecto/**/solution/
+**/solution/
+**/_instructor-only/
+**/6-instructor/
+
+*.bak
+*.backup
+*.old
