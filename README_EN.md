@@ -8,6 +8,9 @@
   <img src="https://img.shields.io/badge/hours-200-orange.svg" alt="200 Hours">
   <img src="https://img.shields.io/badge/distro-Ubuntu%2024.04%20LTS-E95420.svg?logo=ubuntu&logoColor=white" alt="Ubuntu 24.04 LTS">
   <img src="https://img.shields.io/badge/lab-Docker-2496ED.svg?logo=docker&logoColor=white" alt="Docker Lab">
+</p>
+
+<p align="center">
   <a href="README.md"><img src="https://img.shields.io/badge/lang-Espa%C3%B1ol-red.svg" alt="Versión en Español"></a>
 </p>
 
