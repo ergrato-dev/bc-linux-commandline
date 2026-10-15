@@ -30,6 +30,9 @@ log/
 .cache/
 *.cache
 
+# Artefactos internos de la herramienta del agente (no es contenido del repo)
+.claude/
+
 # ============================================
 # IDEs Y EDITORES
 # ============================================

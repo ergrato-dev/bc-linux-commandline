@@ -7,9 +7,9 @@ Semana 20 es una herramienta real, instalable, demostrable en una entrevista.
 
 ## Por qué un proyecto y no ejercicios sueltos
 
-Un ejercicio suelto se olvida apenas se entrega. Una herramienta que seguís
+Un ejercicio suelto se olvida apenas se entrega. Una herramienta que sigues
 usando cada semana para resolver el ejercicio de esa semana se vuelve parte de
-cómo trabajás. Cada capa nueva también obliga a no romper las anteriores —
+cómo trabajas. Cada capa nueva también obliga a no romper las anteriores —
 eso es exactamente lo que un sysadmin de verdad tiene que manejar.
 
 ## Cómo crece
@@ -30,15 +30,15 @@ eso es exactamente lo que un sysadmin de verdad tiene que manejar.
   personal (o al menos en una carpeta separada) — es tuyo, no un ejercicio de
   clase.
 - **Todo lo que falla, falla ruidoso.** `set -euo pipefail` desde la primera
-  línea que escribís, no solo desde la Semana 15.
+  línea que escribes, no solo desde la Semana 15.
 - Cada semana, la sección `3-proyecto/README.md` dice exactamente qué capa
-  tenés que añadir y con qué `checks.json` se verifica.
+  tienes que añadir y con qué `checks.json` se verifica.
 
 ## Adaptación
 
 `toolkit` opera sobre **tu propia máquina** — no hay "elegir un dominio" como
 en otros bootcamps del canal, porque el dominio acá siempre es el mismo: el
-sistema que tenés al frente. Lo que sí varía persona a persona son los
+sistema que tienes al frente. Lo que sí varía persona a persona son los
 subcomandos opcionales que cada quien decide priorizar en la Semana 17-19
 (backup vs. auditoría de seguridad vs. monitoreo de contenedores).
 

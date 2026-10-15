@@ -165,7 +165,12 @@ verificar_semana() {
       printf '  \033[0;31m❌\033[0m %s\n' "$descripcion"
       printf '     \033[0;90mpista: %s\033[0m\n' "$pista"
     fi
-  done < <(jq -r '.checks[] | [.id, .descripcion, .cmd, .assert, .pista] | @tsv' "$archivo")
+  # join(), no @tsv: @tsv duplica cada backslash literal (para poder escapar
+  # tabs/saltos de linea en el formato), pero read -r nunca lo deshace, asi
+  # que una regex con \. (punto literal de una version, una IP) se rompe en
+  # silencio. join() no escapa nada; es seguro mientras ningun campo tenga
+  # un tab o salto de linea, que es la convencion de una sola linea por campo.
+  done < <(jq -r '.checks[] | [.id, .descripcion, .cmd, .assert, .pista] | join("\t")' "$archivo")
 
   echo
   if (( pasados == total )); then

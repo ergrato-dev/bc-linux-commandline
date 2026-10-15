@@ -1,0 +1,69 @@
+{
+  "semana": "01",
+  "titulo": "Terminal, shell y primeros pasos",
+  "checks": [
+    {
+      "id": "toolkit-existe-ejecutable",
+      "descripcion": "toolkit.sh existe y es ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "toolkit-shebang-y-modo-estricto",
+      "descripcion": "toolkit.sh arranca con shebang env bash y set -euo pipefail",
+      "cmd": "head -2 ~/bin/toolkit.sh | tr '\\n' '|' | grep -qE '^#!/usr/bin/env bash\\|set -euo pipefail\\|$'",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "toolkit-doctor-reporta-bash",
+      "descripcion": "toolkit.sh doctor reporta la version de bash en uso",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+\\.[0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "toolkit-doctor-reporta-distro",
+      "descripcion": "toolkit.sh doctor reporta la distro via /etc/os-release",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~Ubuntu",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "toolkit-doctor-codigo-no-cero-sin-home",
+      "descripcion": "toolkit.sh sale con codigo distinto de 0 si HOME no esta definido",
+      "cmd": "env -u HOME ~/bin/toolkit.sh doctor",
+      "assert": "exit!=0",
+      "pista": "2-practicas/04-builtins-externos-y-tu-path.md, paso 5"
+    },
+    {
+      "id": "bin-en-path",
+      "descripcion": "~/bin esta en el PATH del usuario",
+      "cmd": "grep -E '^export PATH=.*\\$HOME/bin' ~/.bashrc",
+      "assert": "exit0",
+      "pista": "2-practicas/04-builtins-externos-y-tu-path.md, paso 2"
+    },
+    {
+      "id": "bashrc-historial-configurado",
+      "descripcion": "~/.bashrc fija HISTSIZE y HISTFILESIZE por encima del valor por defecto",
+      "cmd": "grep -E '^(export )?HISTSIZE=[0-9]{4,}' ~/.bashrc && grep -E '^(export )?HISTFILESIZE=[0-9]{4,}' ~/.bashrc",
+      "assert": "exit0",
+      "pista": "2-practicas/03-dominar-historial-y-atajos.md, paso 2"
+    },
+    {
+      "id": "alias-ll-definido",
+      "descripcion": "El alias ll esta definido en ~/.bashrc",
+      "cmd": "grep -E \"^alias ll=\" ~/.bashrc",
+      "assert": "exit0",
+      "pista": "2-practicas/01-primer-contacto-con-ubuntu-lab.md, paso 6"
+    },
+    {
+      "id": "type-distingue-builtin-de-externo",
+      "descripcion": "El reporte de tipos del toolkit distingue cd (builtin) de ls (externo)",
+      "cmd": "~/bin/toolkit.sh doctor --tipos",
+      "assert": "stdout~cd.*builtin",
+      "pista": "2-practicas/04-builtins-externos-y-tu-path.md, paso 3"
+    }
+  ]
+}

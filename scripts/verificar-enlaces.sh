@@ -59,7 +59,10 @@ while IFS= read -r f; do
       fail=1
     fi
   done < <(printf '%s\n' "$content" | grep -oE '\]\([^)]+\)' | sed -E 's/^\]\(//;s/\)$//')
-done < <(find . -iname "*.md" -not -path "./.git/*" -not -path "*/node_modules/*")
+done < <(find . -iname "*.md" -not -path "./.git/*" -not -path "*/node_modules/*" \
+           -not -path "./CLAUDE.md")
+# CLAUDE.md contiene rutas de ejemplo (../0-assets/NN-nombre.svg) que no
+# resuelven por diseno, igual que las plantillas .claude//.github en bc-curl.
 
 echo "== 3. Navegacion anterior/siguiente en README de cada semana publicada =="
 while IFS= read -r rm; do
