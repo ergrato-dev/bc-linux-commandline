@@ -52,6 +52,16 @@ primero).
 - `getfacl archivo1 | setfacl --set-file=- archivo2` copia una ACL completa
   de un archivo a otro.
 
+## Semana 05 — Redirección, pipes y flujo de datos
+
+- `</dev/null` fuerza un EOF inmediato — útil para confirmar si un comando
+  "colgado" está esperando stdin.
+- `: > archivo` vacía un archivo sin borrarlo y recrearlo.
+- `${PIPESTATUS[@]}` da el código de salida de cada comando de un pipeline,
+  no solo el del último.
+- `comando | sudo tee archivo` escribe con privilegios donde `sudo comando
+  > archivo` falla.
+
 ---
 
 [← Volver al índice de documentación](README.md)

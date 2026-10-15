@@ -24,7 +24,7 @@ se escribe en orden, una semana por entrega.
 
 | Semana | Tema | Estado |
 |:--:|---|:--:|
-| [05](week-05-redireccion_pipes_y_flujo_de_datos/README.md) | Redirección, pipes y flujo de datos | ⬜ |
+| [05](week-05-redireccion_pipes_y_flujo_de_datos/README.md) | Redirección, pipes y flujo de datos | ✅ |
 | [06](week-06-busqueda_de_texto_con_grep_y_regex/README.md) | Búsqueda de texto con grep y regex | ⬜ |
 | [07](week-07-procesamiento_de_texto_sed_cut_sort_uniq/README.md) | Procesamiento de texto: sed, cut, sort, uniq, tr | ⬜ |
 | [08](week-08-awk_y_pipelines_de_datos/README.md) | awk y pipelines de datos | ⬜ |

@@ -1,0 +1,76 @@
+{
+  "semana": "05",
+  "titulo": "Redireccion, pipes y flujo de datos",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk05-regresion && mkdir -p /tmp/wk05-regresion && touch /tmp/wk05-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk05-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-sigue-funcionando",
+      "descripcion": "El subcomando audit sigue funcionando (regresion de la Semana 04)",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logreport-cuenta-lineas-totales",
+      "descripcion": "logreport cuenta correctamente las lineas totales del log",
+      "cmd": "printf 'uno\\ndos\\ntres\\n' > /tmp/wk05-simple.log && ~/bin/toolkit.sh logreport /tmp/wk05-simple.log",
+      "assert": "stdout~lineas totales: 3",
+      "pista": "1-teoria/01-stdin-stdout-stderr.md"
+    },
+    {
+      "id": "logreport-detecta-errores-y-sale-con-2",
+      "descripcion": "logreport detecta lineas con ERROR y sale con codigo 2",
+      "cmd": "printf 'INFO ok\\nERROR fallo\\nERROR otro\\n' > /tmp/wk05-conerror.log && ~/bin/toolkit.sh logreport /tmp/wk05-conerror.log",
+      "assert": "exit=2",
+      "pista": "2-practicas/03-encadenar-comandos-y-codigos-de-salida.md"
+    },
+    {
+      "id": "logreport-sale-limpio-con-0",
+      "descripcion": "logreport sale con codigo 0 si no hay lineas con ERROR",
+      "cmd": "printf 'INFO ok\\nINFO bien\\n' > /tmp/wk05-limpio.log && ~/bin/toolkit.sh logreport /tmp/wk05-limpio.log",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "logreport-guarda-informe-en-archivo",
+      "descripcion": "logreport guarda las lineas con ERROR en un archivo de informe aparte",
+      "cmd": "rm -f /tmp/wk05-conerror.log.informe.txt && printf 'INFO ok\\nERROR fallo\\n' > /tmp/wk05-conerror.log && ~/bin/toolkit.sh logreport /tmp/wk05-conerror.log >/dev/null; cat /tmp/wk05-conerror.log.informe.txt",
+      "assert": "stdout~ERROR fallo",
+      "pista": "1-teoria/02-redirecciones-de-entrada-y-salida.md"
+    },
+    {
+      "id": "logreport-falla-sin-archivo",
+      "descripcion": "logreport sale con codigo 1 si el archivo no existe",
+      "cmd": "~/bin/toolkit.sh logreport /tmp/wk05-no-existe.log",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    }
+  ]
+}
