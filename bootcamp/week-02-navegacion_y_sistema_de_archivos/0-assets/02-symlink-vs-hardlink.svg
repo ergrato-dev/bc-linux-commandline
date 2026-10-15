@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="320" viewBox="0 0 820 320" role="img">
+  <title>Enlace simbolico contra enlace duro: que pasa al borrar el original</title>
+
+  <rect width="820" height="320" fill="#0d1117"/>
+
+  <!-- LEFT: symlink -->
+  <text x="205" y="32" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#f0f6fc" font-weight="600">Enlace simbolico</text>
+
+  <rect x="140" y="56" width="130" height="48" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="205" y="85" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="13" fill="#58a6ff">original.txt</text>
+
+  <rect x="140" y="140" width="130" height="48" rx="8" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="205" y="162" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="12" fill="#3fb950">enlace.txt</text>
+  <text x="205" y="178" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#8b949e">(ruta de texto)</text>
+
+  <line x1="205" y1="140" x2="205" y2="106" stroke="#3fb950" stroke-width="2" marker-end="url(#ar1)"/>
+
+  <text x="205" y="230" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#f85149">rm original.txt →</text>
+  <text x="205" y="248" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#f85149">enlace.txt queda ROTO</text>
+
+  <!-- divider -->
+  <line x1="410" y1="20" x2="410" y2="300" stroke="#30363d" stroke-width="1"/>
+
+  <!-- RIGHT: hardlink -->
+  <text x="615" y="32" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" fill="#f0f6fc" font-weight="600">Enlace duro</text>
+
+  <rect x="580" y="110" width="110" height="60" rx="8" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="635" y="134" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#d2a8ff">inodo 123456</text>
+  <text x="635" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#8b949e">(contenido real)</text>
+
+  <rect x="500" y="56" width="110" height="40" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="555" y="80" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="12" fill="#58a6ff">nombre-a.txt</text>
+  <line x1="555" y1="96" x2="615" y2="112" stroke="#8b949e" stroke-width="1.5"/>
+
+  <rect x="660" y="56" width="110" height="40" rx="8" fill="#161b22" stroke="#e3b341" stroke-width="1.5"/>
+  <text x="715" y="80" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="12" fill="#e3b341">nombre-b.txt</text>
+  <line x1="715" y1="96" x2="655" y2="112" stroke="#8b949e" stroke-width="1.5"/>
+
+  <text x="615" y="230" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#3fb950">rm nombre-a.txt →</text>
+  <text x="615" y="248" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#3fb950">nombre-b.txt SIGUE OK</text>
+
+  <defs>
+    <marker id="ar1" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#3fb950"/>
+    </marker>
+  </defs>
+</svg>

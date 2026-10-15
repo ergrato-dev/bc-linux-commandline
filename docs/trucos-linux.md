@@ -19,6 +19,16 @@ primero).
 - `Ctrl+X Ctrl+E` abre el comando que estás escribiendo en tu editor
   (`$EDITOR`) — mejor que editar carácter por carácter para comandos largos.
 
+## Semana 02 — Navegación y sistema de archivos
+
+- `cd -` alterna entre los dos últimos directorios sin escribir ninguna ruta.
+- `readlink -f ruta` resuelve cualquier cadena de enlaces simbólicos hasta el
+  destino final real.
+- `cp archivo{,.bak}` respalda un archivo en un solo comando, usando
+  expansión de llaves.
+- `dircolors --print-database` vuelca la paleta completa que interpreta
+  `LS_COLORS`, por si un color inesperado te genera dudas.
+
 ---
 
 [← Volver al índice de documentación](README.md)

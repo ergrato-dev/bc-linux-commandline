@@ -16,7 +16,7 @@ se escribe en orden, una semana por entrega.
 | Semana | Tema | Estado |
 |:--:|---|:--:|
 | [01](week-01-terminal_shell_y_primeros_pasos/README.md) | Terminal, shell y primeros pasos | ✅ |
-| [02](week-02-navegacion_y_sistema_de_archivos/README.md) | Navegación y sistema de archivos | ⬜ |
+| [02](week-02-navegacion_y_sistema_de_archivos/README.md) | Navegación y sistema de archivos | ✅ |
 | [03](week-03-manipulacion_de_archivos_y_directorios/README.md) | Manipulación de archivos y directorios | ⬜ |
 | [04](week-04-permisos_y_propiedad/README.md) | Permisos y propiedad | ⬜ |
 

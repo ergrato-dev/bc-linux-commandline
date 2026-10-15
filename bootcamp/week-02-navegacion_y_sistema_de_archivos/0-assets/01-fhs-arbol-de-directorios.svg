@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="380" viewBox="0 0 820 380" role="img">
+  <title>Arbol simplificado del FHS: proposito de cada directorio de primer nivel</title>
+
+  <rect width="820" height="380" fill="#0d1117"/>
+
+  <rect x="370" y="16" width="80" height="36" rx="6" fill="#161b22" stroke="#f0f6fc" stroke-width="1.5"/>
+  <text x="410" y="39" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="15" fill="#f0f6fc">/</text>
+
+  <!-- children row -->
+  <g font-family="'SFMono-Regular',monospace" font-size="13">
+    <rect x="30" y="100" width="90" height="36" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="75" y="123" text-anchor="middle" fill="#58a6ff">/etc</text>
+
+    <rect x="140" y="100" width="90" height="36" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="1.5"/>
+    <text x="185" y="123" text-anchor="middle" fill="#e3b341">/var</text>
+
+    <rect x="250" y="100" width="90" height="36" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="295" y="123" text-anchor="middle" fill="#3fb950">/usr</text>
+
+    <rect x="360" y="100" width="90" height="36" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="1.5"/>
+    <text x="405" y="123" text-anchor="middle" fill="#d2a8ff">/home</text>
+
+    <rect x="470" y="100" width="90" height="36" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+    <text x="515" y="123" text-anchor="middle" fill="#f85149">/proc</text>
+
+    <rect x="580" y="100" width="90" height="36" rx="6" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+    <text x="625" y="123" text-anchor="middle" fill="#f85149">/sys</text>
+
+    <rect x="690" y="100" width="100" height="36" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+    <text x="740" y="123" text-anchor="middle" fill="#8b949e">/tmp</text>
+  </g>
+
+  <!-- connecting lines -->
+  <g stroke="#30363d" stroke-width="1.5">
+    <line x1="410" y1="52" x2="75" y2="98"/>
+    <line x1="410" y1="52" x2="185" y2="98"/>
+    <line x1="410" y1="52" x2="295" y2="98"/>
+    <line x1="410" y1="52" x2="405" y2="98"/>
+    <line x1="410" y1="52" x2="515" y2="98"/>
+    <line x1="410" y1="52" x2="625" y2="98"/>
+    <line x1="410" y1="52" x2="740" y2="98"/>
+  </g>
+
+  <!-- descriptions -->
+  <g font-family="system-ui,sans-serif" font-size="12" fill="#8b949e">
+    <text x="75" y="162" text-anchor="middle">configuracion</text>
+    <text x="75" y="178" text-anchor="middle">(texto editable)</text>
+
+    <text x="185" y="162" text-anchor="middle">datos que</text>
+    <text x="185" y="178" text-anchor="middle">cambian (logs)</text>
+
+    <text x="295" y="162" text-anchor="middle">software</text>
+    <text x="295" y="178" text-anchor="middle">instalado</text>
+
+    <text x="405" y="162" text-anchor="middle">home de cada</text>
+    <text x="405" y="178" text-anchor="middle">usuario</text>
+
+    <text x="515" y="162" text-anchor="middle">vista virtual:</text>
+    <text x="515" y="178" text-anchor="middle">procesos</text>
+
+    <text x="625" y="162" text-anchor="middle">vista virtual:</text>
+    <text x="625" y="178" text-anchor="middle">kernel/drivers</text>
+
+    <text x="740" y="162" text-anchor="middle">temporal, se</text>
+    <text x="740" y="178" text-anchor="middle">borra solo</text>
+  </g>
+
+  <text x="410" y="240" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#8b949e">
+    Rojo = sistema de archivos virtual, sin contenido real en disco.
+  </text>
+  <text x="410" y="260" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#8b949e">
+    El FHS fija este proposito; cada distro puede agregar convenciones propias encima.
+  </text>
+</svg>

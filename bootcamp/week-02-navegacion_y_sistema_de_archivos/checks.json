@@ -1,0 +1,69 @@
+{
+  "semana": "02",
+  "titulo": "Navegacion y sistema de archivos",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor de la Semana 01 sigue funcionando (regresion)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-corre-sin-argumentos",
+      "descripcion": "inventory corre sin argumentos usando el directorio actual",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, requisito 1"
+    },
+    {
+      "id": "inventory-resuelve-ruta-absoluta",
+      "descripcion": "inventory muestra la ruta absoluta aunque se le pase una ruta relativa",
+      "cmd": "mkdir -p /tmp/wk02-abs && cd /tmp && ~/bin/toolkit.sh inventory wk02-abs",
+      "assert": "stdout~/tmp/wk02-abs",
+      "pista": "2-practicas/01-rutas-absolutas-y-relativas.md"
+    },
+    {
+      "id": "inventory-cuenta-regulares",
+      "descripcion": "inventory cuenta correctamente los archivos regulares de un directorio",
+      "cmd": "rm -rf /tmp/wk02-fixture && mkdir -p /tmp/wk02-fixture/subdir1 /tmp/wk02-fixture/subdir2 && touch /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/b.sh /tmp/wk02-fixture/c.txt && ln -sf /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/enlace.sh && ~/bin/toolkit.sh inventory /tmp/wk02-fixture",
+      "assert": "stdout~archivos regulares: 3",
+      "pista": "2-practicas/03-tipos-de-archivo-y-enlaces.md"
+    },
+    {
+      "id": "inventory-cuenta-directorios",
+      "descripcion": "inventory cuenta correctamente los subdirectorios, sin contarse a si mismo",
+      "cmd": "rm -rf /tmp/wk02-fixture && mkdir -p /tmp/wk02-fixture/subdir1 /tmp/wk02-fixture/subdir2 && touch /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/b.sh /tmp/wk02-fixture/c.txt && ln -sf /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/enlace.sh && ~/bin/toolkit.sh inventory /tmp/wk02-fixture",
+      "assert": "stdout~directorios: 2",
+      "pista": "2-practicas/03-tipos-de-archivo-y-enlaces.md"
+    },
+    {
+      "id": "inventory-cuenta-enlaces",
+      "descripcion": "inventory cuenta correctamente los enlaces simbolicos",
+      "cmd": "rm -rf /tmp/wk02-fixture && mkdir -p /tmp/wk02-fixture/subdir1 /tmp/wk02-fixture/subdir2 && touch /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/b.sh /tmp/wk02-fixture/c.txt && ln -sf /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/enlace.sh && ~/bin/toolkit.sh inventory /tmp/wk02-fixture",
+      "assert": "stdout~enlaces simbolicos: 1",
+      "pista": "2-practicas/03-tipos-de-archivo-y-enlaces.md"
+    },
+    {
+      "id": "inventory-filtra-por-extension",
+      "descripcion": "inventory --ext filtra por extension usando globbing, sin contar los .txt",
+      "cmd": "rm -rf /tmp/wk02-fixture && mkdir -p /tmp/wk02-fixture/subdir1 /tmp/wk02-fixture/subdir2 && touch /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/b.sh /tmp/wk02-fixture/c.txt && ln -sf /tmp/wk02-fixture/a.sh /tmp/wk02-fixture/enlace.sh && ~/bin/toolkit.sh inventory /tmp/wk02-fixture --ext sh",
+      "assert": "stdout~coincidencias [.]sh: 3",
+      "pista": "2-practicas/04-globbing-y-expansion-de-patrones.md"
+    },
+    {
+      "id": "inventory-falla-en-ruta-inexistente",
+      "descripcion": "inventory sale con codigo distinto de 0 si la ruta no existe",
+      "cmd": "~/bin/toolkit.sh inventory /no/existe/wk02",
+      "assert": "exit!=0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    }
+  ]
+}
