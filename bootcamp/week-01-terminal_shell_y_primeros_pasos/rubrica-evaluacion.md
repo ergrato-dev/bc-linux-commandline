@@ -122,4 +122,4 @@
 
 ## 🔗 Navegación
 
-[← Volver al README de la semana](README.md)
+[← Proyecto: Capa 1 de toolkit](3-proyecto/README.md) · [Ebooks gratuitos →](4-recursos/ebooks-free/README.md)

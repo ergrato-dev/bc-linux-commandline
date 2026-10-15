@@ -45,4 +45,6 @@ shell.
 
 ---
 
-[← Volver al glosario global](../../../docs/glosario-global.md) · [Volver al README de la semana](../README.md)
+[← Webgrafía](../4-recursos/webgrafia/README.md) · [Semana 02 →](../../week-02-navegacion_y_sistema_de_archivos/README.md)
+
+[Glosario global](../../../docs/glosario-global.md) · [Índice del bootcamp](../../README.md)

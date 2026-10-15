@@ -11,7 +11,7 @@ reporta el estado básico del entorno donde corre.
 Esta es la primera capa, así que no hay nada previo que mantener — pero sí
 hay un contrato que las próximas diecinueve capas van a respetar: **un solo
 archivo ejecutable, con subcomandos**, no un script nuevo por semana. Lo que
-armás acá (el patrón `case "$1" in ... esac` para despachar subcomandos) es
+armas acá (el patrón `case "$1" in ... esac` para despachar subcomandos) es
 la estructura que la Semana 10 extiende con `sys-snapshot`, la Semana 16
 refactoriza en un entrypoint más robusto, y la Semana 20 pule para entrega
 final.
@@ -53,7 +53,7 @@ puede priorizar distinto según tu contexto:
 | Administras tu propia laptop | Espacio en disco, batería si es notebook |
 | Vas a usar esto en servidores remotos | Uptime, carga del sistema |
 | Te interesa la seguridad | Última actualización de paquetes instalada |
-| Programás además de administrar | Versión de lenguajes instalados (`python3 --version`, etc.) |
+| Programas además de administrar | Versión de lenguajes instalados (`python3 --version`, etc.) |
 
 No es obligatorio esta semana — es solo para que empieces a pensar en qué
 dirección vas a llevar tu `toolkit` cuando, desde la Semana 17, el proyecto
@@ -78,4 +78,4 @@ chmod +x ~/bin/toolkit.sh
 
 ## 🔗 Navegación
 
-[← Volver al README de la semana](../README.md)
+[← Práctica 04](../2-practicas/04-builtins-externos-y-tu-path.md) · [Rúbrica de evaluación →](../rubrica-evaluacion.md)

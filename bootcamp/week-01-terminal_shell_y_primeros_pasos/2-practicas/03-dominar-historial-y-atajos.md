@@ -124,3 +124,7 @@ shopt histappend
 | `Ctrl+R` no hace nada visible | El terminal no está en modo readline interactivo, o hay un `.inputrc` conflictivo | Confirmar `set -o` incluye `emacs on`; revisar si existe un `~/.inputrc` que redefine atajos |
 | `!!` ejecuta un comando distinto al esperado | Hubo un comando intermedio que no viste (por ejemplo, de autocompletado) | Revisar `history | tail -3` antes de usar `!!` para confirmar qué es "el último" realmente |
 | `shopt histappend` dice `off` después de `source` | El bloque se agregó pero el `source` se ejecutó en otra sesión | Verificar que estás en la misma sesión donde editaste `~/.bashrc`, y repetir `source ~/.bashrc` |
+
+---
+
+[← Práctica 02](02-navegar-la-ayuda-y-el-manual.md) · [Práctica 04 →](04-builtins-externos-y-tu-path.md)

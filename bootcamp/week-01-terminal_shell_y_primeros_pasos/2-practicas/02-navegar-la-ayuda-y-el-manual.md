@@ -118,4 +118,8 @@ entenderlos todavía.
 |---|---|---|
 | `man -k` dice "nothing appropriate" para todo | La base de datos de `apropos` no está indexada | Correr `sudo mandb` dentro de `ubuntu-lab` para reconstruir el índice |
 | `man` no pagina, tira todo el texto de una sola vez | Falta el paginador configurado (`less`) | Confirmar que `less` está instalado: `which less`; si falta, `apt install less` |
-| `man passwd` siempre abre la misma sección sin importar qué pedís | Olvidaste el número de sección antes del nombre | La sintaxis es `man <sección> <nombre>`, con espacio, número primero |
+| `man passwd` siempre abre la misma sección sin importar qué pides | Olvidaste el número de sección antes del nombre | La sintaxis es `man <sección> <nombre>`, con espacio, número primero |
+
+---
+
+[← Práctica 01](01-primer-contacto-con-ubuntu-lab.md) · [Práctica 03 →](03-dominar-historial-y-atajos.md)

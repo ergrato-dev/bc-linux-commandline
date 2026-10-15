@@ -7,4 +7,4 @@
 
 ---
 
-[← Volver al README de la semana](../../README.md)
+[← Videografía](../videografia/README.md) · [Glosario →](../../5-glosario/README.md)

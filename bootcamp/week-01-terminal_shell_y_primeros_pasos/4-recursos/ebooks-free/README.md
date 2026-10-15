@@ -7,4 +7,4 @@
 
 ---
 
-[← Volver al README de la semana](../../README.md)
+[← Rúbrica de evaluación](../../rubrica-evaluacion.md) · [Videografía →](../videografia/README.md)

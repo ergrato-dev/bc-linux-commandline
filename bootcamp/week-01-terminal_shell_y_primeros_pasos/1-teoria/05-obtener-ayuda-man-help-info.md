@@ -120,7 +120,7 @@ olvidar más:
 | `algo...` | Puede repetirse una o más veces |
 | `-a\|-b` | Uno u otro, no ambos |
 | **negrita** (o sin corchetes) | Literal: se escribe tal cual |
-| _cursiva_ (o `MAYÚSCULA`) | Lo reemplazás por tu propio valor |
+| _cursiva_ (o `MAYÚSCULA`) | Lo reemplazas por tu propio valor |
 
 ```
 SYNOPSIS
@@ -198,3 +198,7 @@ man bash | less
 - [ ] Comparaste `man passwd` con `man 5 passwd` y notaste la diferencia
 - [ ] Usaste `help cd` para confirmar por qué `man cd` no te da lo que esperabas
 - [ ] Leíste un `SYNOPSIS` completo y explicaste qué significa cada corchete y cada punto suspensivo
+
+---
+
+[← 04 — Builtins, externos y $PATH](04-builtins-externos-y-path.md) · [06 — Historial y edición de línea →](06-historial-y-edicion-de-linea.md)

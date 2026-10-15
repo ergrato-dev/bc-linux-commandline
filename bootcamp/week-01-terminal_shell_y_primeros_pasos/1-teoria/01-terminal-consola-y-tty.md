@@ -198,3 +198,7 @@ aunque corran el mismo programa.
 - [ ] Corriste `tty` dentro de `ubuntu-lab` y identificaste tu PTY
 - [ ] Corriste `ps -o pid,ppid,tty,comm` y ubicaste la columna `TT`
 - [ ] Explicaste con tus palabras por qué un servidor sin pantalla igual "tiene terminal" cuando te conectas por SSH
+
+---
+
+[← Semana 01](../README.md) · [02 — El shell: bash como intérprete →](02-el-shell-bash-como-interprete.md)

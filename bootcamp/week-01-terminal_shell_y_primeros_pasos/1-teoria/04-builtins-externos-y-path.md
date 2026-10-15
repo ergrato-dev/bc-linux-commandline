@@ -198,3 +198,7 @@ por diseño; y la tabla hash interna de bash es la explicación real detrás de
 - [ ] Agregaste `$HOME/bin` a tu `$PATH` de forma persistente en `~/.bashrc`
 - [ ] Explicaste por qué `./script.sh` necesita el `./` y un comando del sistema no
 - [ ] Provocaste y corregiste un fallo de la tabla hash con `hash -r`
+
+---
+
+[← 03 — Anatomía del prompt](03-anatomia-del-prompt.md) · [05 — Obtener ayuda: man, --help, info →](05-obtener-ayuda-man-help-info.md)

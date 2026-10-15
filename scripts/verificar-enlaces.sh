@@ -73,6 +73,19 @@ while IFS= read -r rm; do
   fi
 done < <(find bootcamp -mindepth 2 -maxdepth 2 -iname "README.md")
 
+echo "== 3b. Pie de navegacion <- -> en cada archivo de contenido de semana publicada =="
+# CLAUDE.md: todo archivo de 1-teoria/2-practicas/3-proyecto/rubrica/4-recursos/
+# 5-glosario de una semana publicada termina con una linea "<- ... / ... ->".
+while IFS= read -r f; do
+  esta_publicada "$f" || continue
+  if ! grep -qE '←.*→|←.+$|→$' "$f"; then
+    echo "SIN PIE DE NAVEGACION (falta <- o ->): $f"
+    fail=1
+  fi
+done < <(find bootcamp -path "*/1-teoria/*.md" -o -path "*/2-practicas/*.md" \
+            -o -path "*/3-proyecto/README.md" -o -name "rubrica-evaluacion.md" \
+            -o -path "*/4-recursos/*/README.md" -o -path "*/5-glosario/README.md")
+
 echo "== 4. SVG huerfanos en 0-assets/ =="
 while IFS= read -r svg; do
   base=$(basename "$svg")

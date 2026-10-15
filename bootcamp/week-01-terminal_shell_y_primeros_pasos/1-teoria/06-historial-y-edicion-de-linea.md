@@ -205,3 +205,7 @@ los casos reales de reutilizar algo que ya escribiste antes.
 - [ ] Configuraste `HISTSIZE`, `HISTFILESIZE` y `HISTCONTROL` en `~/.bashrc` y recargaste con `source`
 - [ ] Usaste `Ctrl+R` para encontrar y ejecutar un comando anterior sin escribirlo de nuevo
 - [ ] Usaste `!!` y `!$` al menos una vez cada uno en un caso real
+
+---
+
+[← 05 — Obtener ayuda: man, --help, info](05-obtener-ayuda-man-help-info.md) · [Práctica 01 →](../2-practicas/01-primer-contacto-con-ubuntu-lab.md)

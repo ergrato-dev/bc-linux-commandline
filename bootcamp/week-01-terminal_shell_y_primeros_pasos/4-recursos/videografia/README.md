@@ -6,4 +6,4 @@
 
 ---
 
-[← Volver al README de la semana](../../README.md)
+[← Ebooks gratuitos](../ebooks-free/README.md) · [Webgrafía →](../webgrafia/README.md)

@@ -166,3 +166,7 @@ ll /etc | head -3
 | `docker exec` dice "No such container" | El laboratorio no está levantado | Correr `./scripts/start.sh` desde la raíz del repositorio, en tu máquina host, no dentro del contenedor |
 | El prompt no muestra `[✗N]` tras un `false` | `source ~/.bashrc` no se ejecutó, o hay un error de sintaxis en el bloque agregado | Revisar `tail -20 ~/.bashrc` buscando algo mal cerrado; volver a correr `source ~/.bashrc` y mirar si tira error |
 | `type ll` dice "not found" | El `cat >> ~/.bashrc` se escribió en una sesión y estás verificando en otra que no hizo `source` | Correr `source ~/.bashrc` en la sesión donde estás verificando |
+
+---
+
+[← 06 — Historial y edición de línea](../1-teoria/06-historial-y-edicion-de-linea.md) · [Práctica 02 →](02-navegar-la-ayuda-y-el-manual.md)

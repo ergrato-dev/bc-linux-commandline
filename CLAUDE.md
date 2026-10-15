@@ -289,6 +289,44 @@ Todo truco se replica en `docs/trucos-linux.md`, en la sección de su semana.
 
 ---
 
+## 🔗 Navegación al pie de cada archivo
+
+**Todo archivo de contenido de una semana termina con una línea de
+navegación `← anterior` / `siguiente →`.** No solo el `README.md` de la
+semana: también cada archivo de `1-teoria/`, `2-practicas/`,
+`3-proyecto/README.md`, `rubrica-evaluacion.md`, cada `4-recursos/*/README.md`
+y `5-glosario/README.md`.
+
+El orden de lectura de una semana, para calcular ese `anterior`/`siguiente`,
+es siempre:
+
+```
+README.md (de la semana)
+  → 1-teoria/01 → 02 → ... → NN
+  → 2-practicas/01 → 02 → ... → NN
+  → 3-proyecto/README.md
+  → rubrica-evaluacion.md
+  → 4-recursos/ebooks-free/README.md
+  → 4-recursos/videografia/README.md
+  → 4-recursos/webgrafia/README.md
+  → 5-glosario/README.md
+  → README.md de la semana siguiente
+```
+
+Formato, al final del archivo, tras un separador `---`:
+
+```markdown
+---
+
+[← Título del archivo anterior](ruta-relativa) · [Título del archivo siguiente →](ruta-relativa)
+```
+
+El primer archivo de teoría de la Semana 01 no tiene "anterior" real — enlaza
+al `README.md` de su propia semana. El último archivo de la última semana no
+tiene "siguiente" — enlaza al índice del bootcamp.
+
+---
+
 ## 📝 Convenciones
 
 ### Comandos
@@ -547,7 +585,7 @@ tema lo pide.
 - [ ] Ningún comando destructivo sin aviso
 - [ ] Ningún secreto en ningún ejemplo
 - [ ] Prerrequisitos encadenados a semanas anteriores, concretos
-- [ ] Navegación anterior/siguiente correcta
+- [ ] Navegación anterior/siguiente correcta en el `README.md` de la semana **y al pie de cada archivo de contenido**
 - [ ] Las tablas maestras siguen coincidiendo (`CLAUDE.md`, `README.md`, `README_EN.md`)
 - [ ] `bash scripts/verificar-enlaces.sh` en verde
 - [ ] `bash scripts/verificar-semana.sh NN` en verde

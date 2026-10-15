@@ -199,3 +199,7 @@ que tienes para evitar un error caro.
 - [ ] Corriste `echo "$PS1"` y ubicaste al menos tres secuencias de escape de la tabla
 - [ ] Agregaste el código de salida visible al prompt en `~/.bashrc` y lo recargaste con `source`
 - [ ] Provocaste un comando que falla y confirmaste que el prompt lo muestra en el intento siguiente
+
+---
+
+[← 02 — El shell: bash como intérprete](02-el-shell-bash-como-interprete.md) · [04 — Builtins, externos y $PATH →](04-builtins-externos-y-path.md)

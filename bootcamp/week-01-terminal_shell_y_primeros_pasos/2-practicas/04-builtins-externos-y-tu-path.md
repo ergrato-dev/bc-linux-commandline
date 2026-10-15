@@ -150,3 +150,7 @@ hash chau.sh
 | `hola.sh` sigue sin encontrarse después de moverlo a `~/bin` | `~/bin` no quedó en `$PATH` de esta sesión | Repetir `source ~/.bashrc`, o confirmar con `echo $PATH` que la carpeta aparece |
 | `chmod +x` no alcanza y el script sigue sin ejecutarse | El shebang de la primera línea tiene un error de tipeo o un espacio extra | `head -1 archivo.sh | cat -A` para ver caracteres invisibles |
 | `$PATH` quedó vacío o roto después de editar `.bashrc` | Se sobrescribió `PATH=` en vez de extenderlo con `$PATH` al final | Revisar la línea agregada: siempre `export PATH="algo:$PATH"`, nunca `export PATH="algo"` |
+
+---
+
+[← Práctica 03](03-dominar-historial-y-atajos.md) · [Proyecto: Capa 1 de toolkit →](../3-proyecto/README.md)

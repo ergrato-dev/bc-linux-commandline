@@ -214,3 +214,7 @@ razonar sobre cuántos shells hay apilados y por qué.
 - [ ] Corriste `ps -p $$ -o comm=` y confirmaste que estás en `bash`
 - [ ] Verificaste que `/usr/bin/sh` apunta a `dash`, no a `bash`
 - [ ] Explicaste con tus palabras por qué un cron job no ve tus alias de `.bashrc`
+
+---
+
+[← 01 — Terminal, consola y TTY](01-terminal-consola-y-tty.md) · [03 — Anatomía del prompt →](03-anatomia-del-prompt.md)
