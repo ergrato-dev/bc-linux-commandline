@@ -40,6 +40,18 @@ primero).
 - `stat -c '%Y %n' * | sort -rn` ordena archivos por fecha real de
   modificación, más preciso que fiarse del orden visual de `ls -lt`.
 
+## Semana 04 — Permisos y propiedad
+
+- `namei -l /ruta/completa` muestra los permisos de cada componente de una
+  ruta, uno por uno — útil cuando el problema está en un directorio
+  intermedio, no en el archivo final.
+- `chmod --reference=otro-archivo` copia permisos exactos sin calcular el
+  número.
+- `find / -perm -4000 -type f 2>/dev/null` audita todos los binarios con
+  SUID activo en el sistema.
+- `getfacl archivo1 | setfacl --set-file=- archivo2` copia una ACL completa
+  de un archivo a otro.
+
 ---
 
 [← Volver al índice de documentación](README.md)

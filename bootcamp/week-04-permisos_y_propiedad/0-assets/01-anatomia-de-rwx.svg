@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="260" viewBox="0 0 820 260" role="img">
+  <title>Anatomia de los nueve caracteres de permisos en ls -l</title>
+
+  <rect width="820" height="260" fill="#0d1117"/>
+
+  <text x="410" y="36" text-anchor="middle" font-family="'SFMono-Regular',monospace" font-size="26" fill="#f0f6fc">-rw-r--r--</text>
+
+  <!-- type char -->
+  <rect x="130" y="56" width="38" height="36" rx="4" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+  <line x1="149" y1="92" x2="149" y2="130" stroke="#8b949e" stroke-width="1.5"/>
+  <text x="149" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#8b949e">tipo</text>
+
+  <!-- owner group -->
+  <rect x="168" y="56" width="110" height="36" rx="4" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <line x1="223" y1="92" x2="223" y2="130" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="223" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#3fb950">dueño (rw-)</text>
+
+  <rect x="278" y="56" width="110" height="36" rx="4" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <line x1="333" y1="92" x2="333" y2="130" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="333" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#58a6ff">grupo (r--)</text>
+
+  <rect x="388" y="56" width="110" height="36" rx="4" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <line x1="443" y1="92" x2="443" y2="130" stroke="#e3b341" stroke-width="1.5"/>
+  <text x="443" y="150" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#e3b341">otros (r--)</text>
+
+  <!-- rwx legend -->
+  <rect x="80" y="180" width="660" height="60" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="130" y="205" font-family="'SFMono-Regular',monospace" font-size="14" fill="#f0f6fc">r = 4</text>
+  <text x="130" y="225" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e">lectura</text>
+  <text x="330" y="205" font-family="'SFMono-Regular',monospace" font-size="14" fill="#f0f6fc">w = 2</text>
+  <text x="330" y="225" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e">escritura</text>
+  <text x="530" y="205" font-family="'SFMono-Regular',monospace" font-size="14" fill="#f0f6fc">x = 1</text>
+  <text x="530" y="225" font-family="system-ui,sans-serif" font-size="11" fill="#8b949e">ejecución / tránsito</text>
+</svg>

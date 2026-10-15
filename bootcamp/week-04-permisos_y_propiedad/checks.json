@@ -1,0 +1,69 @@
+{
+  "semana": "04",
+  "titulo": "Permisos y propiedad",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk04-regresion && mkdir -p /tmp/wk04-regresion && touch /tmp/wk04-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk04-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-reporta-umask",
+      "descripcion": "audit reporta el umask actual de la sesion",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "1-teoria/04-umask.md"
+    },
+    {
+      "id": "audit-detecta-escribible-por-otros",
+      "descripcion": "audit detecta un archivo escribible por otros y sale con codigo 2",
+      "cmd": "rm -rf /tmp/wk04-riesgo && mkdir -p /tmp/wk04-riesgo && touch /tmp/wk04-riesgo/a.txt && chmod 666 /tmp/wk04-riesgo/a.txt && ~/bin/toolkit.sh audit /tmp/wk04-riesgo",
+      "assert": "exit=2",
+      "pista": "2-practicas/01-modelo-de-permisos-y-chmod.md"
+    },
+    {
+      "id": "audit-limpio-sale-con-cero",
+      "descripcion": "audit sale con codigo 0 si no encuentra ningun riesgo",
+      "cmd": "rm -rf /tmp/wk04-limpio && mkdir -p /tmp/wk04-limpio && touch /tmp/wk04-limpio/a.txt && chmod 644 /tmp/wk04-limpio/a.txt && ~/bin/toolkit.sh audit /tmp/wk04-limpio",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "audit-detecta-suid",
+      "descripcion": "audit detecta un archivo con SUID activo",
+      "cmd": "rm -rf /tmp/wk04-suid && mkdir -p /tmp/wk04-suid && touch /tmp/wk04-suid/bin && chmod 4755 /tmp/wk04-suid/bin && ~/bin/toolkit.sh audit /tmp/wk04-suid",
+      "assert": "stdout~SUID: 1",
+      "pista": "2-practicas/03-bits-especiales-suid-sgid-sticky.md"
+    },
+    {
+      "id": "audit-falla-en-ruta-inexistente",
+      "descripcion": "audit sale con codigo 1 (no 2) si la ruta no existe",
+      "cmd": "~/bin/toolkit.sh audit /no/existe/wk04",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    }
+  ]
+}
