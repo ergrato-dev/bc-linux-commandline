@@ -17,6 +17,7 @@ explica en profundidad.
 | Init / service manager | systemd | systemd | systemd (base mínima, menos unidades preinstaladas) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/), [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
 | Seguridad obligatoria | AppArmor (activo por defecto) | SELinux (activo por defecto) | ninguno por defecto | [04](../bootcamp/week-04-permisos_y_propiedad/) |
 | ACLs | `acl` paquete aparte en bases mínimas | preinstalado en la mayoría | paquete `acl` aparte | [04](../bootcamp/week-04-permisos_y_propiedad/) |
+| `awk` por defecto | `mawk` (liviano, sin extensiones de gawk) | `gawk` (GNU Awk completo) | `gawk` (GNU Awk completo) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/) |
 
 ## Por qué esto y no una semana por distro
 

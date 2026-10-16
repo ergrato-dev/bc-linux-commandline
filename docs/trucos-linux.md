@@ -88,6 +88,18 @@ primero).
 - `tr -d '[:punct:]'` quita toda la puntuación de un texto de una sola
   vez, sin enumerar cada símbolo.
 
+## Semana 08 — awk y pipelines de datos
+
+- `awk 'NF'` (sin acción) imprime solo las líneas no vacías — `NF` es
+  `0` en una línea vacía, que `awk` interpreta como falso.
+- `awk '{ print $NF }'` imprime el último campo de cada línea, sin
+  saber de antemano cuántos campos tiene.
+- El operador ternario (`condicion ? si : sino`) evita un `if`/`else`
+  completo para una decisión binaria simple dentro de una acción.
+- `awk --version` (o `readlink -f "$(command -v awk)"` si falla)
+  confirma en segundos si estás con `mawk` o `gawk`, antes de depurar
+  un error de "función no definida".
+
 ---
 
 [← Volver al índice de documentación](README.md)

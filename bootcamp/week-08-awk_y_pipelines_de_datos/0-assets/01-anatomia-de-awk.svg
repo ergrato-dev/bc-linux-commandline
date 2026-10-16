@@ -1,0 +1,57 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-awk desc-awk">
+  <title id="titulo-awk">Anatomía de un programa awk: patrón, acción, y división de un registro en campos</title>
+  <desc id="desc-awk">La estructura patrón { acción } de awk, junto con un registro de ejemplo "root:x:0:0:root:/root:/bin/bash" dividido en campos numerados $1 a $7, con $0 representando la línea completa y NF el total de campos.</desc>
+
+  <rect x="0" y="0" width="900" height="420" fill="#0d1117"/>
+
+  <text x="450" y="35" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#f0f6fc" font-weight="bold">
+    awk -F: '/root/ { print $1, NF }'
+  </text>
+
+  <g font-family="monospace" font-size="22" font-weight="bold">
+    <rect x="80" y="70" width="230" height="50" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="195" y="103" text-anchor="middle" fill="#79c0ff">/root/</text>
+
+    <rect x="330" y="70" width="40" height="50" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="350" y="103" text-anchor="middle" fill="#8b949e">{</text>
+
+    <rect x="380" y="70" width="330" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="545" y="103" text-anchor="middle" fill="#3fb950">print $1, NF</text>
+
+    <rect x="720" y="70" width="40" height="50" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="740" y="103" text-anchor="middle" fill="#8b949e">}</text>
+  </g>
+
+  <g font-family="sans-serif" font-size="13">
+    <text x="195" y="140" text-anchor="middle" fill="#79c0ff">patrón: ¿coincide la línea?</text>
+    <text x="545" y="140" text-anchor="middle" fill="#3fb950">acción: qué hacer si coincide</text>
+  </g>
+
+  <line x1="450" y1="160" x2="450" y2="185" stroke="#30363d" stroke-width="2"/>
+
+  <text x="450" y="210" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#8b949e">
+    Por cada línea de entrada, awk evalúa el patrón y, si coincide, corre la acción.
+  </text>
+
+  <text x="450" y="245" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#f0f6fc" font-weight="bold">
+    Un registro dividido en campos (FS = ":")
+  </text>
+
+  <g font-family="monospace" font-size="15">
+    <rect x="40" y="270" width="820" height="45" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <text x="60" y="298" fill="#f0f6fc">root : x : 0 : 0 : root : /root : /bin/bash</text>
+  </g>
+
+  <g font-family="monospace" font-size="13">
+    <text x="60" y="335" fill="#e3b341">$1</text>
+    <text x="118" y="335" fill="#e3b341">$2</text>
+    <text x="155" y="335" fill="#e3b341">$3</text>
+    <text x="190" y="335" fill="#e3b341">$4</text>
+    <text x="225" y="335" fill="#e3b341">$5</text>
+    <text x="280" y="335" fill="#e3b341">$6</text>
+    <text x="360" y="335" fill="#e3b341">$7</text>
+  </g>
+
+  <text x="60" y="365" font-family="sans-serif" font-size="13" fill="#d2a8ff">$0 = la línea completa, sin dividir</text>
+  <text x="60" y="390" font-family="sans-serif" font-size="13" fill="#79c0ff">NF = 7 (cantidad de campos de esta línea)</text>
+</svg>

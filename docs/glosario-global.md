@@ -7,11 +7,13 @@ qué semana se explica a fondo.
 | Término | Semana |
 |---|:--:|
 | ACL (Access Control List) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| Acción (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Agrupación (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Alias | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Ámbito (permisos) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | Ancla (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| Array asociativo | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | atime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | Brace expansion (expansión de llaves) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | BRE (Basic Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -21,6 +23,7 @@ qué semana se explica a fondo.
 | Clase de caracteres (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Clase POSIX (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Clave de ordenamiento | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
+| Coerción | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Código de salida (exit code) | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Cortocircuito (evaluación) | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | ctime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
@@ -38,6 +41,9 @@ qué semana se explica a fondo.
 | ERE (Extended Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Escritura atómica | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | FHS (Filesystem Hierarchy Standard) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
+| FNR | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| FS (Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| gawk | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | GID | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | Glob / globbing | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Grupo de captura | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
@@ -48,11 +54,16 @@ qué semana se explica a fondo.
 | Inodo | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Lookahead (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | mask (ACL) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| mawk | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | mtime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
+| NF (Number of Fields) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| NR (Number of Records) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Nullglob | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
+| OFS (Output Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Orden estable | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | Papelera de reciclaje | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | PATH | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
+| Patrón (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Patrón literal (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | PCRE (Perl Compatible Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Pila de directorios | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
@@ -61,11 +72,13 @@ qué semana se explica a fondo.
 | Pipeline de ranking de frecuencia | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | PIPESTATUS | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Principio de menor privilegio | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| printf | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Prompt | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | PTY (pseudo-terminal) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Readline | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Referencia hacia atrás (backreference) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Reflink | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
+| Registro (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Ruta absoluta | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Ruta relativa | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Set (tr) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |

@@ -1,0 +1,111 @@
+{
+  "semana": "08",
+  "titulo": "awk y pipelines de datos",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk08-regresion && mkdir -p /tmp/wk08-regresion && touch /tmp/wk08-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk08-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-sigue-funcionando",
+      "descripcion": "El subcomando audit sigue funcionando (regresion de la Semana 04)",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logreport-sigue-funcionando",
+      "descripcion": "El subcomando logreport sigue funcionando (regresion de la Semana 05)",
+      "cmd": "printf 'INFO ok\\n' > /tmp/wk08-logreport.log && ~/bin/toolkit.sh logreport /tmp/wk08-logreport.log",
+      "assert": "stdout~lineas totales: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logscan-sigue-funcionando",
+      "descripcion": "El subcomando logscan sigue funcionando (regresion de la Semana 06)",
+      "cmd": "rm -rf /tmp/wk08-logscan && mkdir -p /tmp/wk08-logscan && printf 'ERROR x\\n' > /tmp/wk08-logscan/a.log && ~/bin/toolkit.sh logscan /tmp/wk08-logscan",
+      "assert": "stdout~archivos [.]log: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "topcount-sigue-funcionando",
+      "descripcion": "El subcomando topcount sigue funcionando (regresion de la Semana 07)",
+      "cmd": "rm -rf /tmp/wk08-topcount && mkdir -p /tmp/wk08-topcount && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk08-topcount/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk08-topcount/eventos.log",
+      "assert": "stdout~entradas validas: 3",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "sumfield-detecta-no-numericos",
+      "descripcion": "sumfield cuenta correctamente los valores no numericos del campo",
+      "cmd": "rm -rf /tmp/wk08-chk1 && mkdir -p /tmp/wk08-chk1 && printf 'norte:150\\nsur:200\\nnorte:abc\\n' > /tmp/wk08-chk1/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk08-chk1/ventas.log",
+      "assert": "stdout~valores no numericos: 1",
+      "pista": "1-teoria/03-validacion-de-datos-con-awk.md"
+    },
+    {
+      "id": "sumfield-agrupa-y-suma-por-clave",
+      "descripcion": "sumfield agrupa por la clave y suma el campo numerico correctamente",
+      "cmd": "rm -rf /tmp/wk08-chk2 && mkdir -p /tmp/wk08-chk2 && printf 'norte:150\\nsur:200\\nnorte:120\\n' > /tmp/wk08-chk2/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk08-chk2/ventas.log",
+      "assert": "stdout~270 norte",
+      "pista": "1-teoria/02-arrays-asociativos-y-agrupacion.md"
+    },
+    {
+      "id": "sumfield-calcula-suma-total",
+      "descripcion": "sumfield calcula la suma total de todos los grupos",
+      "cmd": "rm -rf /tmp/wk08-chk2b && mkdir -p /tmp/wk08-chk2b && printf 'norte:150\\nsur:200\\nnorte:120\\n' > /tmp/wk08-chk2b/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk08-chk2b/ventas.log",
+      "assert": "stdout~suma total: 470",
+      "pista": "1-teoria/02-arrays-asociativos-y-agrupacion.md"
+    },
+    {
+      "id": "sumfield-exit-2-con-no-numericos",
+      "descripcion": "sumfield sale con codigo 2 si hay valores no numericos en el campo",
+      "cmd": "rm -rf /tmp/wk08-chk3 && mkdir -p /tmp/wk08-chk3 && printf 'norte:150\\nnorte:abc\\n' > /tmp/wk08-chk3/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk08-chk3/ventas.log",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "sumfield-exit-0-sin-no-numericos",
+      "descripcion": "sumfield sale con codigo 0 si todos los valores del campo son numericos",
+      "cmd": "rm -rf /tmp/wk08-chk4 && mkdir -p /tmp/wk08-chk4 && printf 'norte:150\\nsur:200\\n' > /tmp/wk08-chk4/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk08-chk4/ventas.log",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "sumfield-exit-1-archivo-invalido",
+      "descripcion": "sumfield sale con codigo 1 si el archivo no existe",
+      "cmd": "~/bin/toolkit.sh sumfield /tmp/wk08-no-existe.log",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "sumfield-usa-campo-delim-y-grupo-personalizados",
+      "descripcion": "sumfield usa --campo, --delim y --grupo en vez de los valores por defecto",
+      "cmd": "rm -rf /tmp/wk08-chk5 && mkdir -p /tmp/wk08-chk5 && printf 'A1,electro,5\\nA2,electro,3\\nB1,hogar,10\\n' > /tmp/wk08-chk5/inventario.log && ~/bin/toolkit.sh sumfield /tmp/wk08-chk5/inventario.log --delim , --campo 3 --grupo 2",
+      "assert": "stdout~8 electro",
+      "pista": "1-teoria/01-awk-basico-campos-nr-y-nf.md"
+    }
+  ]
+}
