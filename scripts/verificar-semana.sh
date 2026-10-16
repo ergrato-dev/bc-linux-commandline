@@ -145,9 +145,11 @@ verificar_semana() {
   echo
 
   local total=0 pasados=0
-  local id descripcion cmd asercion pista codigo salida
+  local descripcion cmd asercion pista codigo salida
 
-  while IFS=$'\t' read -r id descripcion cmd asercion pista; do
+  # El primer campo (id) se descarta con "_": es el identificador estable
+  # de checks.json, pero este script solo reporta por descripcion.
+  while IFS=$'\t' read -r _ descripcion cmd asercion pista; do
     total=$(( total + 1 ))
 
     # `if` alrededor: con `set -e`, capturar el codigo de un comando que falla

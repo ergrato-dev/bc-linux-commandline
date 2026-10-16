@@ -4,8 +4,6 @@
 > de archivos a la vez. Este archivo cierra la semana con los hábitos que
 > convierten "operación masiva" en algo controlado, no en una apuesta.
 
-![Patrón dry-run por defecto, --apply para el cambio real](../0-assets/02-patron-dry-run-apply.svg)
-
 ## 🎯 Objetivos
 
 - Previsualizar una operación destructiva antes de ejecutarla de verdad
