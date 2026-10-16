@@ -1,0 +1,63 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-recursivo desc-recursivo">
+  <title id="titulo-recursivo">grep recursivo filtrando un árbol de directorios por extensión</title>
+  <desc id="desc-recursivo">Un árbol de directorios con archivos .log y un archivo .txt. grep -r --include="*.log" "ERROR|WARN|CRIT" recorre el árbol, descarta el .txt por extensión, y de los .log restantes extrae las líneas coincidentes, que se resumen en tres números: archivos .log, líneas coincidentes y archivos con coincidencias.</desc>
+
+  <rect x="0" y="0" width="900" height="520" fill="#0d1117"/>
+
+  <text x="450" y="35" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#f0f6fc" font-weight="bold">
+    grep -r --include='*.log' "ERROR|WARN|CRIT" logs/
+  </text>
+
+  <!-- arbol de directorios -->
+  <g font-family="monospace" font-size="15">
+    <text x="40" y="80" fill="#79c0ff">logs/</text>
+
+    <text x="60" y="105" fill="#79c0ff">web/</text>
+    <rect x="80" y="115" width="180" height="30" rx="4" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="90" y="135" fill="#f0f6fc">access.log</text>
+
+    <text x="60" y="165" fill="#79c0ff">db/</text>
+    <rect x="80" y="175" width="180" height="30" rx="4" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="90" y="195" fill="#f0f6fc">db.log</text>
+    <rect x="80" y="210" width="180" height="30" rx="4" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <text x="90" y="230" fill="#8b949e">limpio.log</text>
+
+    <text x="60" y="260" fill="#79c0ff">raro/</text>
+    <rect x="80" y="270" width="180" height="30" rx="4" fill="#161b22" stroke="#f85149" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="90" y="290" fill="#8b949e">notas.txt</text>
+  </g>
+
+  <text x="100" y="325" font-family="sans-serif" font-size="13" fill="#f85149">✗ descartado por --include='*.log'</text>
+  <text x="100" y="150" font-family="sans-serif" font-size="13" fill="#3fb950">✓ contiene ERROR</text>
+  <text x="100" y="210" font-family="sans-serif" font-size="13" fill="#3fb950">✓ contiene WARN</text>
+
+  <!-- flecha hacia el resumen -->
+  <path d="M 320 220 L 460 220" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#flecha)"/>
+  <defs>
+    <marker id="flecha" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8b949e"/>
+    </marker>
+  </defs>
+
+  <!-- panel de resumen: los tres numeros de logscan -->
+  <g font-family="sans-serif">
+    <rect x="480" y="90" width="380" height="280" rx="10" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+    <text x="670" y="120" text-anchor="middle" font-size="16" fill="#f0f6fc" font-weight="bold">toolkit.sh logscan logs/</text>
+
+    <text x="500" y="160" font-size="15" fill="#8b949e">archivos .log:</text>
+    <text x="840" y="160" text-anchor="end" font-size="15" fill="#3fb950" font-weight="bold">3</text>
+
+    <text x="500" y="195" font-size="15" fill="#8b949e">lineas coincidentes:</text>
+    <text x="840" y="195" text-anchor="end" font-size="15" fill="#e3b341" font-weight="bold">2</text>
+
+    <text x="500" y="230" font-size="15" fill="#8b949e">archivos con coincidencias:</text>
+    <text x="840" y="230" text-anchor="end" font-size="15" fill="#e3b341" font-weight="bold">2</text>
+
+    <line x1="500" y1="250" x2="840" y2="250" stroke="#30363d" stroke-width="1"/>
+
+    <text x="500" y="280" font-family="monospace" font-size="13" fill="#79c0ff">web/access.log:2:ERROR 502...</text>
+    <text x="500" y="305" font-family="monospace" font-size="13" fill="#79c0ff">db/db.log:2:WARN pool...</text>
+
+    <text x="500" y="345" font-size="14" fill="#f85149" font-weight="bold">exit 2 (coincidencias encontradas)</text>
+  </g>
+</svg>

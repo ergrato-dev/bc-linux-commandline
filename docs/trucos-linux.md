@@ -62,6 +62,21 @@ primero).
 - `comando | sudo tee archivo` escribe con privilegios donde `sudo comando
   > archivo` falla.
 
+## Semana 06 — Búsqueda de texto con grep y regex
+
+- `grep -f patrones.txt archivo` lee los patrones a buscar desde un
+  archivo (uno por línea) en vez de escribirlos todos en la línea de
+  comandos — útil con listas largas de palabras prohibidas o IPs
+  bloqueadas.
+- `zgrep "patron" archivo.log.gz` busca directo dentro de un log
+  comprimido con `gzip`, sin descomprimirlo primero a mano.
+- `GREP_COLORS="mt=01;34"` (antes del comando) cambia el color de
+  resaltado de la coincidencia — útil cuando el rojo/verde por defecto se
+  confunde con el esquema de color de tu terminal.
+- `grep -z` trata el archivo completo como registros separados por `NUL`
+  en vez de por salto de línea — permite que `.` y patrones multilínea
+  cuenten un registro completo como una sola "línea" lógica.
+
 ---
 
 [← Volver al índice de documentación](README.md)

@@ -1,0 +1,104 @@
+{
+  "semana": "06",
+  "titulo": "Busqueda de texto con grep y regex",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk06-regresion && mkdir -p /tmp/wk06-regresion && touch /tmp/wk06-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk06-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-sigue-funcionando",
+      "descripcion": "El subcomando audit sigue funcionando (regresion de la Semana 04)",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logreport-sigue-funcionando",
+      "descripcion": "El subcomando logreport sigue funcionando (regresion de la Semana 05)",
+      "cmd": "printf 'INFO ok\\n' > /tmp/wk06-logreport.log && ~/bin/toolkit.sh logreport /tmp/wk06-logreport.log",
+      "assert": "stdout~lineas totales: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logscan-cuenta-archivos-log",
+      "descripcion": "logscan cuenta correctamente los archivos .log, recursivo, e ignora otras extensiones",
+      "cmd": "rm -rf /tmp/wk06-chk1 && mkdir -p /tmp/wk06-chk1/sub && printf 'INFO ok\\n' > /tmp/wk06-chk1/a.log && printf 'INFO ok\\n' > /tmp/wk06-chk1/sub/b.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk1",
+      "assert": "stdout~archivos [.]log: 2",
+      "pista": "1-teoria/01-grep-basico-y-patrones-literales.md"
+    },
+    {
+      "id": "logscan-cuenta-coincidencias-patron-defecto",
+      "descripcion": "logscan cuenta las lineas que coinciden con el patron por defecto (ERROR|WARN|CRIT)",
+      "cmd": "rm -rf /tmp/wk06-chk2 && mkdir -p /tmp/wk06-chk2 && printf 'INFO ok\\nERROR fallo\\nWARN cuidado\\n' > /tmp/wk06-chk2/a.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk2",
+      "assert": "stdout~lineas coincidentes: 2",
+      "pista": "1-teoria/04-grep-extendido-y-alternancia.md"
+    },
+    {
+      "id": "logscan-exit-2-con-coincidencias",
+      "descripcion": "logscan sale con codigo 2 si encuentra coincidencias",
+      "cmd": "rm -rf /tmp/wk06-chk2b && mkdir -p /tmp/wk06-chk2b && printf 'INFO ok\\nERROR fallo\\n' > /tmp/wk06-chk2b/a.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk2b",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "logscan-exit-0-sin-coincidencias",
+      "descripcion": "logscan sale con codigo 0 si ningun log tiene coincidencias",
+      "cmd": "rm -rf /tmp/wk06-chk3 && mkdir -p /tmp/wk06-chk3 && printf 'INFO ok\\nINFO bien\\n' > /tmp/wk06-chk3/a.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk3",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "logscan-exit-1-directorio-invalido",
+      "descripcion": "logscan sale con codigo 1 si el directorio no existe",
+      "cmd": "~/bin/toolkit.sh logscan /tmp/wk06-no-existe-dir",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "logscan-patron-personalizado",
+      "descripcion": "logscan usa el patron pasado con --patron en vez del valor por defecto",
+      "cmd": "rm -rf /tmp/wk06-chk4 && mkdir -p /tmp/wk06-chk4 && printf 'INFO ok\\nERROR fallo\\nCRIT boom\\n' > /tmp/wk06-chk4/a.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk4 --patron CRIT",
+      "assert": "stdout~lineas coincidentes: 1",
+      "pista": "2-practicas/04-logscan-con-pipes-y-regex-reales.md"
+    },
+    {
+      "id": "logscan-lista-archivos-con-coincidencias",
+      "descripcion": "logscan cuenta cuantos archivos distintos tienen al menos una coincidencia",
+      "cmd": "rm -rf /tmp/wk06-chk5 && mkdir -p /tmp/wk06-chk5/sub && printf 'INFO ok\\n' > /tmp/wk06-chk5/limpio.log && printf 'ERROR fallo\\n' > /tmp/wk06-chk5/sub/con-error.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk5",
+      "assert": "stdout~archivos con coincidencias: 1",
+      "pista": "1-teoria/06-grep-recursivo-y-por-nombre-de-archivo.md"
+    },
+    {
+      "id": "logscan-ignora-archivos-no-log",
+      "descripcion": "logscan ignora archivos que no terminan en .log aunque contengan el patron",
+      "cmd": "rm -rf /tmp/wk06-chk6 && mkdir -p /tmp/wk06-chk6 && printf 'ERROR esto no cuenta\\n' > /tmp/wk06-chk6/notas.txt && printf 'INFO ok\\n' > /tmp/wk06-chk6/a.log && ~/bin/toolkit.sh logscan /tmp/wk06-chk6",
+      "assert": "stdout~archivos [.]log: 1",
+      "pista": "1-teoria/06-grep-recursivo-y-por-nombre-de-archivo.md"
+    }
+  ]
+}
