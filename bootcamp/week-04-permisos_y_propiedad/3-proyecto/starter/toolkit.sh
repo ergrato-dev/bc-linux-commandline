@@ -145,13 +145,16 @@ cmd_audit() {
   # -maxdepth 1) son escribibles por "otros". Pista: find con
   # "-perm -0002" encuentra justo eso. Imprime
   # "archivos/directorios escribibles por otros: N".
+  # shellcheck disable=SC2034  # el TODO 5 de abajo lo usa
   local escribibles_por_otros=0
 
   # TODO 4: cuenta cuantos archivos dentro de "$absoluta" (un solo nivel)
   # tienen SUID activo ("-perm -4000") y cuantos tienen SGID activo
   # ("-perm -2000"). Imprime "archivos con SUID: N" y "archivos con SGID: N"
   # por separado.
+  # shellcheck disable=SC2034  # el TODO 5 de abajo los usa
   local con_suid=0
+  # shellcheck disable=SC2034  # el TODO 5 de abajo los usa
   local con_sgid=0
 
   # TODO 5: si escribibles_por_otros es mayor a 0, imprime a stderr

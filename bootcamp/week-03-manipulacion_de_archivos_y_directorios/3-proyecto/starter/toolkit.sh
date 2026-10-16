@@ -97,6 +97,7 @@ cmd_organize() {
   # que cmd_inventory: shopt -s nullglob antes, shopt -u nullglob despues).
 
   local plan_count=0
+  # shellcheck disable=SC2034  # el TODO 3 de abajo los usa
   local archivo nombre extension destino
 
   # TODO 3: recorre el array del TODO 2. Para cada elemento que sea un

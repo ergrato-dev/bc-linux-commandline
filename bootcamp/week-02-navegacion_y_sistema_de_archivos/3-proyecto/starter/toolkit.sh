@@ -37,6 +37,7 @@ cmd_doctor() {
 }
 
 cmd_inventory() {
+  # shellcheck disable=SC2034  # los TODO 1-5 de abajo los usan
   local objetivo="." extension=""
 
   # TODO 1: recorre "$@" con un while/case. Si ves el flag --ext, el

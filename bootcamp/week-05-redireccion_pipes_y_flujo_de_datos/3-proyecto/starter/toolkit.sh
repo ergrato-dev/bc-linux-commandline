@@ -163,7 +163,9 @@ cmd_audit() {
 }
 
 cmd_logreport() {
-  local archivo="" salida=""
+  local archivo=""
+  # shellcheck disable=SC2034  # el TODO 3 y el TODO 6 de abajo la usan
+  local salida=""
 
   # TODO 1: recorre "$@" igual que en las capas anteriores. Si ves el flag
   # --salida, el siguiente argumento es el nombre del archivo de informe
@@ -188,6 +190,7 @@ cmd_logreport() {
   # TODO 4: cuenta las lineas totales de "$archivo" usando redireccion de
   # entrada (wc -l < "$archivo"), no "wc -l archivo" seguido de parseo.
   # Imprime "lineas totales: N".
+  # shellcheck disable=SC2034  # el TODO 4 de abajo la usa
   local total_lineas="TODO"
 
   # TODO 5: cuenta cuantas lineas de "$archivo" contienen la palabra
@@ -195,6 +198,7 @@ cmd_logreport() {
   # sale con codigo 1 — necesitas manejar ese caso (por ejemplo, con
   # "|| errores=0" despues de la asignacion) para que el script no corte
   # ahi cuando el log esta limpio. Imprime "lineas con ERROR: N".
+  # shellcheck disable=SC2034  # el TODO 5 y el TODO 7 de abajo la usan
   local errores="TODO"
 
   # TODO 6: usa "grep "ERROR" "$archivo"" redirigido con ">" hacia
