@@ -1,0 +1,86 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-fd desc-fd">
+  <title id="titulo-fd">Pipeline de finddupes: find, xargs, hash, y agrupación con sort/uniq/awk</title>
+  <desc id="desc-fd">Seis etapas: find -print0 recorre el árbol de forma segura, xargs -r0 sha256sum calcula un hash por archivo, awk extrae la columna del hash, sort agrupa hashes iguales, uniq -d filtra a los repetidos, y un awk final por cada hash duplicado recupera las rutas correspondientes.</desc>
+
+  <rect x="0" y="0" width="900" height="460" fill="#0d1117"/>
+
+  <text x="450" y="35" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">
+    toolkit.sh finddupes — de un árbol de archivos a un reporte de duplicados
+  </text>
+
+  <g font-family="monospace" font-size="12">
+    <rect x="30" y="65" width="110" height="45" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="85" y="85" text-anchor="middle" fill="#79c0ff" font-family="sans-serif" font-size="12">find</text>
+    <text x="85" y="102" text-anchor="middle" fill="#f0f6fc" font-size="10">-print0</text>
+
+    <rect x="160" y="65" width="130" height="45" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+    <text x="225" y="85" text-anchor="middle" fill="#d2a8ff" font-family="sans-serif" font-size="12">xargs -r0</text>
+    <text x="225" y="102" text-anchor="middle" fill="#f0f6fc" font-size="10">sha256sum</text>
+
+    <rect x="310" y="65" width="110" height="45" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+    <text x="365" y="85" text-anchor="middle" fill="#e3b341" font-family="sans-serif" font-size="12">awk</text>
+    <text x="365" y="102" text-anchor="middle" fill="#f0f6fc" font-size="10">columna hash</text>
+
+    <rect x="440" y="65" width="90" height="45" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="485" y="85" text-anchor="middle" fill="#3fb950" font-family="sans-serif" font-size="12">sort</text>
+    <text x="485" y="102" text-anchor="middle" fill="#f0f6fc" font-size="10">agrupa</text>
+
+    <rect x="550" y="65" width="110" height="45" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="605" y="85" text-anchor="middle" fill="#3fb950" font-family="sans-serif" font-size="12">uniq -d</text>
+    <text x="605" y="102" text-anchor="middle" fill="#f0f6fc" font-size="10">solo repetidos</text>
+
+    <rect x="680" y="65" width="150" height="45" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+    <text x="755" y="85" text-anchor="middle" fill="#e3b341" font-family="sans-serif" font-size="12">awk -v h=...</text>
+    <text x="755" y="102" text-anchor="middle" fill="#f0f6fc" font-size="10">recupera rutas</text>
+  </g>
+
+  <g stroke="#30363d" stroke-width="2" fill="none" marker-end="url(#fla)">
+    <line x1="140" y1="87" x2="158" y2="87"/>
+    <line x1="290" y1="87" x2="308" y2="87"/>
+    <line x1="420" y1="87" x2="438" y2="87"/>
+    <line x1="530" y1="87" x2="548" y2="87"/>
+    <line x1="660" y1="87" x2="678" y2="87"/>
+  </g>
+
+  <defs>
+    <marker id="fla" markerWidth="8" markerHeight="8" refX="7" refY="2.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#30363d"/>
+    </marker>
+  </defs>
+
+  <!-- entrada de ejemplo -->
+  <g font-family="monospace" font-size="12">
+    <text x="30" y="150" fill="#8b949e">fotos/original.jpg</text>
+    <text x="30" y="167" fill="#8b949e">fotos/vacaciones/copia.jpg</text>
+    <text x="30" y="184" fill="#8b949e">fotos/eventos/otro.jpg</text>
+  </g>
+
+  <!-- tabla intermedia de hashes -->
+  <g font-family="monospace" font-size="12">
+    <rect x="280" y="140" width="560" height="75" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="300" y="162" fill="#79c0ff">29427f5d...  fotos/original.jpg</text>
+    <text x="300" y="180" fill="#79c0ff">29427f5d...  fotos/vacaciones/copia.jpg</text>
+    <text x="300" y="198" fill="#8b949e">5bfa210a...  fotos/eventos/otro.jpg</text>
+  </g>
+
+  <line x1="200" y1="167" x2="278" y2="177" stroke="#30363d" stroke-width="2" marker-end="url(#fla)"/>
+
+  <text x="450" y="245" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#8b949e">
+    el hash "29427f5d..." se repite dos veces → grupo de duplicados
+  </text>
+
+  <!-- resultado final -->
+  <g font-family="sans-serif">
+    <rect x="200" y="270" width="500" height="110" rx="10" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+    <text x="450" y="295" text-anchor="middle" font-size="14" fill="#f0f6fc" font-weight="bold">duplicado (29427f5d...)</text>
+    <text x="230" y="320" font-family="monospace" font-size="13" fill="#f85149">fotos/original.jpg</text>
+    <text x="230" y="340" font-family="monospace" font-size="13" fill="#f85149">fotos/vacaciones/copia.jpg</text>
+    <text x="450" y="365" text-anchor="middle" font-size="13" fill="#8b949e" font-family="monospace">exit 2</text>
+  </g>
+
+  <line x1="450" y1="215" x2="450" y2="268" stroke="#30363d" stroke-width="2" marker-end="url(#fla)"/>
+
+  <text x="450" y="420" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#8b949e">
+    Seis herramientas de cinco semanas distintas, cada una resolviendo exactamente su parte.
+  </text>
+</svg>

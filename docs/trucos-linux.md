@@ -100,6 +100,17 @@ primero).
   confirma en segundos si estás con `mawk` o `gawk`, antes de depurar
   un error de "función no definida".
 
+## Semana 09 — Búsqueda de archivos y ejecución en lote
+
+- `find . -maxdepth 1 -type d -empty` encuentra directorios vacíos de
+  primer nivel, sin necesitar revisar cada uno a mano.
+- `find /etc -iname "*.conf" 2>/dev/null` descarta los mensajes de
+  "Permission denied" sin perder los resultados válidos.
+- `xargs -t` imprime cada comando antes de ejecutarlo — confirma
+  exactamente qué va a correr, antes de que corra de verdad.
+- `nproc` da el número de núcleos disponibles, un punto de partida
+  razonable para elegir un valor de `xargs -P`.
+
 ---
 
 [← Volver al índice de documentación](README.md)

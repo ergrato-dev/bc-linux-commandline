@@ -33,7 +33,7 @@ se escribe en orden, una semana por entrega.
 
 | Semana | Tema | Estado |
 |:--:|---|:--:|
-| [09](week-09-busqueda_de_archivos_find_y_xargs/README.md) | Búsqueda de archivos y ejecución en lote | ⬜ |
+| [09](week-09-busqueda_de_archivos_find_y_xargs/README.md) | Búsqueda de archivos y ejecución en lote | ✅ |
 | [10](week-10-gestion_de_procesos_y_senales/README.md) | Gestión de procesos y señales | ⬜ |
 | [11](week-11-usuarios_grupos_y_gestion_de_paquetes/README.md) | Usuarios, grupos y gestión de paquetes | ⬜ |
 | [12](week-12-redes_desde_la_linea_de_comandos/README.md) | Redes desde la línea de comandos | ⬜ |

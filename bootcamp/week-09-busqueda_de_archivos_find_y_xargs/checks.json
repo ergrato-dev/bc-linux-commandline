@@ -1,0 +1,118 @@
+{
+  "semana": "09",
+  "titulo": "Busqueda de archivos y ejecucion en lote",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk09-regresion && mkdir -p /tmp/wk09-regresion && touch /tmp/wk09-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk09-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-sigue-funcionando",
+      "descripcion": "El subcomando audit sigue funcionando (regresion de la Semana 04)",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logreport-sigue-funcionando",
+      "descripcion": "El subcomando logreport sigue funcionando (regresion de la Semana 05)",
+      "cmd": "printf 'INFO ok\\n' > /tmp/wk09-logreport.log && ~/bin/toolkit.sh logreport /tmp/wk09-logreport.log",
+      "assert": "stdout~lineas totales: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logscan-sigue-funcionando",
+      "descripcion": "El subcomando logscan sigue funcionando (regresion de la Semana 06)",
+      "cmd": "rm -rf /tmp/wk09-logscan && mkdir -p /tmp/wk09-logscan && printf 'ERROR x\\n' > /tmp/wk09-logscan/a.log && ~/bin/toolkit.sh logscan /tmp/wk09-logscan",
+      "assert": "stdout~archivos [.]log: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "topcount-sigue-funcionando",
+      "descripcion": "El subcomando topcount sigue funcionando (regresion de la Semana 07)",
+      "cmd": "rm -rf /tmp/wk09-topcount && mkdir -p /tmp/wk09-topcount && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk09-topcount/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk09-topcount/eventos.log",
+      "assert": "stdout~entradas validas: 3",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "sumfield-sigue-funcionando",
+      "descripcion": "El subcomando sumfield sigue funcionando (regresion de la Semana 08)",
+      "cmd": "rm -rf /tmp/wk09-sumfield && mkdir -p /tmp/wk09-sumfield && printf 'norte:150\\nsur:200\\n' > /tmp/wk09-sumfield/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk09-sumfield/ventas.log",
+      "assert": "stdout~suma total: 350",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "finddupes-cuenta-archivos-analizados",
+      "descripcion": "finddupes cuenta correctamente los archivos analizados, recursivo",
+      "cmd": "rm -rf /tmp/wk09-chk1 && mkdir -p /tmp/wk09-chk1/sub && printf 'igual\\n' > /tmp/wk09-chk1/a.txt && printf 'igual\\n' > /tmp/wk09-chk1/sub/b.txt && ~/bin/toolkit.sh finddupes /tmp/wk09-chk1",
+      "assert": "stdout~archivos analizados: 2",
+      "pista": "1-teoria/01-find-basico-criterios-de-busqueda.md"
+    },
+    {
+      "id": "finddupes-detecta-grupo-duplicado",
+      "descripcion": "finddupes detecta un grupo de archivos con el mismo contenido",
+      "cmd": "rm -rf /tmp/wk09-chk1b && mkdir -p /tmp/wk09-chk1b/sub && printf 'igual\\n' > /tmp/wk09-chk1b/a.txt && printf 'igual\\n' > /tmp/wk09-chk1b/sub/b.txt && ~/bin/toolkit.sh finddupes /tmp/wk09-chk1b",
+      "assert": "stdout~grupos de duplicados: 1",
+      "pista": "1-teoria/05-xargs-basico-y-el-gotcha-de-entrada-vacia.md"
+    },
+    {
+      "id": "finddupes-exit-2-con-duplicados",
+      "descripcion": "finddupes sale con codigo 2 si encuentra archivos duplicados",
+      "cmd": "rm -rf /tmp/wk09-chk2 && mkdir -p /tmp/wk09-chk2 && printf 'igual\\n' > /tmp/wk09-chk2/a.txt && printf 'igual\\n' > /tmp/wk09-chk2/b.txt && ~/bin/toolkit.sh finddupes /tmp/wk09-chk2",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "finddupes-exit-0-sin-duplicados",
+      "descripcion": "finddupes sale con codigo 0 si ningun archivo esta duplicado",
+      "cmd": "rm -rf /tmp/wk09-chk3 && mkdir -p /tmp/wk09-chk3 && printf 'x\\n' > /tmp/wk09-chk3/a.txt && printf 'y\\n' > /tmp/wk09-chk3/b.txt && ~/bin/toolkit.sh finddupes /tmp/wk09-chk3",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "finddupes-exit-0-directorio-vacio",
+      "descripcion": "finddupes sale con codigo 0 y cero archivos si el directorio esta vacio",
+      "cmd": "rm -rf /tmp/wk09-chk4 && mkdir -p /tmp/wk09-chk4 && ~/bin/toolkit.sh finddupes /tmp/wk09-chk4",
+      "assert": "stdout~archivos analizados: 0",
+      "pista": "1-teoria/05-xargs-basico-y-el-gotcha-de-entrada-vacia.md"
+    },
+    {
+      "id": "finddupes-exit-1-directorio-invalido",
+      "descripcion": "finddupes sale con codigo 1 si el directorio no existe",
+      "cmd": "~/bin/toolkit.sh finddupes /tmp/wk09-no-existe",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "finddupes-usa-extension-personalizada",
+      "descripcion": "finddupes filtra por la extension pasada con --ext",
+      "cmd": "rm -rf /tmp/wk09-chk5 && mkdir -p /tmp/wk09-chk5 && printf 'igual\\n' > /tmp/wk09-chk5/a.txt && printf 'igual\\n' > /tmp/wk09-chk5/b.log && ~/bin/toolkit.sh finddupes /tmp/wk09-chk5 --ext txt",
+      "assert": "stdout~archivos analizados: 1",
+      "pista": "1-teoria/01-find-basico-criterios-de-busqueda.md"
+    }
+  ]
+}

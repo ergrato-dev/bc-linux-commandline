@@ -19,6 +19,7 @@ qué semana se explica a fondo.
 | BRE (Basic Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Buffering | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Builtin (comando interno) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
+| Byte nulo | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | CDPATH | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Clase de caracteres (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Clase POSIX (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -40,6 +41,7 @@ qué semana se explica a fondo.
 | Enlace simbólico (symlink) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | ERE (Extended Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Escritura atómica | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
+| exec (find -exec) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | FHS (Filesystem Hierarchy Standard) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | FNR | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | FS (Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
@@ -47,6 +49,7 @@ qué semana se explica a fondo.
 | GID | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | Glob / globbing | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Grupo de captura | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
+| Hash | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | Hash table | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Here-document | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Here-string | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
@@ -55,8 +58,10 @@ qué semana se explica a fondo.
 | Lookahead (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | mask (ACL) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | mawk | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| maxdepth / mindepth (find) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | mtime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | NF (Number of Fields) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| no-run-if-empty (xargs -r) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | NR (Number of Records) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Nullglob | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | OFS (Output Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
@@ -72,6 +77,7 @@ qué semana se explica a fondo.
 | Pipeline de ranking de frecuencia | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | PIPESTATUS | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Principio de menor privilegio | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| print0 (find -print0) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | printf | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Prompt | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | PTY (pseudo-terminal) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
@@ -100,6 +106,9 @@ qué semana se explica a fondo.
 | umask | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | usr-merge | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | UUOC (Useless Use of Cat) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| xargs | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
+| xargs -L | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
+| xargs -P (max-procs) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 
 _Crece semana a semana._
 
