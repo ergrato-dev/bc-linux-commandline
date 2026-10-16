@@ -11,7 +11,7 @@
 #   toolkit.sh organize [ruta] --apply  ejecuta ese plan de verdad
 #
 # Este es el unico entrypoint del proyecto. doctor e inventory ya vienen
-# completos de las semanas anteriores — esta semana vos completas organize.
+# completos de las semanas anteriores — esta semana completas organize.
 
 set -euo pipefail
 

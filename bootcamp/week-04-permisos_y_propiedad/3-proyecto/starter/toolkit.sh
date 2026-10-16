@@ -14,7 +14,7 @@
 # Codigos de salida de audit: 0 sin riesgos, 1 ruta invalida, 2 riesgos encontrados.
 #
 # Este es el unico entrypoint del proyecto. doctor, inventory y organize ya
-# vienen completos de las semanas anteriores — esta semana vos completas audit.
+# vienen completos de las semanas anteriores — esta semana completas audit.
 
 set -euo pipefail
 

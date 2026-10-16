@@ -10,7 +10,7 @@
 #
 # Este es el unico entrypoint del proyecto: cada semana nueva agrega un
 # subcomando aca, nunca un script aparte. doctor ya viene completo de la
-# Semana 01 — esta semana vos completas inventory.
+# Semana 01 — esta semana completas inventory.
 
 set -euo pipefail
 

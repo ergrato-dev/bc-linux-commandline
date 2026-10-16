@@ -17,7 +17,7 @@
 # Codigos de salida de logreport: 0 sin ERROR,   1 archivo invalido, 2 ERROR encontrado.
 #
 # Este es el unico entrypoint del proyecto. doctor, inventory, organize y
-# audit ya vienen completos de las semanas anteriores — esta semana vos
+# audit ya vienen completos de las semanas anteriores — esta semana
 # completas logreport.
 
 set -euo pipefail
