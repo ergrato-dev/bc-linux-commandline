@@ -77,6 +77,17 @@ primero).
   en vez de por salto de línea — permite que `.` y patrones multilínea
   cuenten un registro completo como una sola "línea" lógica.
 
+## Semana 07 — Procesamiento de texto: sed, cut, sort, uniq, tr
+
+- `sed -n '$p'` imprime solo la última línea de un archivo, sin
+  necesitar `tail`.
+- `cut -d: -f2-` (rango abierto) extrae desde una columna hasta el final
+  de la línea, sin saber cuántas columnas tiene en total.
+- `sort -R` da un orden aleatorio — útil para elegir una muestra al azar
+  de un archivo combinado con `head`.
+- `tr -d '[:punct:]'` quita toda la puntuación de un texto de una sola
+  vez, sin enumerar cada símbolo.
+
 ---
 
 [← Volver al índice de documentación](README.md)

@@ -1,0 +1,111 @@
+{
+  "semana": "07",
+  "titulo": "Procesamiento de texto: sed, cut, sort, uniq, tr",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk07-regresion && mkdir -p /tmp/wk07-regresion && touch /tmp/wk07-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk07-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-sigue-funcionando",
+      "descripcion": "El subcomando audit sigue funcionando (regresion de la Semana 04)",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logreport-sigue-funcionando",
+      "descripcion": "El subcomando logreport sigue funcionando (regresion de la Semana 05)",
+      "cmd": "printf 'INFO ok\\n' > /tmp/wk07-logreport.log && ~/bin/toolkit.sh logreport /tmp/wk07-logreport.log",
+      "assert": "stdout~lineas totales: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logscan-sigue-funcionando",
+      "descripcion": "El subcomando logscan sigue funcionando (regresion de la Semana 06)",
+      "cmd": "rm -rf /tmp/wk07-logscan && mkdir -p /tmp/wk07-logscan && printf 'ERROR x\\n' > /tmp/wk07-logscan/a.log && ~/bin/toolkit.sh logscan /tmp/wk07-logscan",
+      "assert": "stdout~archivos [.]log: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "topcount-cuenta-entradas-validas",
+      "descripcion": "topcount ignora comentarios y lineas en blanco al contar entradas validas",
+      "cmd": "rm -rf /tmp/wk07-chk1 && mkdir -p /tmp/wk07-chk1 && printf '# comentario\\n\\nroot:login:ok\\nroot:login:ok\\n# otro\\nadmin:login:ok\\n' > /tmp/wk07-chk1/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk1/eventos.log",
+      "assert": "stdout~entradas validas: 3",
+      "pista": "1-teoria/02-sed-direcciones-multiples-comandos-y-edicion-in-place.md"
+    },
+    {
+      "id": "topcount-normaliza-mayusculas",
+      "descripcion": "topcount normaliza mayusculas/minusculas antes de contar (ROOT y root cuentan igual)",
+      "cmd": "rm -rf /tmp/wk07-chk2 && mkdir -p /tmp/wk07-chk2 && printf 'root:login:ok\\nROOT:login:ok\\nadmin:login:ok\\n' > /tmp/wk07-chk2/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk2/eventos.log",
+      "assert": "stdout~2 root",
+      "pista": "1-teoria/06-tr-traducir-borrar-y-comprimir-caracteres.md"
+    },
+    {
+      "id": "topcount-exit-2-con-dominancia",
+      "descripcion": "topcount sale con codigo 2 si un valor domina mas de la mitad de las entradas",
+      "cmd": "rm -rf /tmp/wk07-chk3 && mkdir -p /tmp/wk07-chk3 && printf 'root:login:ok\\nroot:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk07-chk3/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk3/eventos.log",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "topcount-exit-0-balanceado",
+      "descripcion": "topcount sale con codigo 0 si ningun valor domina mas de la mitad",
+      "cmd": "rm -rf /tmp/wk07-chk4 && mkdir -p /tmp/wk07-chk4 && printf 'root:login:ok\\nadmin:login:ok\\ninvitado:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk07-chk4/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk4/eventos.log",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "topcount-exit-1-archivo-invalido",
+      "descripcion": "topcount sale con codigo 1 si el archivo no existe",
+      "cmd": "~/bin/toolkit.sh topcount /tmp/wk07-no-existe.log",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "topcount-exit-0-sin-datos",
+      "descripcion": "topcount sale con codigo 0 si el archivo no tiene ninguna entrada valida (solo comentarios/blancos)",
+      "cmd": "rm -rf /tmp/wk07-chk5 && mkdir -p /tmp/wk07-chk5 && printf '# solo comentarios\\n\\n' > /tmp/wk07-chk5/vacio.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk5/vacio.log",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "topcount-usa-campo-personalizado",
+      "descripcion": "topcount usa el campo pasado con --campo en vez del primero por defecto",
+      "cmd": "rm -rf /tmp/wk07-chk6 && mkdir -p /tmp/wk07-chk6 && printf 'root:login:ok\\nroot:logout:ok\\nroot:login:ok\\n' > /tmp/wk07-chk6/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk6/eventos.log --campo 2",
+      "assert": "stdout~2 login",
+      "pista": "1-teoria/03-cut-extraer-campos-y-caracteres.md"
+    },
+    {
+      "id": "topcount-usa-delimitador-personalizado",
+      "descripcion": "topcount usa el delimitador pasado con --delim en vez de los dos puntos por defecto",
+      "cmd": "rm -rf /tmp/wk07-chk7 && mkdir -p /tmp/wk07-chk7 && printf '203.0.113.5 GET /a 200\\n198.51.100.9 GET /b 200\\n203.0.113.5 GET /c 200\\n' > /tmp/wk07-chk7/acceso.log && ~/bin/toolkit.sh topcount /tmp/wk07-chk7/acceso.log --delim ' '",
+      "assert": "stdout~2 203[.]0[.]113[.]5",
+      "pista": "1-teoria/03-cut-extraer-campos-y-caracteres.md"
+    }
+  ]
+}

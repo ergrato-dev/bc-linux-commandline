@@ -1,0 +1,71 @@
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-sed desc-sed">
+  <title id="titulo-sed">Anatomía de la sustitución de sed: s/patrón/reemplazo/flags</title>
+  <desc id="desc-sed">El comando sed 's/root/superuser/g' descompuesto en sus partes: el comando s, el delimitador, el patrón de búsqueda, el reemplazo y el flag g, cada uno anotado con su rol.</desc>
+
+  <rect x="0" y="0" width="900" height="380" fill="#0d1117"/>
+
+  <text x="450" y="40" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#f0f6fc" font-weight="bold">
+    sed 's/root/superuser/g'
+  </text>
+
+  <g font-family="monospace" font-size="26" font-weight="bold">
+    <!-- s -->
+    <rect x="50" y="90" width="50" height="55" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="75" y="128" text-anchor="middle" fill="#8b949e">s</text>
+
+    <!-- delimitador 1 -->
+    <rect x="100" y="90" width="36" height="55" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+    <text x="118" y="128" text-anchor="middle" fill="#e3b341">/</text>
+
+    <!-- patron -->
+    <rect x="136" y="90" width="150" height="55" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="211" y="128" text-anchor="middle" fill="#79c0ff">root</text>
+
+    <!-- delimitador 2 -->
+    <rect x="286" y="90" width="36" height="55" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+    <text x="304" y="128" text-anchor="middle" fill="#e3b341">/</text>
+
+    <!-- reemplazo -->
+    <rect x="322" y="90" width="230" height="55" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="437" y="128" text-anchor="middle" fill="#3fb950">superuser</text>
+
+    <!-- delimitador 3 -->
+    <rect x="552" y="90" width="36" height="55" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+    <text x="570" y="128" text-anchor="middle" fill="#e3b341">/</text>
+
+    <!-- flag -->
+    <rect x="588" y="90" width="50" height="55" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+    <text x="613" y="128" text-anchor="middle" fill="#d2a8ff">g</text>
+  </g>
+
+  <g stroke-width="1.5" fill="none">
+    <line x1="75" y1="145" x2="75" y2="185" stroke="#8b949e"/>
+    <line x1="211" y1="145" x2="211" y2="185" stroke="#58a6ff"/>
+    <line x1="437" y1="145" x2="437" y2="185" stroke="#3fb950"/>
+    <line x1="613" y1="145" x2="613" y2="185" stroke="#d2a8ff"/>
+    <line x1="118" y1="145" x2="118" y2="225" stroke="#e3b341"/>
+  </g>
+
+  <g font-family="sans-serif" font-size="14">
+    <text x="75" y="205" text-anchor="middle" fill="#8b949e">comando</text>
+    <text x="75" y="222" text-anchor="middle" fill="#8b949e">"substitute"</text>
+
+    <text x="211" y="205" text-anchor="middle" fill="#79c0ff">patrón</text>
+    <text x="211" y="222" text-anchor="middle" fill="#8b949e">qué buscar (BRE/ERE)</text>
+
+    <text x="437" y="205" text-anchor="middle" fill="#3fb950">reemplazo</text>
+    <text x="437" y="222" text-anchor="middle" fill="#8b949e">con qué sustituirlo</text>
+
+    <text x="613" y="205" text-anchor="middle" fill="#d2a8ff">flag</text>
+    <text x="613" y="222" text-anchor="middle" fill="#8b949e">g = todas las coincidencias</text>
+
+    <text x="118" y="245" text-anchor="middle" fill="#e3b341">delimitador</text>
+    <text x="118" y="262" text-anchor="middle" fill="#8b949e">"/" por defecto —</text>
+    <text x="118" y="279" text-anchor="middle" fill="#8b949e">cualquier carácter sirve</text>
+  </g>
+
+  <g font-family="monospace" font-size="17">
+    <text x="60" y="330" fill="#3fb950">root:x:0:0:root:/root:/bin/bash</text>
+    <text x="60" y="355" fill="#8b949e">→ superuser:x:0:0:superuser:/superuser:/bin/bash</text>
+  </g>
+</svg>
