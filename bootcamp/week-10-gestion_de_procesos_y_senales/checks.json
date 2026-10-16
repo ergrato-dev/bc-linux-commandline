@@ -1,0 +1,125 @@
+{
+  "semana": "10",
+  "titulo": "Gestion de procesos y senales",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "doctor-sigue-funcionando",
+      "descripcion": "El subcomando doctor sigue funcionando (regresion de la Semana 01)",
+      "cmd": "~/bin/toolkit.sh doctor",
+      "assert": "stdout~bash.*[0-9]+[.][0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "inventory-sigue-funcionando",
+      "descripcion": "El subcomando inventory sigue funcionando (regresion de la Semana 02)",
+      "cmd": "cd /tmp && ~/bin/toolkit.sh inventory",
+      "assert": "stdout~ruta: /tmp",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "organize-sigue-funcionando",
+      "descripcion": "El subcomando organize sigue funcionando (regresion de la Semana 03)",
+      "cmd": "rm -rf /tmp/wk10-regresion && mkdir -p /tmp/wk10-regresion && touch /tmp/wk10-regresion/a.sh && ~/bin/toolkit.sh organize /tmp/wk10-regresion",
+      "assert": "stdout~dry-run",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "audit-sigue-funcionando",
+      "descripcion": "El subcomando audit sigue funcionando (regresion de la Semana 04)",
+      "cmd": "~/bin/toolkit.sh audit /tmp",
+      "assert": "stdout~umask actual: [0-9]+",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logreport-sigue-funcionando",
+      "descripcion": "El subcomando logreport sigue funcionando (regresion de la Semana 05)",
+      "cmd": "printf 'INFO ok\\n' > /tmp/wk10-logreport.log && ~/bin/toolkit.sh logreport /tmp/wk10-logreport.log",
+      "assert": "stdout~lineas totales: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "logscan-sigue-funcionando",
+      "descripcion": "El subcomando logscan sigue funcionando (regresion de la Semana 06)",
+      "cmd": "rm -rf /tmp/wk10-logscan && mkdir -p /tmp/wk10-logscan && printf 'ERROR x\\n' > /tmp/wk10-logscan/a.log && ~/bin/toolkit.sh logscan /tmp/wk10-logscan",
+      "assert": "stdout~archivos [.]log: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "topcount-sigue-funcionando",
+      "descripcion": "El subcomando topcount sigue funcionando (regresion de la Semana 07)",
+      "cmd": "rm -rf /tmp/wk10-topcount && mkdir -p /tmp/wk10-topcount && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk10-topcount/eventos.log && ~/bin/toolkit.sh topcount /tmp/wk10-topcount/eventos.log",
+      "assert": "stdout~entradas validas: 3",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "sumfield-sigue-funcionando",
+      "descripcion": "El subcomando sumfield sigue funcionando (regresion de la Semana 08)",
+      "cmd": "rm -rf /tmp/wk10-sumfield && mkdir -p /tmp/wk10-sumfield && printf 'norte:150\\nsur:200\\n' > /tmp/wk10-sumfield/ventas.log && ~/bin/toolkit.sh sumfield /tmp/wk10-sumfield/ventas.log",
+      "assert": "stdout~suma total: 350",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "finddupes-sigue-funcionando",
+      "descripcion": "El subcomando finddupes sigue funcionando (regresion de la Semana 09)",
+      "cmd": "rm -rf /tmp/wk10-finddupes && mkdir -p /tmp/wk10-finddupes && printf 'igual\\n' > /tmp/wk10-finddupes/a.txt && printf 'igual\\n' > /tmp/wk10-finddupes/b.txt && ~/bin/toolkit.sh finddupes /tmp/wk10-finddupes",
+      "assert": "stdout~grupos de duplicados: 1",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "procwatch-exit-1-sin-patron",
+      "descripcion": "procwatch sale con codigo 1 si no se le pasa ningun patron",
+      "cmd": "~/bin/toolkit.sh procwatch",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "procwatch-exit-0-sin-coincidencias",
+      "descripcion": "procwatch sale con codigo 0 si no encuentra ningun proceso con ese patron",
+      "cmd": "~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "procwatch-encuentra-proceso-real",
+      "descripcion": "procwatch encuentra un proceso real en ejecucion por su nombre",
+      "cmd": "tail -f /dev/null & sleep 0.3; ~/bin/toolkit.sh procwatch tail",
+      "assert": "stdout~coincidencias: [1-9]",
+      "pista": "1-teoria/01-ps-y-el-arbol-de-procesos.md"
+    },
+    {
+      "id": "procwatch-exit-0-sin-zombies",
+      "descripcion": "procwatch sale con codigo 0 cuando las coincidencias no incluyen ningun zombie",
+      "cmd": "tail -f /dev/null & sleep 0.3; ~/bin/toolkit.sh procwatch tail",
+      "assert": "exit0",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "procwatch-detecta-zombie",
+      "descripcion": "procwatch detecta un proceso zombie entre las coincidencias",
+      "cmd": "perl -e 'my $p=fork(); if ($p==0){exit 0} else {sleep 2}' & sleep 0.3; ~/bin/toolkit.sh procwatch perl",
+      "assert": "stdout~zombies encontrados: [1-9]",
+      "pista": "1-teoria/02-estados-de-proceso-zombies-y-huerfanos.md"
+    },
+    {
+      "id": "procwatch-exit-2-con-zombie",
+      "descripcion": "procwatch sale con codigo 2 si encuentra al menos un zombie",
+      "cmd": "perl -e 'my $p=fork(); if ($p==0){exit 0} else {sleep 2}' & sleep 0.3; ~/bin/toolkit.sh procwatch perl",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh"
+    },
+    {
+      "id": "procwatch-envia-senal-con-apply",
+      "descripcion": "procwatch envia la senal de verdad solo cuando se pasa --apply",
+      "cmd": "tail -f /dev/null & tpid=$!; sleep 0.3; ~/bin/toolkit.sh procwatch tail --senal TERM --apply >/dev/null; sleep 0.3; kill -0 \"$tpid\"",
+      "assert": "exit=1",
+      "pista": "1-teoria/06-senales-comunes-y-kill-con-criterio.md"
+    }
+  ]
+}

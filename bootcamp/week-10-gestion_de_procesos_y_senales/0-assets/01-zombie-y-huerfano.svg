@@ -1,0 +1,97 @@
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-zh desc-zh">
+  <title id="titulo-zh">Tres finales posibles para un proceso hijo: normal, zombie y huérfano</title>
+  <desc id="desc-zh">Tres columnas comparando qué pasa cuando un proceso hijo termina. Columna 1, caso normal: el padre llama a wait() y el hijo se libera de inmediato. Columna 2, zombie: el hijo termina pero el padre nunca llama a wait(), así que el hijo queda en estado Z indefinidamente, inmune a cualquier señal. Columna 3, huérfano: el padre termina antes que el hijo, y el kernel reasigna el PPID del hijo al proceso 1.</desc>
+
+  <rect x="0" y="0" width="900" height="480" fill="#0d1117"/>
+
+  <text x="450" y="35" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">
+    Tres finales posibles para un proceso hijo
+  </text>
+
+  <!-- Columna 1: caso normal -->
+  <g font-family="sans-serif">
+    <text x="150" y="70" text-anchor="middle" font-size="14" fill="#3fb950" font-weight="bold">1. Caso normal</text>
+
+    <rect x="80" y="90" width="140" height="45" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="150" y="117" text-anchor="middle" fill="#79c0ff" font-size="13">padre (PID 100)</text>
+
+    <line x1="150" y1="135" x2="150" y2="170" stroke="#30363d" stroke-width="2"/>
+
+    <rect x="80" y="170" width="140" height="45" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="150" y="197" text-anchor="middle" fill="#f0f6fc" font-size="13">hijo termina</text>
+
+    <line x1="150" y1="215" x2="150" y2="250" stroke="#3fb950" stroke-width="2" marker-end="url(#arrow-g)"/>
+    <text x="150" y="240" text-anchor="middle" font-size="11" fill="#3fb950">wait()</text>
+
+    <rect x="80" y="250" width="140" height="45" rx="6" fill="#0d1117" stroke="#3fb950" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="150" y="277" text-anchor="middle" fill="#3fb950" font-size="13">liberado</text>
+
+    <text x="150" y="330" text-anchor="middle" font-size="11" fill="#8b949e">El padre recoge el</text>
+    <text x="150" y="346" text-anchor="middle" font-size="11" fill="#8b949e">estado de salida y</text>
+    <text x="150" y="362" text-anchor="middle" font-size="11" fill="#8b949e">la entrada se libera.</text>
+  </g>
+
+  <line x1="300" y1="60" x2="300" y2="420" stroke="#30363d" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Columna 2: zombie -->
+  <g font-family="sans-serif">
+    <text x="450" y="70" text-anchor="middle" font-size="14" fill="#e3b341" font-weight="bold">2. Zombie</text>
+
+    <rect x="380" y="90" width="140" height="45" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="450" y="117" text-anchor="middle" fill="#79c0ff" font-size="13">padre (PID 200)</text>
+
+    <line x1="450" y1="135" x2="450" y2="170" stroke="#30363d" stroke-width="2"/>
+
+    <rect x="380" y="170" width="140" height="45" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="450" y="197" text-anchor="middle" fill="#f0f6fc" font-size="13">hijo termina</text>
+
+    <text x="450" y="240" text-anchor="middle" font-size="11" fill="#f85149">nunca llama wait()</text>
+
+    <rect x="380" y="250" width="140" height="45" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+    <text x="450" y="277" text-anchor="middle" fill="#f85149" font-size="13" font-weight="bold">STAT = Z</text>
+
+    <text x="450" y="330" text-anchor="middle" font-size="11" fill="#8b949e">kill -9 no tiene ningún</text>
+    <text x="450" y="346" text-anchor="middle" font-size="11" fill="#8b949e">efecto: ya no hay nada</text>
+    <text x="450" y="362" text-anchor="middle" font-size="11" fill="#8b949e">vivo que reciba la señal.</text>
+  </g>
+
+  <line x1="600" y1="60" x2="600" y2="420" stroke="#30363d" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Columna 3: huerfano -->
+  <g font-family="sans-serif">
+    <text x="750" y="70" text-anchor="middle" font-size="14" fill="#d2a8ff" font-weight="bold">3. Huérfano</text>
+
+    <rect x="680" y="90" width="140" height="45" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="750" y="117" text-anchor="middle" fill="#79c0ff" font-size="13">padre termina primero</text>
+
+    <line x1="750" y1="135" x2="750" y2="170" stroke="#f85149" stroke-width="2"/>
+    <text x="810" y="155" text-anchor="middle" font-size="11" fill="#f85149">PPID huérfano</text>
+
+    <rect x="680" y="170" width="140" height="45" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+    <text x="750" y="197" text-anchor="middle" fill="#f0f6fc" font-size="13">hijo sigue vivo</text>
+
+    <line x1="750" y1="215" x2="750" y2="250" stroke="#d2a8ff" stroke-width="2" marker-end="url(#arrow-p)"/>
+    <text x="750" y="240" text-anchor="middle" font-size="11" fill="#d2a8ff">reparentado</text>
+
+    <rect x="680" y="250" width="140" height="45" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+    <text x="750" y="277" text-anchor="middle" fill="#d2a8ff" font-size="13">PPID = 1</text>
+
+    <text x="750" y="330" text-anchor="middle" font-size="11" fill="#8b949e">Si PID 1 no reapa</text>
+    <text x="750" y="346" text-anchor="middle" font-size="11" fill="#8b949e">huérfanos (ej. "sleep</text>
+    <text x="750" y="362" text-anchor="middle" font-size="11" fill="#8b949e">infinity" en un lab),</text>
+    <text x="750" y="378" text-anchor="middle" font-size="11" fill="#8b949e">se acumulan zombies.</text>
+  </g>
+
+  <defs>
+    <marker id="arrow-g" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#3fb950"/>
+    </marker>
+    <marker id="arrow-p" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#d2a8ff"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="440" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">
+    Un zombie ya terminó, pero su entrada en la tabla de procesos no se liberó. Un huérfano sigue vivo, solo cambió de padre.
+  </text>
+</svg>

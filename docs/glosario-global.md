@@ -24,8 +24,10 @@ qué semana se explica a fondo.
 | Clase de caracteres (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Clase POSIX (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Clave de ordenamiento | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
+| comm | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Coerción | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Código de salida (exit code) | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
+| Control de trabajos (job control) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Cortocircuito (evaluación) | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | ctime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | Cuantificador (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -33,6 +35,7 @@ qué semana se explica a fondo.
 | Cuantificador voraz (greedy) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Delimitador | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | Dirección (sed) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
+| disown | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Dry-run | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | Edición in-place | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | Emulador de terminal | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
@@ -53,6 +56,7 @@ qué semana se explica a fondo.
 | Hash table | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Here-document | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Here-string | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
+| Huérfano (orphan) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Idempotente | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | Inodo | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Lookahead (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -62,6 +66,7 @@ qué semana se explica a fondo.
 | mtime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | NF (Number of Fields) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | no-run-if-empty (xargs -r) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
+| nohup | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | NR (Number of Records) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Nullglob | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | OFS (Output Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
@@ -71,11 +76,14 @@ qué semana se explica a fondo.
 | Patrón (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Patrón literal (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | PCRE (Perl Compatible Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| PGID (Process Group ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
+| PID (Process ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Pila de directorios | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Pipe | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | pipefail | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Pipeline de ranking de frecuencia | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | PIPESTATUS | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
+| PPID (Parent Process ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Principio de menor privilegio | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | print0 (find -print0) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | printf | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
@@ -87,13 +95,20 @@ qué semana se explica a fondo.
 | Registro (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Ruta absoluta | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Ruta relativa | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
+| Señal (signal) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Set (tr) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | SGID (Set Group ID) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | Shell | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Shell de login | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | SHLVL | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
-| SIGHUP | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
+| SID (Session ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
+| SIGHUP | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
+| SIGINT | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
+| SIGKILL | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
+| SIGTERM | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
+| SIGUSR1 / SIGUSR2 | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Sparse file (archivo disperso) | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
+| STAT (ps) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | stderr | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | stdin | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | stdout | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
@@ -101,6 +116,7 @@ qué semana se explica a fondo.
 | SUID (Set User ID) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | sudoers | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | Sustitución (sed) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
+| trap | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | TTY | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | UID | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | umask | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
@@ -109,6 +125,7 @@ qué semana se explica a fondo.
 | xargs | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | xargs -L | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | xargs -P (max-procs) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
+| Zombie | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 
 _Crece semana a semana._
 

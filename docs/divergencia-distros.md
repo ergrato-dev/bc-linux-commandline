@@ -18,6 +18,7 @@ explica en profundidad.
 | Seguridad obligatoria | AppArmor (activo por defecto) | SELinux (activo por defecto) | ninguno por defecto | [04](../bootcamp/week-04-permisos_y_propiedad/) |
 | ACLs | `acl` paquete aparte en bases mínimas | preinstalado en la mayoría | paquete `acl` aparte | [04](../bootcamp/week-04-permisos_y_propiedad/) |
 | `awk` por defecto | `mawk` (liviano, sin extensiones de gawk) | `gawk` (GNU Awk completo) | `gawk` (GNU Awk completo) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/) |
+| `ps`/`pgrep`/`pkill` (paquete `procps`) | preinstalado en `ubuntu-lab`; ausente en imágenes `debian` mínimas | ausente en imágenes `rhel`/UBI mínimas, requiere `dnf install procps-ng` | preinstalado (`procps-ng`) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/) |
 
 ## Por qué esto y no una semana por distro
 

@@ -1,0 +1,73 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-pw desc-pw">
+  <title id="titulo-pw">Pipeline de procwatch: buscar, clasificar por STAT, y decidir</title>
+  <desc id="desc-pw">Cuatro etapas: pgrep -a sin -f busca coincidencias por nombre sin riesgo de automatcheo, ps -p PID -o stat= clasifica cada PID como zombie o vivo, la decisión aplica dry-run por defecto o la señal real solo con --apply, y el conteo final de zombies determina el código de salida 0 o 2.</desc>
+
+  <rect x="0" y="0" width="900" height="460" fill="#0d1117"/>
+
+  <text x="450" y="35" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">
+    toolkit.sh procwatch — de un patrón de búsqueda a una decisión por PID
+  </text>
+
+  <g font-family="monospace" font-size="12">
+    <rect x="30" y="70" width="140" height="50" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+    <text x="100" y="90" text-anchor="middle" fill="#79c0ff" font-family="sans-serif" font-size="12">pgrep -a</text>
+    <text x="100" y="107" text-anchor="middle" fill="#f0f6fc" font-size="10">(sin -f)</text>
+
+    <rect x="210" y="70" width="140" height="50" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+    <text x="280" y="90" text-anchor="middle" fill="#d2a8ff" font-family="sans-serif" font-size="12">grep -c . || true</text>
+    <text x="280" y="107" text-anchor="middle" fill="#f0f6fc" font-size="10">contar protegido</text>
+
+    <rect x="390" y="70" width="140" height="50" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+    <text x="460" y="90" text-anchor="middle" fill="#e3b341" font-family="sans-serif" font-size="12">ps -p PID -o stat=</text>
+    <text x="460" y="107" text-anchor="middle" fill="#f0f6fc" font-size="10">clasificar</text>
+
+    <rect x="570" y="70" width="150" height="50" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="645" y="90" text-anchor="middle" fill="#3fb950" font-family="sans-serif" font-size="12">decidir</text>
+    <text x="645" y="107" text-anchor="middle" fill="#f0f6fc" font-size="10">dry-run / --apply</text>
+
+    <rect x="750" y="70" width="120" height="50" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+    <text x="810" y="90" text-anchor="middle" fill="#f85149" font-family="sans-serif" font-size="12">exit 0/1/2</text>
+  </g>
+
+  <path d="M170,95 L210,95" stroke="#8b949e" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M350,95 L390,95" stroke="#8b949e" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M530,95 L570,95" stroke="#8b949e" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M720,95 L750,95" stroke="#8b949e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/>
+    </marker>
+  </defs>
+
+  <!-- Bifurcacion de clasificar -->
+  <line x1="460" y1="120" x2="460" y2="170" stroke="#30363d" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <g font-family="sans-serif" font-size="12">
+    <rect x="300" y="180" width="160" height="60" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+    <text x="380" y="203" text-anchor="middle" fill="#f85149" font-weight="bold">STAT = Z (zombie)</text>
+    <text x="380" y="222" text-anchor="middle" fill="#8b949e" font-size="11">reportar, no enviar nada</text>
+
+    <rect x="490" y="180" width="160" height="60" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+    <text x="570" y="203" text-anchor="middle" fill="#3fb950" font-weight="bold">vivo</text>
+    <text x="570" y="222" text-anchor="middle" fill="#8b949e" font-size="11">dry-run, o señal con --apply</text>
+  </g>
+
+  <line x1="460" y1="170" x2="380" y2="180" stroke="#f85149" stroke-width="1.5"/>
+  <line x1="460" y1="170" x2="570" y2="180" stroke="#3fb950" stroke-width="1.5"/>
+
+  <g font-family="monospace" font-size="12">
+    <text x="100" y="290" font-family="sans-serif" fill="#8b949e" font-size="12">Ejemplo real, mezcla de zombies y proceso vivo:</text>
+
+    <rect x="100" y="305" width="700" height="110" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <text x="115" y="325" fill="#f85149">3617 [tail] &lt;defunct&gt;</text>
+    <text x="115" y="342" fill="#f85149">3632 [tail] &lt;defunct&gt;</text>
+    <text x="115" y="359" fill="#3fb950">4267 tail -f /dev/null</text>
+    <text x="115" y="378" fill="#e3b341">zombie detectado: PID 3617</text>
+    <text x="115" y="395" fill="#79c0ff">dry-run: kill -s TERM 4267</text>
+  </g>
+
+  <text x="450" y="445" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">
+    Cada PID se clasifica antes de actuar — enviar una señal a un zombie "tiene éxito" sin ningún efecto real.
+  </text>
+</svg>

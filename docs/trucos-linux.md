@@ -111,6 +111,17 @@ primero).
 - `nproc` da el número de núcleos disponibles, un punto de partida
   razonable para elegir un valor de `xargs -P`.
 
+## Semana 10 — Gestión de procesos y señales
+
+- `ps -eo pid,%mem,%cpu,cmd --sort=-%mem` ordena por mayor uso de
+  memoria, sin tener que leer la lista completa a ojo.
+- `trap -p` lista todos los traps activos de la sesión actual, con el
+  comando exacto configurado para cada señal.
+- `pkill -c -0 "patron"` cuenta coincidencias sin enviar ninguna señal
+  real — a diferencia de `pkill -c` solo, que sí la envía mientras cuenta.
+- `kill -l 143` traduce un código de salida de vuelta al nombre de la
+  señal que lo causó, sin tener que hacer la resta a mano.
+
 ---
 
 [← Volver al índice de documentación](README.md)
