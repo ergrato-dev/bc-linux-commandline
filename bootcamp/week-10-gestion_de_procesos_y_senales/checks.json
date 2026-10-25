@@ -96,7 +96,7 @@
     {
       "id": "procwatch-exit-0-sin-zombies",
       "descripcion": "procwatch sale con codigo 0 cuando las coincidencias no incluyen ningun zombie",
-      "cmd": "tail -f /dev/null & sleep 0.3; ~/bin/toolkit.sh procwatch tail",
+      "cmd": "cp /bin/sleep /tmp/zzw10; /tmp/zzw10 300 & p=$!; sleep 0.3; ~/bin/toolkit.sh procwatch zzw10; rc=$?; kill $p; wait $p 2>/dev/null; exit $rc",
       "assert": "exit0",
       "pista": "3-proyecto/starter/toolkit.sh"
     },

@@ -13,18 +13,24 @@ qué semana se explica a fondo.
 | Alias | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Ámbito (permisos) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| ámbito dinámico (dynamic scope) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | Ancla (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | apt | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | argumento posicional | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
-| Array asociativo | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| Array asociativo | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/), [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| array disperso (sparse array) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| array indexado (indexed array) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | atime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | AUR (Arch User Repository) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | authorized_keys | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | backlog | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | BASH_REMATCH | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
+| BASH_SOURCE | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | bashismo (bashism) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Brace expansion (expansión de llaves) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | BRE (Basic Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| break / continue | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| bucle (loop) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | Buffering | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Builtin (comando interno) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Byte nulo | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
@@ -49,6 +55,7 @@ qué semana se explica a fondo.
 | Delimitador | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | Dependencia (paquete) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | Descriptor de archivo | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
+| despacho dinámico (dynamic dispatch) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | dig | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Dirección (sed) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | disown | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
@@ -71,6 +78,8 @@ qué semana se explica a fondo.
 | FHS (Filesystem Hierarchy Standard) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | FNR | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | FS (Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| función (function) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| FUNCNAME | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | gateway (puerta de enlace) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | gawk | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | GECOS | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
@@ -82,6 +91,7 @@ qué semana se explica a fondo.
 | Glob / globbing | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | Grupo de captura | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | Grupo primario / suplementario | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| guarda de ejecución (source guard) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | Hash | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | Hash table | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Here-document | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
@@ -95,14 +105,18 @@ qué semana se explica a fondo.
 | InRelease | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | interfaz (interface) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | known_hosts | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
+| lista blanca (allowlist) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| local | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | Lookahead (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | loopback | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
+| mapfile / readarray | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | mask (ACL) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | mawk | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | maxdepth / mindepth (find) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | Mínimo privilegio | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | mtime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | MTU | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
+| nameref (name reference) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | NF (Number of Fields) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | no-run-if-empty (xargs -r) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | nohup | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
@@ -143,11 +157,13 @@ qué semana se explica a fondo.
 | Quoting (entrecomillado) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Readline | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | readonly | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
+| recursión (recursion) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | Referencia hacia atrás (backreference) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Reflink | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | refused (Connection refused) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Registro (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Repositorio | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| return | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | rpm | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | Ruta absoluta | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | ruta por defecto | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
@@ -197,10 +213,12 @@ qué semana se explica a fondo.
 | UID | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | UID 0 | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | umask | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| until | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | usr-merge | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | UUOC (Useless Use of Cat) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | visudo | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | wheel | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| while | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | xargs | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | xargs -L | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | xargs -P (max-procs) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |

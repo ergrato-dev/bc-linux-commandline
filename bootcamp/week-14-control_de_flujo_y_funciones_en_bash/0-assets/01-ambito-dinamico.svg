@@ -1,0 +1,31 @@
+<svg viewBox="0 0 900 426" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-amb d-amb">
+  <title id="t-amb">Ámbito dinámico de las variables en bash</title>
+  <desc id="d-amb">Un script define v=global, una función show que imprime v y una función f que declara local v=local y llama a show. Mientras show corre, la pila de llamadas tiene show arriba, f debajo y el ámbito global al fondo. Bash busca v en la pila de arriba abajo: show no tiene v propia, la encuentra en f y muestra local. Llamada directamente, show ve global. Sin local una función escribe en la variable global y pisa la del llamador.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="426" fill="#0d1117"/>
+  <text x="450" y="32" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Ámbito dinámico: una función ve las variables locales de quien la llamó</text>
+  <text x="20" y="70" text-anchor="start" font-family="sans-serif" font-size="12" fill="#8b949e">Código</text>
+  <text x="30" y="88" text-anchor="start" font-family="monospace" font-size="13" fill="#f0f6fc">v=global</text>
+  <text x="30" y="114" text-anchor="start" font-family="monospace" font-size="13" fill="#f0f6fc">show() { echo "show ve $v"; }</text>
+  <text x="30" y="140" text-anchor="start" font-family="monospace" font-size="13" fill="#e3b341">f()    { local v=local; show; }</text>
+  <text x="30" y="166" text-anchor="start" font-family="monospace" font-size="13" fill="#3fb950">f      # imprime: show ve local</text>
+  <text x="30" y="192" text-anchor="start" font-family="monospace" font-size="13" fill="#3fb950">show   # imprime: show ve global</text>
+  <text x="500" y="70" text-anchor="start" font-family="sans-serif" font-size="12" fill="#8b949e">Pila de llamadas mientras corre show (dentro de f)</text>
+  <rect x="500" y="84" width="380" height="56" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="520" y="108" text-anchor="start" font-family="sans-serif" font-size="14" fill="#79c0ff" font-weight="bold">show</text>
+  <text x="520" y="128" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">no tiene v propia: busca hacia abajo</text>
+  <path d="M690,142 L690,160" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="500" y="162" width="380" height="64" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="520" y="186" text-anchor="start" font-family="sans-serif" font-size="14" fill="#e3b341" font-weight="bold">f</text>
+  <text x="520" y="208" text-anchor="start" font-family="monospace" font-size="12" fill="#f0f6fc">local v = local   ← la encuentra aquí</text>
+  <path d="M690,228 L690,246" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="500" y="248" width="380" height="64" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="520" y="272" text-anchor="start" font-family="sans-serif" font-size="14" fill="#f0f6fc" font-weight="bold">script (ámbito global)</text>
+  <text x="520" y="294" text-anchor="start" font-family="monospace" font-size="12" fill="#8b949e">v = global</text>
+  <rect x="20" y="240" width="440" height="72" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="240" y="266" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#3fb950" font-weight="bold">Regla: bash busca la variable en la pila, de arriba abajo.</text>
+  <text x="240" y="288" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">Sin local, la función escribe en la global y pisa la del llamador.</text>
+  <rect x="20" y="336" width="860" height="70" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="450" y="364" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#f85149" font-weight="bold">Por eso: toda variable de una función lleva  local  y se declara en su línea,</text>
+  <text x="450" y="386" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">y si una función necesita un dato, lo recibe como argumento ($1, $2...) y no lo "adivina" del llamador.</text>
+</svg>

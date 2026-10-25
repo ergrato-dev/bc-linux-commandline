@@ -172,6 +172,22 @@ primero).
   `${DIR:?}` aborta el script con el mensaje. Mensaje en `stderr` y código
   `1`, y una sola línea al principio del script para sus requisitos.
 
+## Semana 14 — Control de flujo y funciones en bash
+
+- `shopt -s lastpipe` hace que el **último** comando de una tubería corra en la
+  shell actual: `printf 'a\nb\n' | while read -r l; do n=$((n+1)); done`
+  deja `n=2` en lugar de `0`. Solo funciona en scripts (sin control de
+  trabajos); en el laboratorio dio `n=2` en las cuatro distribuciones.
+- `"${a[@]@Q}"` entrecomilla **cada elemento** de forma que se pueda pegar de
+  vuelta en bash: con `a=(uno "dos tres" "it's")` imprime `'uno' 'dos tres'
+  'it'\''s'`. Es la forma limpia de mostrar un array en un mensaje de error.
+- `mapfile -d '' -t archivos < <(find . -name '*.txt' -print0)` carga en un
+  array nombres de archivo **con cualquier carácter** (el separador es el byte
+  nulo): es `read -d ''` sin el bucle.
+- `echo ${!hc_*}` expande a los **nombres** de las variables que empiezan por
+  `hc_` (`hc_a hc_b`): para depurar "qué variables dejó mi script" sin
+  `declare -p` entero.
+
 ---
 
 [← Volver al índice de documentación](README.md)

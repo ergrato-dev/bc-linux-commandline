@@ -117,6 +117,6 @@ sale con `0`, `1` o `2` según el uso del disco frente a un umbral.
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 12](../week-12-redes_desde_la_linea_de_comandos/README.md) | Semana 13 | [Índice del bootcamp →](../README.md) |
+| [← Semana 12](../week-12-redes_desde_la_linea_de_comandos/README.md) | Semana 13 | [Semana 14 →](../week-14-control_de_flujo_y_funciones_en_bash/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)
