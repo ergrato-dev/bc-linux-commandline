@@ -59,4 +59,4 @@ se escribe en orden, una semana por entrega.
 
 | Semana | Tema | Estado |
 |:--:|---|:--:|
-| [20](week-20-proyecto_final_toolkit_integrado/README.md) | Proyecto final: toolkit integrado | ⬜ |
+| [20](week-20-proyecto_final_toolkit_integrado/README.md) | Proyecto final: toolkit integrado | ✅ |

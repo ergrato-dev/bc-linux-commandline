@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" role="img" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Anatomía de un .deb: un archivo ar con debian-binary, control.tar (control y md5sums) y data.tar (lo que se instala), y las órdenes dpkg-deb que leen cada parte</title>
+  <rect width="900" height="380" fill="#0d1117"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b949e"/></marker>
+  </defs>
+
+  <text x="20" y="28" fill="#8b949e" font-size="13">toolkit_1.0.0_all.deb  →  un archivo ar (empieza por !&lt;arch&gt;) con tres miembros</text>
+
+  <rect x="20" y="45" width="520" height="300" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="40" y="70" fill="#f0f6fc" font-size="14" font-weight="600">toolkit_1.0.0_all.deb</text>
+
+  <rect x="40" y="85" width="480" height="44" rx="8" fill="#0d1117" stroke="#30363d"/>
+  <text x="56" y="112" fill="#f0f6fc" font-size="13" font-weight="600">debian-binary</text>
+  <text x="500" y="112" fill="#8b949e" font-size="12" text-anchor="end">versión del formato: 2.0</text>
+
+  <rect x="40" y="141" width="480" height="82" rx="8" fill="#0d1117" stroke="#d2a8ff"/>
+  <text x="56" y="165" fill="#d2a8ff" font-size="13" font-weight="600">control.tar.zst</text>
+  <text x="500" y="165" fill="#8b949e" font-size="12" text-anchor="end">metadatos: no se instalan</text>
+  <text x="56" y="189" fill="#f0f6fc" font-size="12">./control    Package, Version, Depends, Description…</text>
+  <text x="56" y="209" fill="#f0f6fc" font-size="12">./md5sums    una suma por archivo instalado</text>
+
+  <rect x="40" y="235" width="480" height="96" rx="8" fill="#0d1117" stroke="#3fb950"/>
+  <text x="56" y="259" fill="#3fb950" font-size="13" font-weight="600">data.tar.zst</text>
+  <text x="500" y="259" fill="#8b949e" font-size="12" text-anchor="end">lo que se copia al sistema</text>
+  <text x="56" y="283" fill="#f0f6fc" font-size="12">./usr/bin/toolkit                    (755, root/root)</text>
+  <text x="56" y="303" fill="#f0f6fc" font-size="12">./usr/share/man/man1/toolkit.1.gz    (644, root/root)</text>
+
+  <text x="580" y="105" fill="#79c0ff" font-size="12">dpkg-deb -I  /  -f  Version</text>
+  <line x1="575" y1="112" x2="525" y2="180" stroke="#79c0ff" stroke-width="2" marker-end="url(#a)"/>
+  <text x="580" y="250" fill="#79c0ff" font-size="12">dpkg-deb -c  (listar)  /  -x  (extraer)</text>
+  <line x1="575" y1="257" x2="525" y2="278" stroke="#79c0ff" stroke-width="2" marker-end="url(#a)"/>
+
+  <rect x="580" y="285" width="300" height="60" rx="8" fill="#161b22" stroke="#3fb950"/>
+  <text x="730" y="310" fill="#3fb950" font-size="13" text-anchor="middle" font-weight="600">dpkg -i  →  /usr/bin/toolkit</text>
+  <text x="730" y="330" fill="#8b949e" font-size="11" text-anchor="middle">dpkg --verify compara con md5sums</text>
+</svg>

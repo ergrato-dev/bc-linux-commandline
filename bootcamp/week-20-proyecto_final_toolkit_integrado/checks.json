@@ -1,0 +1,132 @@
+{
+  "semana": "20",
+  "titulo": "Proyecto final: toolkit integrado",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/06-verify-y-selftest-a-mano.md, paso 5"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk20-org && mkdir -p /tmp/wk20-org && touch /tmp/wk20-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk20-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk20-lr.log && ~/bin/toolkit.sh logreport /tmp/wk20-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk20-reg && mkdir -p /tmp/wk20-reg && printf 'ERROR x\\n' > /tmp/wk20-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk20-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk20-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk20-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk20-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk20-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk20-reg/d1.dup && printf 'igual\\n' > /tmp/wk20-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk20-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk20-etc && mkdir -p /tmp/wk20-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk20-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk20-etc/group && printf '/bin/bash\\n' > /tmp/wk20-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk20-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-13-19",
+      "descripcion": "Los subcomandos snapshot, healthcheck, guard, schedule, dotfiles, backup y harden siguen funcionando (regresion de las Semanas 13 a 19)",
+      "cmd": "set -o pipefail; [ \"$(~/bin/toolkit.sh snapshot --umbral 100 | wc -l)\" = 11 ] && ~/bin/toolkit.sh healthcheck | grep -q 'resumen: 3 de 3 ok' && ~/bin/toolkit.sh guard -- echo hola-guard 2>/dev/null | grep -q hola-guard && { ~/bin/toolkit.sh guard -- false 2>/dev/null; [ $? -eq 2 ]; } && ~/bin/toolkit.sh schedule check '*/15 9-17 * * 1-5' | grep -q 'ejecuciones por dia: 36' && rm -rf /tmp/wk20-reg/dot && mkdir -p /tmp/wk20-reg/dot/repo /tmp/wk20-reg/dot/home && printf 'a\\n' > /tmp/wk20-reg/dot/repo/bashrc && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk20-reg/dot/repo --home /tmp/wk20-reg/dot/home >/dev/null && ~/bin/toolkit.sh dotfiles status --repo /tmp/wk20-reg/dot/repo --home /tmp/wk20-reg/dot/home | grep -q 'resumen: ok=1 falta=0 conflicto=0' && rm -rf /tmp/wk20-bk && mkdir -p /tmp/wk20-bk/src/p /tmp/wk20-bk/dest && printf 'a\\n' > /tmp/wk20-bk/src/p/a && ~/bin/toolkit.sh backup create /tmp/wk20-bk/src/p --dest /tmp/wk20-bk/dest >/dev/null && ~/bin/toolkit.sh backup verify /tmp/wk20-bk/dest/p-*.tar.gz | grep -q '^ok ' && printf '[Service]\\nExecStart=/bin/true\\n' > /tmp/wk20-h.service && { ~/bin/toolkit.sh harden unit /tmp/wk20-h.service >/tmp/wk20-h.out || true; } && tail -1 /tmp/wk20-h.out | grep -qx 'hallazgos: 5'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "version-imprime",
+      "descripcion": "version imprime toolkit 1.0.0 y con --short solo el numero",
+      "cmd": "[ \"$(~/bin/toolkit.sh version)\" = 'toolkit 1.0.0' ] && [ \"$(~/bin/toolkit.sh version --short)\" = '1.0.0' ]",
+      "assert": "exit0",
+      "pista": "2-practicas/02-manual-version-y-documentacion.md, paso 1"
+    },
+    {
+      "id": "release-build-crea-deb-y-suma",
+      "descripcion": "release build crea el .deb con Package y Version correctos y su linea en SHA256SUMS",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3 >/dev/null && [ \"$(dpkg-deb -f /tmp/wk20/out/toolkit_1.2.3_all.deb Package)\" = toolkit ] && [ \"$(dpkg-deb -f /tmp/wk20/out/toolkit_1.2.3_all.deb Version)\" = 1.2.3 ] && (cd /tmp/wk20/out && sha256sum -c --status SHA256SUMS)",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 5"
+    },
+    {
+      "id": "release-build-imprime-ruta-y-suma",
+      "descripcion": "release build imprime paquete: RUTA y sha256: con la suma real del archivo",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && out=$(~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3); printf '%s\\n' \"$out\" | grep -qx 'paquete: /tmp/wk20/out/toolkit_1.2.3_all.deb' && [ \"$(printf '%s\\n' \"$out\" | grep '^sha256: ' | cut -d' ' -f2)\" = \"$(sha256sum /tmp/wk20/out/toolkit_1.2.3_all.deb | cut -d' ' -f1)\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 5"
+    },
+    {
+      "id": "release-deb-contenido",
+      "descripcion": "El .deb lleva toolkit ejecutable 755, la pagina de manual comprimida y nada escribible por grupo u otros",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3 >/dev/null && l=$(dpkg-deb -c /tmp/wk20/out/toolkit_1.2.3_all.deb) && printf '%s\\n' \"$l\" | grep -qE '^-rwxr-xr-x root/root .* \\./usr/bin/toolkit$' && printf '%s\\n' \"$l\" | grep -qE '^-rw-r--r-- root/root .* \\./usr/share/man/man1/toolkit\\.1\\.gz$' && [ -z \"$(printf '%s\\n' \"$l\" | awk 'substr($1,6,1)==\"w\" || substr($1,9,1)==\"w\"')\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 4"
+    },
+    {
+      "id": "release-deb-ejecuta-con-su-version",
+      "descripcion": "El toolkit extraido del .deb se ejecuta y declara la version del paquete, no la del script original",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3 >/dev/null && dpkg-deb -x /tmp/wk20/out/toolkit_1.2.3_all.deb /tmp/wk20/x && [ \"$(/tmp/wk20/x/usr/bin/toolkit version --short)\" = 1.2.3 ] && [ \"$(~/bin/toolkit.sh version --short)\" = 1.0.0 ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 4"
+    },
+    {
+      "id": "release-version-invalida",
+      "descripcion": "release build rechaza con codigo 1 una version que no es MAYOR.MENOR.PARCHE y no crea nada",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.0 2>/tmp/wk20/err; [ $? -eq 1 ] && grep -q 'version invalida: 1.0' /tmp/wk20/err && [ -z \"$(ls -A /tmp/wk20/out)\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 3"
+    },
+    {
+      "id": "release-dry-run",
+      "descripcion": "release build --dry-run anuncia el paquete y no escribe nada",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3 --dry-run | grep -qxF '[dry-run] paquete: /tmp/wk20/out/toolkit_1.2.3_all.deb' && [ -z \"$(ls -A /tmp/wk20/out)\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 5"
+    },
+    {
+      "id": "release-verify-ok",
+      "descripcion": "release verify da seis ok y fallos: 0 sobre un paquete recien construido",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3 >/dev/null && out=$(~/bin/toolkit.sh release verify /tmp/wk20/out/toolkit_1.2.3_all.deb); rc=$?; [ $rc -eq 0 ] && [ \"$(printf '%s\\n' \"$out\" | grep -c '^ok ')\" = 6 ] && printf '%s\\n' \"$out\" | grep -qx 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-verify-y-selftest-a-mano.md, paso 1"
+    },
+    {
+      "id": "release-verify-detecta-manipulacion",
+      "descripcion": "release verify sale con 2 y marca falla suma cuando el .deb ha cambiado despues de construirlo",
+      "cmd": "rm -rf /tmp/wk20 && mkdir -p /tmp/wk20/out && ~/bin/toolkit.sh release build --out /tmp/wk20/out --version 1.2.3 >/dev/null && echo x >> /tmp/wk20/out/toolkit_1.2.3_all.deb && out=$(~/bin/toolkit.sh release verify /tmp/wk20/out/toolkit_1.2.3_all.deb); rc=$?; [ $rc -eq 2 ] && printf '%s\\n' \"$out\" | grep -qx 'falla suma: la suma de toolkit_1.2.3_all.deb no coincide'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-verify-y-selftest-a-mano.md, paso 1"
+    },
+    {
+      "id": "release-uso-invalido",
+      "descripcion": "release sale con codigo 1 sin --out, ante una opcion desconocida y ante un paquete inexistente",
+      "cmd": "~/bin/toolkit.sh release build 2>/dev/null; [ $? -eq 1 ] && ~/bin/toolkit.sh release build --out /tmp/wk20 --zz 2>/dev/null; [ $? -eq 1 ] && ~/bin/toolkit.sh release verify /tmp/wk20/no-existe.deb 2>/dev/null; [ $? -eq 1 ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-release-a-mano.md, paso 2"
+    },
+    {
+      "id": "selftest-pasa",
+      "descripcion": "selftest sale con 0, imprime cinco ok y pruebas: 5, fallos: 0; con --quiet solo el resumen",
+      "cmd": "out=$(~/bin/toolkit.sh selftest); rc=$?; [ $rc -eq 0 ] && [ \"$(printf '%s\\n' \"$out\" | grep -c '^ok ')\" = 5 ] && printf '%s\\n' \"$out\" | tail -1 | grep -qx 'pruebas: 5, fallos: 0' && [ \"$(~/bin/toolkit.sh selftest --quiet)\" = 'pruebas: 5, fallos: 0' ]",
+      "assert": "exit0",
+      "pista": "2-practicas/06-verify-y-selftest-a-mano.md, paso 4"
+    },
+    {
+      "id": "selftest-detecta-fallo",
+      "descripcion": "selftest_case marca falla con el codigo esperado y el obtenido cuando no coinciden, y cuenta el fallo",
+      "cmd": "out=$(bash -c 'source ~/bin/toolkit.sh; ST_QUIET=0; ST_TOTAL=0; ST_FAILS=0; selftest_case a 0 false; selftest_case b 3 bash -c \"exit 3\"; echo \"$ST_TOTAL $ST_FAILS\"'); [ \"$out\" = \"$(printf 'falla a: esperaba 0, salio 1\\nok b\\n2 1')\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/06-verify-y-selftest-a-mano.md, paso 2"
+    }
+  ]
+}

@@ -49,6 +49,11 @@ explica en profundidad.
 | Carpeta de las unidades del paquete | `/lib/systemd/system/` (es un enlace a `/usr/lib/...`) | `/usr/lib/systemd/system/` | `/usr/lib/systemd/system/` | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
 | Unidad del planificador `cron` | `cron.service` | `crond.service` (paquete `cronie`) | `cronie.service` (paquete `cronie`, repositorio `extra`) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
 | Directorio `sshd_config.d/` | existe; `sshd_config` lo incluye con `Include` al principio | existe y trae `50-redhat.conf` del paquete | existe en el paquete `openssh` | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
+| Construir un paquete | `dpkg-deb --build` (presente en `ubuntu-lab` y `debian-lab`) | `rpmbuild` con un `.spec` (ausente en `rhel-lab`; tampoco hay `dpkg-deb`, y `toolkit release` termina con `falta dpkg-deb`) | `makepkg` con un `PKGBUILD` (presente en `arch-lab`) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/) |
+| Instalar un archivo de paquete local | `dpkg -i x.deb` o `apt install ./x.deb` | `rpm -i x.rpm` o `dnf install ./x.rpm` | `pacman -U x.pkg.tar.zst` | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/) |
+| ¿A qué paquete pertenece este archivo? | `dpkg -S /usr/bin/ls` → `coreutils` | `rpm -qf /usr/bin/ls` → `coreutils-single` en `rhel-lab` | `pacman -Qo /usr/bin/ls` → `coreutils` | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/) |
+| Verificar los archivos instalados | `dpkg --verify` (solo contenido y ausencias; no ve permisos ni dueño; sale con 0 aunque haya diferencias) | `rpm -V NOMBRE` (el paquete se llama `coreutils-single` en `rhel-lab`: `rpm -V coreutils` falla) | `pacman -Qkk NOMBRE` (avisa de archivos y directorios ausentes) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/) |
+| Páginas de manual en la imagen mínima | `ubuntu-lab`: `dpkg` **no instala** `/usr/share/man/*` (`path-exclude`) y `man` es un sustituto que solo avisa; `debian-lab`: sin `man` | `rhel-lab`: sin `man` | `arch-lab`: sin `man`, y `pacman -Qkk` avisa de que falta `/usr/share/man` | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/) |
 
 ## Por qué esto y no una semana por distro
 

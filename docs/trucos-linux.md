@@ -252,6 +252,27 @@ primero).
   (rw={{.RW}}){{"\n"}}{{end}}' NOMBRE` lista los montajes de un contenedor con su
   modo de escritura: el riesgo que `harden container` no mira.
 
+## Semana 20 — Proyecto final: toolkit integrado
+
+- `dpkg-deb -R paquete.deb carpeta` extrae **todo**, incluida la parte de control en
+  `carpeta/DEBIAN/`, con la forma exacta que acepta `dpkg-deb --build`. Es la manera
+  más rápida de corregir un paquete: editas `DEBIAN/control`, ajustas permisos y lo
+  reconstruyes, sin repetir el árbol entero.
+- `dpkg-deb --ctrl-tarfile p.deb | tar -xO ./control` imprime **un archivo** de la
+  parte de control por la salida estándar sin extraer nada a disco (`-O` es «a
+  stdout»). Cámbialo por `--fsys-tarfile` para leer un archivo instalable.
+- `apt-get -s install ./p.deb` **simula** la instalación: lista las líneas `Inst` y
+  `Conf` de lo que haría (incluidas las dependencias que traería) y no toca el
+  sistema. `-s` es lo primero que se prueba con un paquete ajeno.
+- `readlink -f "${BASH_SOURCE[0]}"` da la ruta **real** de un script aunque lo
+  llamen por un enlace simbólico o desde otro directorio (`$0` solo diría
+  `./enlace`). Es lo que permite a `toolkit` empaquetarse a sí mismo. Y
+  `[[ "${BASH_SOURCE[0]}" == "$0" ]]` distingue «ejecutado» de «cargado con `source`»:
+  la guarda que deja probar las funciones sin lanzar el programa.
+- `install -D -m 0755 origen /destino/usr/bin/toolkit` crea también los directorios
+  intermedios que falten, así que ahorra el `mkdir -p` previo. Los crea con modo 755
+  aunque el `umask` sea más estricto.
+
 ---
 
 [← Volver al índice de documentación](README.md)

@@ -1,0 +1,2441 @@
+#!/usr/bin/env bash
+#
+# toolkit.sh — caja de herramientas personal de sysadmin.
+#
+# Uso:
+#   toolkit.sh doctor                   reporta el estado del entorno (Semana 01)
+#   toolkit.sh doctor --tipos           ademas distingue builtins de externos
+#   toolkit.sh inventory [ruta]         cuenta archivos/directorios/enlaces (Semana 02)
+#   toolkit.sh inventory [ruta] --ext E filtra ademas por extension E
+#   toolkit.sh organize [ruta]          plan para agrupar archivos por extension (Semana 03)
+#   toolkit.sh organize [ruta] --apply  ejecuta ese plan de verdad
+#   toolkit.sh audit [ruta]             audita permisos riesgosos (Semana 04)
+#   toolkit.sh logreport <archivo>      resume un log: lineas, errores (Semana 05)
+#   toolkit.sh logreport <archivo> --salida archivo.txt   fija el nombre del informe
+#   toolkit.sh logscan [directorio]     busca ERROR/WARN/CRIT en *.log, recursivo (Semana 06)
+#   toolkit.sh logscan [directorio] --patron REGEX   usa un patron extendido propio
+#   toolkit.sh topcount <archivo>       ranking de valores mas frecuentes de una columna (Semana 07)
+#   toolkit.sh topcount <archivo> --campo N --delim D --top N   ajusta columna, separador y cuantos mostrar
+#   toolkit.sh sumfield <archivo>       suma un campo numerico, agrupado por otro campo (Semana 08)
+#   toolkit.sh sumfield <archivo> --campo N --delim D --grupo M   ajusta campo de valor, separador y campo de agrupacion
+#   toolkit.sh finddupes [directorio]   encuentra archivos duplicados por contenido, recursivo (Semana 09)
+#   toolkit.sh finddupes [directorio] --ext E   filtra ademas por extension E
+#   toolkit.sh procwatch <patron>       lista procesos por nombre y detecta zombies entre ellos (Semana 10)
+#   toolkit.sh procwatch <patron> --senal SIG [--apply]   envia una senal a los procesos encontrados (no zombies)
+#   toolkit.sh acctaudit [directorio]   audita passwd/group/shells de un directorio tipo /etc (Semana 11)
+#   toolkit.sh pkgcheck <paquete>       dice si un paquete esta instalado y en que version (Semana 11)
+#   toolkit.sh netcheck <host> [puerto] diagnostica la red por capas: interfaz, ruta, DNS y TCP (Semana 12)
+#   toolkit.sh snapshot                 foto de la maquina: sistema, memoria, procesos, disco (Semana 13)
+#   toolkit.sh snapshot --umbral N --salida archivo   avisa si el disco llega a N% y guarda el informe
+#   toolkit.sh healthcheck              comprueba disco, memoria y procesos contra limites (Semana 14)
+#   toolkit.sh healthcheck --solo disk,mem   ejecuta solo esas comprobaciones, en ese orden
+#   toolkit.sh healthcheck --umbral-disco N --min-mem MiB --max-procesos N   ajusta los limites
+#   toolkit.sh guard [-l LOG] [-k LOCK] [-t SEG] [-r N] [-w SEG] -- CMD [ARGS]   ejecuta CMD con registro, bloqueo y limite de tiempo (Semana 15)
+#   toolkit.sh schedule check 'M H DOM MES DOW'   valida una expresion de cron y cuenta sus ejecuciones (Semana 16)
+#   toolkit.sh schedule gen NOMBRE --cron 'EXPR' [--salida DIR] [--log F] [--timeout S] [--force] -- CMD [ARGS]
+#                                       genera NOMBRE.cron, NOMBRE.service y NOMBRE.timer que ejecutan CMD bajo guard
+#
+#
+#   toolkit.sh dotfiles status [--repo DIR] [--home DIR]   compara tu repositorio de dotfiles con tu home (Semana 17)
+#   toolkit.sh dotfiles link [--repo DIR] [--home DIR] [--force] [--dry-run]
+#                                       enlaza cada archivo del repositorio como ~/.archivo (respalda con --force)
+#   toolkit.sh dotfiles unlink [--repo DIR] [--home DIR]   quita los enlaces y restaura los respaldos
+#   toolkit.sh backup create ORIGEN [--dest DIR] [--name N] [--exclude PAT]... [--dry-run]   (Semana 18)
+#                                       crea NOMBRE-FECHA.tar.gz con su suma sha256 en el directorio de copias
+#   toolkit.sh backup verify ARCHIVO    comprueba la suma y que tar pueda leer el archivo
+#   toolkit.sh backup list [--dest DIR] lista las copias y su tamano
+#   toolkit.sh backup restore ARCHIVO --to DIR   verifica y extrae en un directorio vacio
+#   toolkit.sh backup prune --name N --keep K [--dest DIR] [--dry-run]   borra las copias mas antiguas
+#   toolkit.sh harden unit ARCHIVO      audita una unidad de systemd: usuario y aislamiento (Semana 19)
+#   toolkit.sh harden ssh ARCHIVO       audita un sshd_config: root, contrasenas y X11
+#   toolkit.sh harden perms DIR [--depth N]   busca setuid/setgid y archivos escribibles por todos
+#   toolkit.sh harden container ARCHIVO audita la salida de docker inspect: privilegios, usuario y puertos
+#   (todas admiten --quiet: solo los riesgos y el resumen)
+#   toolkit.sh version [--short]        imprime la version de toolkit (Semana 20)
+#   toolkit.sh release build --out DIR [--version V] [--dry-run]
+#                                       crea toolkit_V_all.deb y su suma en SHA256SUMS
+#   toolkit.sh release verify ARCHIVO [--quiet]   comprueba el paquete: suma, metadatos, ejecutable, manual y permisos
+#   toolkit.sh selftest [--quiet]       prueba de humo de varias capas sobre una maqueta temporal
+#
+# Codigos de salida de audit:     0 sin riesgos,    1 ruta invalida,       2 riesgos encontrados.
+# Codigos de salida de logreport: 0 sin ERROR,      1 archivo invalido,    2 ERROR encontrado.
+# Codigos de salida de logscan:   0 sin matches,    1 directorio invalido, 2 coincidencias encontradas.
+# Codigos de salida de topcount:  0 sin dominancia, 1 archivo invalido,    2 un valor domina mas de la mitad.
+# Codigos de salida de sumfield:  0 datos limpios,  1 archivo invalido,    2 valores no numericos encontrados.
+# Codigos de salida de finddupes: 0 sin duplicados, 1 directorio invalido, 2 duplicados encontrados.
+# Codigos de salida de procwatch: 0 sin zombies,    1 falta el patron,    2 zombie encontrado entre las coincidencias.
+# Codigos de salida de acctaudit: 0 sin hallazgos,  1 directorio invalido, 2 hallazgos encontrados.
+# Codigos de salida de pkgcheck:  0 instalado,      1 falta el paquete o gestor, 2 paquete no instalado.
+# Codigos de salida de netcheck:  0 todo responde,  1 falta el host o puerto invalido, 2 alguna capa falla.
+# Codigos de salida de snapshot:  0 disco bajo el umbral, 1 opcion o umbral invalido, 2 disco en o sobre el umbral.
+# Codigos de salida de healthcheck: 0 todo en orden,     1 opcion o limite invalido, 2 alguna comprobacion falla.
+# Codigos de salida de guard:     0 el comando acabo bien, 1 uso invalido, 2 el comando fallo,
+#                                 3 otro guard tiene el bloqueo, 4 agoto el limite de tiempo,
+#                                 130/143 interrumpido por INT/TERM.
+# Codigos de salida de schedule:  0 todo generado o valido, 1 uso invalido, 2 expresion invalida o ambigua.
+# Codigos de salida de dotfiles:  0 todo en orden, 1 uso invalido o repositorio inexistente,
+#                                 2 status: algo falta o choca; link: conflictos y nada cambiado.
+# Codigos de salida de backup:    0 todo en orden, 1 uso invalido u origen/destino inexistente,
+#                                 2 verify/restore: copia corrupta, sin suma o con rutas peligrosas.
+# Codigos de salida de harden:    0 sin hallazgos, 1 uso invalido o archivo/directorio inexistente,
+#                                 2 se encontro algun riesgo.
+# Codigos de salida de release:   0 todo en orden, 1 uso invalido o archivo/directorio inexistente,
+#                                 2 verify: el paquete no pasa alguna comprobacion.
+# Codigos de salida de selftest:  0 todas las pruebas pasan, 1 uso invalido, 2 alguna prueba falla.
+#
+# Este es el unico entrypoint del proyecto. doctor, inventory, organize,
+# audit, logreport, logscan, topcount, sumfield, finddupes, procwatch,
+# acctaudit, pkgcheck, netcheck, snapshot, healthcheck, guard, schedule, dotfiles, backup y harden
+# ya vienen completos de las semanas anteriores — esta semana completas release y
+# selftest. Lee cmd_release, release_line y selftest_backup antes de empezar.
+
+set -euo pipefail
+
+: "${HOME:?HOME no esta definido}"
+
+cmd_doctor() {
+  local mostrar_tipos=false
+  if [[ "${1:-}" == "--tipos" ]]; then
+    mostrar_tipos=true
+  fi
+  echo "== toolkit doctor =="
+  echo "bash: $BASH_VERSION"
+  local distro
+  distro=$(grep '^PRETTY_NAME=' /etc/os-release | cut -d'"' -f2)
+  echo "distro: $distro"
+  if [[ "$mostrar_tipos" == true ]]; then
+    for c in cd ls; do
+      echo "$c: $(type -t "$c")"
+    done
+  fi
+}
+
+cmd_inventory() {
+  local objetivo="." extension=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --ext) extension="$2"; shift 2 ;;
+      *) objetivo="$1"; shift ;;
+    esac
+  done
+  if [[ ! -d "$objetivo" ]]; then
+    echo "toolkit inventory: '$objetivo' no es un directorio" >&2
+    exit 1
+  fi
+  local absoluta
+  absoluta=$(cd "$objetivo" && pwd)
+  echo "== toolkit inventory =="
+  echo "ruta: $absoluta"
+  local regulares directorios enlaces
+  regulares=$(find "$absoluta" -maxdepth 1 -type f | wc -l)
+  directorios=$(find "$absoluta" -mindepth 1 -maxdepth 1 -type d | wc -l)
+  enlaces=$(find "$absoluta" -maxdepth 1 -type l | wc -l)
+  echo "archivos regulares: $regulares"
+  echo "directorios: $directorios"
+  echo "enlaces simbolicos: $enlaces"
+  if [[ -n "$extension" ]]; then
+    shopt -s nullglob
+    local coincidencias=("$absoluta"/*."$extension")
+    shopt -u nullglob
+    echo "coincidencias .$extension: ${#coincidencias[@]}"
+    local f
+    for f in "${coincidencias[@]}"; do
+      echo "  - $(basename "$f")"
+    done
+  fi
+}
+
+cmd_organize() {
+  local objetivo="." aplicar=false
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --apply) aplicar=true; shift ;;
+      *) objetivo="$1"; shift ;;
+    esac
+  done
+  if [[ ! -d "$objetivo" ]]; then
+    echo "toolkit organize: '$objetivo' no es un directorio" >&2
+    exit 1
+  fi
+  local absoluta
+  absoluta=$(cd "$objetivo" && pwd)
+  echo "== toolkit organize =="
+  echo "ruta: $absoluta"
+  if [[ "$aplicar" == true ]]; then
+    echo "modo: aplicando cambios"
+  else
+    echo "modo: dry-run (nada se mueve sin --apply)"
+  fi
+  shopt -s nullglob
+  local archivos=("$absoluta"/*)
+  shopt -u nullglob
+  local plan_count=0
+  local archivo nombre extension destino
+  for archivo in "${archivos[@]}"; do
+    [[ -f "$archivo" ]] || continue
+    nombre=$(basename "$archivo")
+    if [[ "$nombre" == *.* && "$nombre" != .* ]]; then
+      extension="${nombre##*.}"
+    else
+      extension="sin-extension"
+    fi
+    destino="$absoluta/$extension"
+    plan_count=$(( plan_count + 1 ))
+    echo "plan: mkdir -p '$destino' && mv '$archivo' '$destino/$nombre'"
+    if [[ "$aplicar" == true ]]; then
+      mkdir -p "$destino"
+      mv -n "$archivo" "$destino/$nombre"
+    fi
+  done
+  echo "total movimientos planeados: $plan_count"
+  if [[ "$aplicar" != true && "$plan_count" -gt 0 ]]; then
+    echo "nada se movio todavia. Repite con --apply para ejecutar el plan."
+  fi
+}
+
+cmd_audit() {
+  local objetivo="."
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      *) objetivo="$1"; shift ;;
+    esac
+  done
+  if [[ ! -d "$objetivo" ]]; then
+    echo "toolkit audit: '$objetivo' no es un directorio" >&2
+    exit 1
+  fi
+  local absoluta
+  absoluta=$(cd "$objetivo" && pwd)
+  echo "== toolkit audit =="
+  echo "ruta: $absoluta"
+  echo "umask actual: $(umask)"
+  local escribibles_por_otros
+  escribibles_por_otros=$(find "$absoluta" -maxdepth 1 -perm -0002 | wc -l)
+  echo "archivos/directorios escribibles por otros: $escribibles_por_otros"
+  local con_suid con_sgid
+  con_suid=$(find "$absoluta" -maxdepth 1 -perm -4000 | wc -l)
+  con_sgid=$(find "$absoluta" -maxdepth 1 -perm -2000 | wc -l)
+  echo "archivos con SUID: $con_suid"
+  echo "archivos con SGID: $con_sgid"
+  local riesgo=0
+  if [[ "$escribibles_por_otros" -gt 0 ]]; then
+    echo "riesgo: hay entradas escribibles por cualquier usuario" >&2
+    riesgo=1
+  fi
+  if [[ "$con_suid" -gt 0 || "$con_sgid" -gt 0 ]]; then
+    echo "riesgo: hay archivos con SUID/SGID activo" >&2
+    riesgo=1
+  fi
+  if [[ "$riesgo" -eq 1 ]]; then
+    exit 2
+  fi
+}
+
+cmd_logreport() {
+  local archivo="" salida=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --salida) salida="$2"; shift 2 ;;
+      *) archivo="$1"; shift ;;
+    esac
+  done
+
+  if [[ -z "$archivo" ]]; then
+    echo "toolkit logreport: falta la ruta del log" >&2
+    exit 1
+  fi
+
+  if [[ ! -f "$archivo" ]]; then
+    echo "toolkit logreport: '$archivo' no es un archivo" >&2
+    exit 1
+  fi
+
+  if [[ -z "$salida" ]]; then
+    salida="${archivo}.informe.txt"
+  fi
+
+  echo "== toolkit logreport =="
+  echo "archivo: $archivo"
+
+  local total_lineas
+  total_lineas=$(wc -l < "$archivo")
+  echo "lineas totales: $total_lineas"
+
+  local errores
+  errores=$(grep -c "ERROR" "$archivo") || errores=0
+  echo "lineas con ERROR: $errores"
+
+  grep "ERROR" "$archivo" > "$salida" || true
+  echo "informe guardado en: $salida"
+
+  if [[ "$errores" -gt 0 ]]; then
+    exit 2
+  fi
+}
+
+cmd_logscan() {
+  local directorio="." patron='ERROR|WARN|CRIT'
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --patron) patron="$2"; shift 2 ;;
+      *) directorio="$1"; shift ;;
+    esac
+  done
+
+  if [[ ! -d "$directorio" ]]; then
+    echo "toolkit logscan: '$directorio' no es un directorio" >&2
+    exit 1
+  fi
+
+  local absoluta
+  absoluta=$(cd "$directorio" && pwd)
+  echo "== toolkit logscan =="
+  echo "directorio: $absoluta"
+  echo "patron: $patron"
+
+  local total_logs
+  total_logs=$(find "$absoluta" -type f -name '*.log' | wc -l)
+  echo "archivos .log: $total_logs"
+
+  if [[ "$total_logs" -eq 0 ]]; then
+    echo "no se encontraron archivos .log"
+    exit 0
+  fi
+
+  local total_coincidencias
+  total_coincidencias=$( { grep -rEh --include='*.log' "$patron" "$absoluta" || true; } | wc -l )
+  echo "lineas coincidentes: $total_coincidencias"
+
+  local archivos_con_match
+  archivos_con_match=$( { grep -rEl --include='*.log' "$patron" "$absoluta" || true; } | wc -l )
+  echo "archivos con coincidencias: $archivos_con_match"
+
+  grep -rEn --include='*.log' "$patron" "$absoluta" || true
+
+  if [[ "$total_coincidencias" -gt 0 ]]; then
+    exit 2
+  fi
+}
+
+cmd_topcount() {
+  local archivo="" campo=1 delim=":" top=5
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --campo) campo="$2"; shift 2 ;;
+      --delim) delim="$2"; shift 2 ;;
+      --top) top="$2"; shift 2 ;;
+      *) archivo="$1"; shift ;;
+    esac
+  done
+
+  if [[ -z "$archivo" ]]; then
+    echo "toolkit topcount: falta la ruta del archivo" >&2
+    exit 1
+  fi
+  if [[ ! -f "$archivo" ]]; then
+    echo "toolkit topcount: '$archivo' no es un archivo" >&2
+    exit 1
+  fi
+
+  echo "== toolkit topcount =="
+  echo "archivo: $archivo"
+  echo "campo: $campo"
+  echo "delimitador: $delim"
+
+  local total
+  total=$(sed '/^#/d; /^$/d' "$archivo" | tr -s "$delim" | cut -d"$delim" -f"$campo" | tr '[:upper:]' '[:lower:]' | wc -l)
+  echo "entradas validas: $total"
+
+  if [[ "$total" -eq 0 ]]; then
+    echo "no hay datos para procesar"
+    exit 0
+  fi
+
+  local tabla
+  tabla=$(sed '/^#/d; /^$/d' "$archivo" | tr -s "$delim" | cut -d"$delim" -f"$campo" | tr '[:upper:]' '[:lower:]' | sort | uniq -c | sort -rn)
+
+  echo "$tabla" | head -n "$top"
+
+  local top1_count top1_valor
+  read -r top1_count top1_valor <<< "$(echo "$tabla" | head -1)"
+  echo "valor mas frecuente: $top1_valor ($top1_count de $total)"
+
+  if (( top1_count * 2 > total )); then
+    echo "riesgo: '$top1_valor' domina mas de la mitad de las entradas" >&2
+    exit 2
+  fi
+}
+
+cmd_sumfield() {
+  local archivo="" campo=2 delim=":" grupo=1
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --campo) campo="$2"; shift 2 ;;
+      --delim) delim="$2"; shift 2 ;;
+      --grupo) grupo="$2"; shift 2 ;;
+      *) archivo="$1"; shift ;;
+    esac
+  done
+
+  if [[ -z "$archivo" ]]; then
+    echo "toolkit sumfield: falta la ruta del archivo" >&2
+    exit 1
+  fi
+  if [[ ! -f "$archivo" ]]; then
+    echo "toolkit sumfield: '$archivo' no es un archivo" >&2
+    exit 1
+  fi
+
+  echo "== toolkit sumfield =="
+  echo "archivo: $archivo"
+  echo "campo valor: $campo"
+  echo "campo grupo: $grupo"
+  echo "delimitador: $delim"
+
+  local no_numericos
+  no_numericos=$(awk -F"$delim" -v campo="$campo" 'NF>=campo && $campo !~ /^-?[0-9]+([.][0-9]+)?$/' "$archivo" | wc -l)
+  echo "valores no numericos: $no_numericos"
+
+  local tabla
+  tabla=$(awk -F"$delim" -v campo="$campo" -v grupo="$grupo" '
+    NF>=campo && NF>=grupo && $campo ~ /^-?[0-9]+([.][0-9]+)?$/ {
+      suma[$grupo]+=$campo
+    }
+    END { for (k in suma) print suma[k], k }
+  ' "$archivo" | sort -rn)
+
+  echo "$tabla"
+
+  local total
+  total=$(echo "$tabla" | awk '{s+=$1} END {print s+0}')
+  echo "suma total: $total"
+
+  if [[ "$no_numericos" -gt 0 ]]; then
+    echo "riesgo: hay $no_numericos valores no numericos en el campo $campo" >&2
+    exit 2
+  fi
+}
+
+cmd_finddupes() {
+  local directorio="" extension=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --ext) extension="$2"; shift 2 ;;
+      *) directorio="$1"; shift ;;
+    esac
+  done
+  if [[ -z "$directorio" ]]; then
+    directorio="."
+  fi
+  if [[ ! -d "$directorio" ]]; then
+    echo "toolkit finddupes: '$directorio' no es un directorio" >&2
+    exit 1
+  fi
+
+  local absoluta
+  absoluta=$(cd "$directorio" && pwd)
+  echo "== toolkit finddupes =="
+  echo "directorio: $absoluta"
+
+  local salida
+  if [[ -n "$extension" ]]; then
+    salida=$(find "$absoluta" -type f -name "*.$extension" -print0 | xargs -r0 sha256sum)
+  else
+    salida=$(find "$absoluta" -type f -print0 | xargs -r0 sha256sum)
+  fi
+
+  local total_archivos
+  total_archivos=$(printf '%s\n' "$salida" | grep -c .) || true
+  echo "archivos analizados: $total_archivos"
+
+  local grupos
+  grupos=$(printf '%s\n' "$salida" | awk '{print $1}' | sort | uniq -d | grep -c .) || true
+  echo "grupos de duplicados: $grupos"
+
+  if [[ "$grupos" -eq 0 ]]; then
+    echo "no se encontraron duplicados"
+    exit 0
+  fi
+
+  local hash
+  while read -r hash; do
+    echo "duplicado ($hash):"
+    printf '%s\n' "$salida" | awk -v h="$hash" '$1==h { $1=""; sub(/^ /,""); print "  "$0 }'
+  done < <(printf '%s\n' "$salida" | awk '{print $1}' | sort | uniq -d)
+
+  exit 2
+}
+
+cmd_procwatch() {
+  local patron=""
+  local senal=""
+  local aplicar=false
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --senal) senal="$2"; shift 2 ;;
+      --apply) aplicar=true; shift ;;
+      *) patron="$1"; shift ;;
+    esac
+  done
+  if [[ -z "$patron" ]]; then
+    echo "toolkit procwatch: falta el patron de busqueda" >&2
+    exit 1
+  fi
+
+  echo "== toolkit procwatch =="
+  echo "patron: $patron"
+
+  local procesos
+  procesos=$(pgrep -a "$patron") || true
+
+  local total
+  total=$(printf '%s\n' "$procesos" | grep -c .) || true
+  echo "coincidencias: $total"
+
+  if [[ "$total" -eq 0 ]]; then
+    echo "no se encontraron procesos"
+    exit 0
+  fi
+
+  echo "$procesos"
+
+  local zombies=0 pid stat
+  while read -r pid _; do
+    stat=$(ps -p "$pid" -o stat= 2>/dev/null) || stat=""
+    if [[ "$stat" == Z* ]]; then
+      zombies=$(( zombies + 1 ))
+      echo "zombie detectado: PID $pid (no se le puede enviar ninguna senal)" >&2
+    elif [[ -n "$senal" ]]; then
+      if [[ "$aplicar" == true ]]; then
+        kill -s "$senal" "$pid" 2>/dev/null || true
+        echo "senal $senal enviada a PID $pid"
+      else
+        echo "dry-run: kill -s $senal $pid (usa --apply para enviarla de verdad)"
+      fi
+    fi
+  done < <(printf '%s\n' "$procesos")
+
+  echo "zombies encontrados: $zombies"
+
+  if [[ "$zombies" -gt 0 ]]; then
+    exit 2
+  fi
+}
+
+cmd_acctaudit() {
+  local etc="/etc"
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      *) etc="$1"; shift ;;
+    esac
+  done
+  local archivo
+  for archivo in passwd group shells; do
+    if [[ ! -f "$etc/$archivo" ]]; then
+      echo "toolkit acctaudit: falta '$etc/$archivo'" >&2
+      exit 1
+    fi
+  done
+
+  echo "== toolkit acctaudit =="
+  echo "directorio: $etc"
+
+  # UID_MIN/UID_MAX de /etc/login.defs en Ubuntu: 1000 y 60000.
+  local conteos
+  conteos=$(awk -F: 'NF >= 7 {
+    total++
+    if ($3 < 1000) sistema++
+    else if ($3 <= 60000) regulares++
+  } END { print total + 0, sistema + 0, regulares + 0 }' "$etc/passwd")
+  local total sistema regulares
+  read -r total sistema regulares <<<"$conteos"
+  echo "cuentas totales: $total"
+  echo "cuentas de sistema (UID < 1000): $sistema"
+  echo "cuentas regulares (UID 1000-60000): $regulares"
+
+  # Un solo awk lee tres archivos: shells y group llenan tablas (NR==FNR
+  # no sirve con tres archivos, por eso se compara FILENAME) y passwd se evalua.
+  local hallazgos
+  hallazgos=$(awk -F: -v shells="$etc/shells" -v groups="$etc/group" '
+    FILENAME == shells { if ($0 !~ /^#/ && $0 != "") valida[$0] = 1; next }
+    FILENAME == groups { gid[$3] = 1; next }
+    NF < 7 { next }
+    {
+      if ($3 == 0 && $1 != "root") print "hallazgo: UID 0 extra: " $1
+      if ($3 > 0 && $3 < 1000 && ($7 in valida)) print "hallazgo: cuenta de sistema con shell: " $1 " (" $7 ")"
+      if (!($4 in gid)) print "hallazgo: grupo primario inexistente: " $1 " (GID " $4 ")"
+      if ($3 != 0) { n[$3]++; quienes[$3] = quienes[$3] (n[$3] > 1 ? ", " : "") $1 }
+    }
+    END { for (u in n) if (n[u] > 1) print "hallazgo: UID duplicado: " u " (" quienes[u] ")" }
+  ' "$etc/shells" "$etc/group" "$etc/passwd" | sort)
+
+  local cantidad
+  cantidad=$(printf '%s\n' "$hallazgos" | grep -c .) || true
+  if [[ "$cantidad" -eq 0 ]]; then
+    echo "sin hallazgos"
+    exit 0
+  fi
+
+  echo "$hallazgos"
+  echo "hallazgos: $cantidad"
+  exit 2
+}
+
+cmd_pkgcheck() {
+  local paquete=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      *) paquete="$1"; shift ;;
+    esac
+  done
+  if [[ -z "$paquete" ]]; then
+    echo "toolkit pkgcheck: falta el nombre del paquete" >&2
+    exit 1
+  fi
+
+  local gestor="" version=""
+  if command -v dpkg-query >/dev/null 2>&1; then
+    gestor="apt (dpkg)"
+    # Status tiene que ser "install ok installed": un paquete quitado con
+    # remove (no purge) sigue en la base de dpkg con estado "deinstall ok config-files".
+    version=$(dpkg-query -W -f='${db:Status-Status} ${Version}' "$paquete" 2>/dev/null \
+      | awk '$1 == "installed" { print $2 }') || true
+  elif command -v rpm >/dev/null 2>&1; then
+    gestor="dnf (rpm)"
+    # rpm -q imprime "package X is not installed" en stdout: hay que mirar el codigo de salida.
+    version=$(rpm -q --qf '%{VERSION}-%{RELEASE}' "$paquete" 2>/dev/null) || version=""
+  elif command -v pacman >/dev/null 2>&1; then
+    gestor="pacman"
+    version=$(pacman -Q "$paquete" 2>/dev/null | awk '{ print $2 }') || true
+  else
+    echo "toolkit pkgcheck: no encontre apt, dnf ni pacman en esta maquina" >&2
+    exit 1
+  fi
+
+  echo "== toolkit pkgcheck =="
+  echo "gestor: $gestor"
+  echo "paquete: $paquete"
+
+  if [[ -z "$version" ]]; then
+    echo "estado: no instalado"
+    exit 2
+  fi
+
+  echo "estado: instalado"
+  echo "version: $version"
+}
+
+cmd_netcheck() {
+  local host="" puerto=""
+  while [[ $# -gt 0 ]]; do
+    if [[ -z "$host" ]]; then host="$1"; else puerto="$1"; fi
+    shift
+  done
+  if [[ -z "$host" ]]; then
+    echo "toolkit netcheck: falta el host" >&2
+    exit 1
+  fi
+  if [[ -n "$puerto" ]] && ! [[ "$puerto" =~ ^[0-9]+$ && "$puerto" -ge 1 && "$puerto" -le 65535 ]]; then
+    echo "toolkit netcheck: puerto invalido: '$puerto'" >&2
+    exit 1
+  fi
+
+  echo "== toolkit netcheck =="
+  echo "destino: $host${puerto:+:$puerto}"
+
+  local fallos=0
+
+  # Capa 1-2: alguna interfaz que no sea lo con operstate "up" en /sys.
+  local d nombre iface_up=""
+  for d in /sys/class/net/*; do
+    nombre="${d##*/}"
+    [[ "$nombre" == lo ]] && continue
+    if [[ "$(cat "$d/operstate" 2>/dev/null)" == up ]]; then
+      iface_up="$nombre"
+      break
+    fi
+  done
+  if [[ -n "$iface_up" ]]; then
+    echo "ok interfaz: $iface_up (up)"
+  else
+    echo "fallo interfaz: ninguna interfaz activa aparte de lo"
+    fallos=$(( fallos + 1 ))
+  fi
+
+  # Capa 3: la ruta por defecto es la linea de /proc/net/route con destino 00000000.
+  # El gateway esta en hexadecimal little-endian: 01001BAC = AC.1B.00.01 = 172.27.0.1.
+  local ruta iface gw_hex gw
+  ruta=$(awk 'NR > 1 && $2 == "00000000" { print $1, $3; exit }' /proc/net/route)
+  if [[ -n "$ruta" ]]; then
+    read -r iface gw_hex <<<"$ruta"
+    gw=$(printf '%d.%d.%d.%d' "0x${gw_hex:6:2}" "0x${gw_hex:4:2}" "0x${gw_hex:2:2}" "0x${gw_hex:0:2}")
+    echo "ok ruta por defecto: $iface via $gw"
+  else
+    echo "fallo ruta por defecto: no hay puerta de enlace"
+    fallos=$(( fallos + 1 ))
+  fi
+
+  # DNS: getent usa la misma ruta que los programas (NSS), no solo el servidor DNS.
+  local ip=""
+  if [[ "$host" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    ip="$host"
+    echo "dns: no aplica (IP literal)"
+  else
+    ip=$(getent ahostsv4 "$host" | awk 'NR == 1 { print $1 }') || true
+    if [[ -n "$ip" ]]; then
+      echo "ok dns: $host -> $ip"
+    else
+      echo "fallo dns: $host no resuelve"
+      fallos=$(( fallos + 1 ))
+    fi
+  fi
+
+  # TCP: /dev/tcp es una funcion de bash, no un archivo: no hace falta nc ni curl.
+  # Es seguro interpolar ip y puerto: ya estan validados (IPv4 o salida de getent, y entero).
+  if [[ -n "$puerto" ]]; then
+    if [[ -z "$ip" ]]; then
+      echo "tcp: omitido (sin IP)"
+    elif timeout 3 bash -c "exec 3<>/dev/tcp/$ip/$puerto" 2>/dev/null; then
+      echo "ok tcp: $host:$puerto abierto"
+    else
+      echo "fallo tcp: $host:$puerto cerrado o sin respuesta"
+      fallos=$(( fallos + 1 ))
+    fi
+  fi
+
+  echo "fallos: $fallos"
+  if [[ "$fallos" -gt 0 ]]; then
+    exit 2
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Helpers de sistema (Semana 14). Cada funcion imprime UN dato en stdout y no
+# toca variables globales: quien la llama lo captura con $( ).
+# ---------------------------------------------------------------------------
+
+is_uint() { [[ "$1" =~ ^[0-9]+$ ]]; }
+
+sys_os_name() {
+  # shellcheck source=/dev/null  # /etc/os-release lo lee bash en ejecucion, no shellcheck
+  ( . /etc/os-release && echo "$PRETTY_NAME" )
+}
+
+sys_uptime_days() {
+  local segundos _resto
+  read -r segundos _resto < /proc/uptime
+  echo $(( ${segundos%%.*} / 86400 ))
+}
+
+sys_mem_mib() {
+  local memoria_kb
+  memoria_kb=$(awk '/^MemTotal:/ { print $2 }' /proc/meminfo)
+  echo $(( memoria_kb / 1024 ))
+}
+
+sys_proc_count() {
+  find /proc -mindepth 1 -maxdepth 1 -name '[0-9]*' | wc -l
+}
+
+sys_disk_usage() {
+  df -P / | awk 'NR == 2 { gsub("%", "", $5); print $5 }'
+}
+
+# Arma el informe. Recibe lo ya calculado y lo imprime: no decide nada.
+snapshot_report() {
+  local uso=$1 estado=$2 alerta=$3
+  # $USER no existe en un contenedor lanzado con docker exec: id -un lo sustituye.
+  local usuario="${USER:-$(id -un)}"
+  cat <<EOT
+== toolkit snapshot ==
+fecha: $(date +%F)
+host: $(uname -n)
+usuario: $usuario
+sistema: $(sys_os_name)
+kernel: $(uname -r)
+uptime: $(sys_uptime_days) dias
+memoria: $(sys_mem_mib) MiB
+procesos: $(sys_proc_count)
+disco /: ${uso}%
+${alerta:+$alerta
+}estado: $estado
+EOT
+}
+
+# Muestra el informe por pantalla o lo guarda en un archivo.
+snapshot_emit() {
+  local informe=$1 salida=$2
+  if [[ -n "$salida" ]]; then
+    mkdir -p "$(dirname "$salida")"
+    printf '%s\n' "$informe" > "$salida"
+    echo "informe guardado en: $salida"
+  else
+    printf '%s\n' "$informe"
+  fi
+}
+
+cmd_snapshot() {
+  local salida="" umbral=90
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --salida | --umbral)
+        if [[ $# -lt 2 ]]; then
+          echo "toolkit snapshot: $1 necesita un valor" >&2
+          exit 1
+        fi
+        if [[ "$1" == --salida ]]; then salida="$2"; else umbral="$2"; fi
+        shift 2
+        ;;
+      *)
+        echo "toolkit snapshot: opcion desconocida: $1" >&2
+        exit 1
+        ;;
+    esac
+  done
+
+  # is_uint va primero: -gt evalua su operando como aritmetica (Semana 12).
+  if ! is_uint "$umbral" || [[ "$umbral" -gt 100 ]]; then
+    echo "toolkit snapshot: umbral invalido: '$umbral'" >&2
+    exit 1
+  fi
+
+  local uso estado="ok" alerta=""
+  uso=$(sys_disk_usage)
+  if [[ "$uso" -ge "$umbral" ]]; then
+    estado="alerta"
+    alerta="alerta: disco / al ${uso}% (umbral ${umbral}%)"
+  fi
+
+  local informe
+  informe=$(snapshot_report "$uso" "$estado" "$alerta")
+  snapshot_emit "$informe" "$salida"
+
+  if [[ "$estado" == alerta ]]; then
+    exit 2
+  fi
+}
+
+# Una linea por comprobacion: estado, nombre y detalle.
+hc_line() { printf '%-5s %s: %s\n' "$1" "$2" "$3"; }
+
+# Cada hc_check_NOMBRE recibe su limite, imprime UNA linea y sale con 0 (ok)
+# o 1 (fallo). cmd_healthcheck las llama por nombre: hc_check_disk, etc.
+hc_check_disk() {
+  local limite=$1 uso
+  uso=$(sys_disk_usage)
+  if [[ "$uso" -lt "$limite" ]]; then
+    hc_line ok disk "${uso}% (umbral ${limite}%)"
+  else
+    hc_line fallo disk "${uso}% (umbral ${limite}%)"
+    return 1
+  fi
+}
+
+hc_check_mem() {
+  local limite=$1 mem
+  mem=$(sys_mem_mib)
+  if [[ "$mem" -ge "$limite" ]]; then
+    hc_line ok mem "${mem} MiB (minimo ${limite} MiB)"
+  else
+    hc_line fallo mem "${mem} MiB (minimo ${limite} MiB)"
+    return 1
+  fi
+}
+
+hc_check_procs() {
+  local limite=$1 procesos
+  procesos=$(sys_proc_count)
+  if [[ "$procesos" -le "$limite" ]]; then
+    hc_line ok procs "${procesos} (maximo ${limite})"
+  else
+    hc_line fallo procs "${procesos} (maximo ${limite})"
+    return 1
+  fi
+}
+
+cmd_healthcheck() {
+  local solo="" solo_dado=0
+  # Array asociativo: un limite por comprobacion, indexado por su nombre.
+  local -A limite=([disk]=90 [mem]=128 [procs]=500)
+  local -a orden=(disk mem procs)
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --solo | --umbral-disco | --min-mem | --max-procesos)
+        if [[ $# -lt 2 ]]; then
+          echo "toolkit healthcheck: $1 necesita un valor" >&2
+          exit 1
+        fi
+        case "$1" in
+          --solo) solo="$2"; solo_dado=1 ;;
+          --umbral-disco) limite[disk]="$2" ;;
+          --min-mem) limite[mem]="$2" ;;
+          --max-procesos) limite[procs]="$2" ;;
+        esac
+        shift 2
+        ;;
+      *)
+        echo "toolkit healthcheck: opcion desconocida: $1" >&2
+        exit 1
+        ;;
+    esac
+  done
+
+  local nombre
+  for nombre in "${orden[@]}"; do
+    if ! is_uint "${limite[$nombre]}"; then
+      echo "toolkit healthcheck: limite invalido para $nombre: '${limite[$nombre]}'" >&2
+      exit 1
+    fi
+  done
+  if [[ "${limite[disk]}" -gt 100 ]]; then
+    echo "toolkit healthcheck: el umbral de disco no puede pasar de 100" >&2
+    exit 1
+  fi
+
+  # Sin --solo se ejecutan todas, en orden; con --solo, las pedidas y en ESE orden.
+  local -a pedidos=("${orden[@]}")
+  if [[ "$solo_dado" -eq 1 ]]; then
+    IFS=, read -ra pedidos <<< "$solo"
+  fi
+  if [[ "${#pedidos[@]}" -eq 0 ]]; then
+    echo "toolkit healthcheck: --solo necesita al menos una comprobacion" >&2
+    exit 1
+  fi
+  for nombre in "${pedidos[@]}"; do
+    case "$nombre" in
+      disk | mem | procs) ;;
+      *)
+        echo "toolkit healthcheck: comprobacion desconocida: '$nombre' (disk, mem, procs)" >&2
+        exit 1
+        ;;
+    esac
+  done
+
+  local total=0 fallos=0
+  for nombre in "${pedidos[@]}"; do
+    total=$(( total + 1 ))
+    # Despacho dinamico: "hc_check_${nombre}" es el nombre de una funcion.
+    if ! "hc_check_${nombre}" "${limite[$nombre]}"; then
+      fallos=$(( fallos + 1 ))
+    fi
+  done
+
+  echo "resumen: $(( total - fallos )) de $total ok"
+  if [[ "$fallos" -gt 0 ]]; then
+    exit 2
+  fi
+}
+
+# --- guard (Semana 15) --------------------------------------------------
+
+# Estado que los manejadores de trap necesitan ver: viven en variables
+# globales porque un trap se ejecuta fuera de la funcion que lo instalo.
+GUARD_LOG=""
+GUARD_TMP=""
+GUARD_PID=""
+
+# Una linea de registro: a -l ARCHIVO si lo hay, a stderr si no.
+guard_log() {
+  local nivel=$1 mensaje=$2 linea
+  linea="$(date +%FT%T) ${nivel} ${mensaje}"
+  if [[ -n "$GUARD_LOG" ]]; then
+    echo "$linea" >> "$GUARD_LOG"
+  else
+    echo "$linea" >&2
+  fi
+}
+
+# Se ejecuta SIEMPRE al salir (trap EXIT): registra el codigo y borra el temporal.
+guard_cleanup() {
+  local rc=$?
+  guard_log INFO "fin: codigo de salida ${rc}"
+  if [[ -n "$GUARD_TMP" ]]; then
+    rm -f -- "$GUARD_TMP"
+  fi
+}
+
+# Senal recibida (INT o TERM): mata al hijo y lo recoge con wait (si no, queda
+# zombi), deja constancia y sale con 128+N.
+guard_interrupt() {
+  local senal=$1 codigo=$2
+  guard_log WARN "interrumpido (${senal})"
+  if [[ -n "$GUARD_PID" ]]; then
+    kill "$GUARD_PID" 2> /dev/null || true
+    wait "$GUARD_PID" 2> /dev/null || true
+  fi
+  exit "$codigo"
+}
+
+# Una ejecucion del comando (con timeout opcional). Su salida va al temporal.
+# Corre en segundo plano y se espera con "wait": asi un TERM recibido mientras
+# tanto ejecuta el trap al instante, en vez de esperar a que el hijo acabe.
+guard_run() {
+  local segundos=$1
+  shift
+  if [[ "$segundos" -gt 0 ]]; then
+    timeout "$segundos" "$@" > "$GUARD_TMP" 2>&1 &
+  else
+    "$@" > "$GUARD_TMP" 2>&1 &
+  fi
+  GUARD_PID=$!
+  wait "$GUARD_PID"
+}
+
+cmd_guard() {
+  local lock="" segundos=0 reintentos=0 espera=1 opt
+  GUARD_LOG=""
+  local OPTIND=1
+  while getopts ':l:k:t:r:w:' opt; do
+    case "$opt" in
+      l) GUARD_LOG=$OPTARG ;;
+      k) lock=$OPTARG ;;
+      t) segundos=$OPTARG ;;
+      r) reintentos=$OPTARG ;;
+      w) espera=$OPTARG ;;
+      :)
+        echo "toolkit guard: -${OPTARG} necesita un valor" >&2
+        exit 1
+        ;;
+      *)
+        echo "toolkit guard: opcion desconocida: -${OPTARG}" >&2
+        exit 1
+        ;;
+    esac
+  done
+  shift $(( OPTIND - 1 ))
+
+  if [[ $# -eq 0 ]]; then
+    echo "toolkit guard: falta el comando (uso: guard [opciones] -- COMANDO [ARGS...])" >&2
+    exit 1
+  fi
+  local nombre valor
+  for nombre in segundos reintentos espera; do
+    valor=${!nombre}
+    if ! is_uint "$valor"; then
+      echo "toolkit guard: valor invalido para ${nombre}: '${valor}'" >&2
+      exit 1
+    fi
+  done
+  if ! command -v "$1" > /dev/null; then
+    echo "toolkit guard: comando no encontrado: $1" >&2
+    exit 1
+  fi
+  if [[ -n "$GUARD_LOG" ]] && ! { : >> "$GUARD_LOG"; } 2> /dev/null; then
+    echo "toolkit guard: no puedo escribir el registro: ${GUARD_LOG}" >&2
+    exit 1
+  fi
+
+  GUARD_TMP=$(mktemp "${TMPDIR:-/tmp}/toolkit-guard.XXXXXX")
+  trap guard_cleanup EXIT
+  trap 'guard_interrupt INT 130' INT
+  trap 'guard_interrupt TERM 143' TERM
+
+  if [[ -n "$lock" ]]; then
+    local lock_fd
+    exec {lock_fd}> "$lock"
+    if ! flock -n "$lock_fd"; then
+      guard_log ERROR "bloqueado: otra ejecucion tiene ${lock}"
+      exit 3
+    fi
+  fi
+
+  local intento=0 maximo=$(( reintentos + 1 )) rc=0
+  while [[ "$intento" -lt "$maximo" ]]; do
+    intento=$(( intento + 1 ))
+    guard_log INFO "intento ${intento}/${maximo}: $*"
+    rc=0
+    guard_run "$segundos" "$@" || rc=$?
+    if [[ "$rc" -eq 0 ]]; then
+      break
+    fi
+    if [[ "$rc" -eq 124 ]]; then
+      guard_log WARN "timeout tras ${segundos}s"
+    else
+      guard_log WARN "fallo con codigo ${rc}"
+    fi
+    if [[ "$intento" -lt "$maximo" ]]; then
+      sleep "$espera"
+    fi
+  done
+
+  cat "$GUARD_TMP"
+  if [[ "$rc" -eq 0 ]]; then
+    guard_log INFO "ok"
+    return 0
+  fi
+  tail -n 5 "$GUARD_TMP" | while IFS= read -r linea; do
+    guard_log INFO "salida: ${linea}"
+  done
+  if [[ "$rc" -eq 124 ]]; then
+    exit 4
+  fi
+  exit 2
+}
+
+# --- schedule (Semana 16) -----------------------------------------------
+
+# Resultado de cron_parse, uno por campo (minuto, hora, dia del mes, mes, dia
+# de la semana). Son globales porque una funcion de bash no devuelve arrays.
+CRON_ERROR=""
+CRON_VALUES=()
+CRON_RAW=()
+CRON_LIST=()
+CRON_COUNT=()
+
+# Expande UN campo de cron (lista, rango, paso) a CRON_VALUES: enteros
+# ordenados y sin repetidos. Devuelve 1 y deja el motivo en CRON_ERROR si el
+# campo no es valido. Gramatica: *, N, A-B, */S, A-B/S, separados por comas.
+cron_expand() {
+  local campo=$1 min=$2 max=$3
+  local item rango paso inicio fin n
+  local -a items
+  local -A visto=()
+  CRON_VALUES=()
+  if [[ ! "$campo" =~ ^[^,]+(,[^,]+)*$ ]]; then
+    CRON_ERROR="campo vacio o con coma sobrante: '${campo}'"
+    return 1
+  fi
+  IFS=, read -ra items <<< "$campo"
+  for item in "${items[@]}"; do
+    rango=$item
+    paso=1
+    if [[ "$item" == */* ]]; then
+      rango=${item%%/*}
+      paso=${item#*/}
+      # 10# fuerza base 10: sin el, "08" es un octal invalido.
+      if [[ ! "$paso" =~ ^[0-9]{1,4}$ ]] || (( 10#$paso < 1 )); then
+        CRON_ERROR="paso invalido en '${item}'"
+        return 1
+      fi
+      paso=$(( 10#$paso ))
+    fi
+    if [[ "$rango" == '*' ]]; then
+      inicio=$min
+      fin=$max
+    elif [[ "$rango" =~ ^([0-9]{1,4})-([0-9]{1,4})$ ]]; then
+      inicio=$(( 10#${BASH_REMATCH[1]} ))
+      fin=$(( 10#${BASH_REMATCH[2]} ))
+    elif [[ "$rango" =~ ^[0-9]{1,4}$ && "$item" != */* ]]; then
+      inicio=$(( 10#$rango ))
+      fin=$inicio
+    else
+      CRON_ERROR="elemento no reconocido: '${item}'"
+      return 1
+    fi
+    if (( inicio < min || fin > max )); then
+      CRON_ERROR="fuera del rango ${min}-${max}: '${item}'"
+      return 1
+    fi
+    if (( inicio > fin )); then
+      CRON_ERROR="rango invertido: '${item}'"
+      return 1
+    fi
+    for (( n = inicio; n <= fin; n += paso )); do
+      visto[$n]=1
+    done
+  done
+  for (( n = min; n <= max; n++ )); do
+    if [[ -n "${visto[$n]:-}" ]]; then
+      CRON_VALUES+=("$n")
+    fi
+  done
+}
+
+# Valida una expresion de 5 campos y rellena CRON_RAW, CRON_LIST y CRON_COUNT.
+cron_parse() {
+  local expr=$1 i d v
+  local -a campos
+  local -a minimos=(0 0 1 1 0) maximos=(59 23 31 12 7)
+  local -A dias=()
+  CRON_ERROR=""
+  CRON_RAW=()
+  CRON_LIST=()
+  CRON_COUNT=()
+  read -ra campos <<< "$expr"
+  if [[ "${#campos[@]}" -ne 5 ]]; then
+    CRON_ERROR="se esperaban 5 campos y hay ${#campos[@]}"
+    return 1
+  fi
+  for i in 0 1 2 3 4; do
+    cron_expand "${campos[$i]}" "${minimos[$i]}" "${maximos[$i]}" || return 1
+    if [[ "$i" -eq 4 ]]; then
+      # En el dia de la semana 0 y 7 son el mismo domingo: se unifican en 0.
+      for v in "${CRON_VALUES[@]}"; do
+        dias[$(( v % 7 ))]=1
+      done
+      CRON_VALUES=()
+      for d in 0 1 2 3 4 5 6; do
+        if [[ -n "${dias[$d]:-}" ]]; then
+          CRON_VALUES+=("$d")
+        fi
+      done
+    fi
+    CRON_RAW[i]=${campos[$i]}
+    CRON_COUNT[i]=${#CRON_VALUES[@]}
+    CRON_LIST[i]=$(IFS=,; echo "${CRON_VALUES[*]}")
+  done
+}
+
+# Cron une "dia del mes" y "dia de la semana" con OR cuando los dos estan
+# restringidos (no empiezan por *); systemd los une con AND. No son iguales.
+cron_dom_dow_restringidos() {
+  [[ "${CRON_RAW[2]}" != \** && "${CRON_RAW[4]}" != \** ]]
+}
+
+# Un campo en OnCalendar: "*" si cubre todo su rango, la lista de valores si no.
+cal_field() {
+  if [[ "${CRON_COUNT[$1]}" -eq "$2" ]]; then
+    echo '*'
+  else
+    echo "${CRON_LIST[$1]}"
+  fi
+}
+
+# La expresion ya validada, como OnCalendar de systemd: [DIAS ]*-MES-DIA HORA:MIN:00
+schedule_calendar() {
+  local dow="" v
+  local -a ds
+  local -a nombres=(Sun Mon Tue Wed Thu Fri Sat)
+  if [[ "${CRON_COUNT[4]}" -ne 7 ]]; then
+    IFS=, read -ra ds <<< "${CRON_LIST[4]}"
+    for v in "${ds[@]}"; do
+      dow+="${nombres[$v]},"
+    done
+    dow="${dow%,} "
+  fi
+  echo "${dow}*-$(cal_field 3 12)-$(cal_field 2 31) $(cal_field 1 24):$(cal_field 0 60):00"
+}
+
+schedule_check() {
+  if [[ $# -ne 1 ]]; then
+    echo "toolkit schedule check: uso: check 'M H DOM MES DOW' (entre comillas)" >&2
+    exit 1
+  fi
+  if ! cron_parse "$1"; then
+    echo "toolkit schedule check: expresion invalida: ${CRON_ERROR}" >&2
+    exit 2
+  fi
+  echo "expresion: $1"
+  echo "minutos: ${CRON_COUNT[0]}"
+  echo "horas: ${CRON_COUNT[1]}"
+  echo "dias del mes: ${CRON_COUNT[2]}"
+  echo "meses: ${CRON_COUNT[3]}"
+  echo "dias de la semana: ${CRON_COUNT[4]}"
+  echo "ejecuciones por dia: $(( CRON_COUNT[0] * CRON_COUNT[1] ))"
+  if cron_dom_dow_restringidos; then
+    echo "aviso: dia del mes y dia de la semana restringidos: cron los une con OR, systemd con AND"
+  fi
+}
+
+# Solo caracteres que ni cron ni systemd interpretan (salvo %, que se escapa
+# aparte): asi no hace falta ningun entrecomillado.
+schedule_safe() {
+  [[ "$1" =~ ^[A-Za-z0-9_@%+=:,./-]+$ ]]
+}
+
+schedule_gen() {
+  local nombre="" cron="" salida="." log="" segundos=300 force=0
+  if [[ $# -gt 0 && "$1" != -* ]]; then
+    nombre=$1
+    shift
+  fi
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --) shift; break ;;
+      --force) force=1; shift ;;
+      --cron | --salida | --log | --timeout)
+        if [[ $# -lt 2 ]]; then
+          echo "toolkit schedule gen: $1 necesita un valor" >&2
+          exit 1
+        fi
+        case "$1" in
+          --cron) cron="$2" ;;
+          --salida) salida="$2" ;;
+          --log) log="$2" ;;
+          --timeout) segundos="$2" ;;
+        esac
+        shift 2
+        ;;
+      *)
+        echo "toolkit schedule gen: opcion desconocida: $1" >&2
+        exit 1
+        ;;
+    esac
+  done
+
+  if [[ ! "$nombre" =~ ^[a-z][a-z0-9-]{0,39}$ ]]; then
+    echo "toolkit schedule gen: nombre invalido: '${nombre}' (minusculas, digitos y guiones; empieza por letra)" >&2
+    exit 1
+  fi
+  if [[ -z "$cron" || $# -eq 0 ]]; then
+    echo "toolkit schedule gen: uso: gen NOMBRE --cron 'EXPR' [--salida DIR] [--log ARCHIVO] [--timeout SEG] [--force] -- COMANDO [ARGS...]" >&2
+    exit 1
+  fi
+  if ! is_uint "$segundos"; then
+    echo "toolkit schedule gen: --timeout debe ser un entero: '${segundos}'" >&2
+    exit 1
+  fi
+  if [[ ! -d "$salida" ]]; then
+    echo "toolkit schedule gen: no existe el directorio: ${salida}" >&2
+    exit 1
+  fi
+  if [[ -z "$log" ]]; then
+    log="/var/tmp/toolkit-${nombre}.log"
+  fi
+  local lock="/var/tmp/toolkit-${nombre}.lock" self cmd0 arg
+  self=$(readlink -f "${BASH_SOURCE[0]}")
+  # type -P solo devuelve rutas de archivo: asi el horario no depende del PATH
+  # de cron ni de un alias o funcion que solo existe en tu shell.
+  if ! cmd0=$(type -P -- "$1"); then
+    echo "toolkit schedule gen: comando no encontrado como archivo ejecutable: $1" >&2
+    exit 1
+  fi
+  shift
+  if [[ "$log" != /* ]]; then
+    echo "toolkit schedule gen: --log debe ser una ruta absoluta: '${log}'" >&2
+    exit 1
+  fi
+  for arg in "$self" "$log" "$cmd0" "$@"; do
+    if ! schedule_safe "$arg"; then
+      echo "toolkit schedule gen: valor no soportado (solo A-Za-z0-9_@%+=:,./-): '${arg}'" >&2
+      exit 1
+    fi
+  done
+  if ! cron_parse "$cron"; then
+    echo "toolkit schedule gen: expresion invalida: ${CRON_ERROR}" >&2
+    exit 2
+  fi
+  if cron_dom_dow_restringidos; then
+    echo "toolkit schedule gen: dia del mes y dia de la semana a la vez: cron usa OR, systemd AND; usa uno solo" >&2
+    exit 2
+  fi
+
+  local base="${salida}/${nombre}" ext
+  if [[ "$force" -eq 0 ]]; then
+    for ext in cron service timer; do
+      if [[ -e "${base}.${ext}" ]]; then
+        echo "toolkit schedule gen: ya existe ${base}.${ext} (usa --force para reemplazarlo)" >&2
+        exit 1
+      fi
+    done
+  fi
+
+  local guardia="${self} guard -k ${lock} -t ${segundos} -- ${cmd0}"
+  if [[ $# -gt 0 ]]; then
+    guardia+=" $*"
+  fi
+  # En cron el % es un salto de linea: hay que escribirlo \%. En systemd es
+  # el inicio de un especificador: se escribe %%.
+  cat > "${base}.cron" << UNIDAD
+# generado por toolkit.sh schedule: ${nombre}
+# instalar: crontab ${nombre}.cron  (REEMPLAZA todo tu crontab: guarda antes "crontab -l")
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+MAILTO=""
+${cron} ${guardia//\%/\\%} >> ${log} 2>&1
+UNIDAD
+  local calendario
+  calendario=$(schedule_calendar)
+  cat > "${base}.service" << UNIDAD
+[Unit]
+Description=toolkit schedule: ${nombre}
+
+[Service]
+Type=oneshot
+ExecStart=${guardia//\%/%%}
+UNIDAD
+  cat > "${base}.timer" << UNIDAD
+[Unit]
+Description=Temporizador de toolkit schedule: ${nombre}
+
+[Timer]
+OnCalendar=${calendario}
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+UNIDAD
+  for ext in cron service timer; do
+    echo "generado: ${base}.${ext}"
+  done
+  echo "calendario: ${calendario}"
+  echo "archivos creados: 3"
+}
+
+cmd_schedule() {
+  local accion="${1:-}"
+  shift || true
+  case "$accion" in
+    check) schedule_check "$@" ;;
+    gen) schedule_gen "$@" ;;
+    *)
+      echo "Uso: toolkit.sh schedule check 'EXPR' | schedule gen NOMBRE --cron 'EXPR' -- COMANDO [ARGS...]" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# --- dotfiles (Semana 17) -----------------------------------------------
+
+# Estado compartido entre las funciones de dotfiles. Son globales porque una
+# funcion de bash no devuelve arrays ni variables a quien la llama.
+DOT_REPO=""
+DOT_HOME=""
+DOT_FORCE=0
+DOT_DRY=0
+DOT_FILES=()
+
+# Los archivos del repositorio que se enlazan: solo archivos regulares del
+# primer nivel (no enlaces), con un nombre sencillo, y sin README ni LICENSE.
+# El glob "$1"/* no casa con ocultos, asi que .git y compania quedan fuera.
+dotfiles_list() {
+  local ruta nombre
+  DOT_FILES=()
+  for ruta in "$1"/*; do
+    if [[ ! -f "$ruta" || -L "$ruta" ]]; then
+      continue
+    fi
+    nombre=${ruta##*/}
+    case "$nombre" in
+      README* | LICENSE*) continue ;;
+    esac
+    if [[ "$nombre" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]]; then
+      DOT_FILES+=("$nombre")
+    fi
+  done
+}
+
+# Estado de HOME/.NOMBRE respecto al repositorio.
+dotfiles_state() {
+  local destino="${DOT_HOME}/.$1"
+  if [[ -L "$destino" ]]; then
+    if [[ "$(readlink "$destino")" == "${DOT_REPO}/$1" ]]; then
+      echo ok
+    else
+      echo conflicto-enlace
+    fi
+  elif [[ -d "$destino" ]]; then
+    echo conflicto-directorio
+  elif [[ -e "$destino" ]]; then
+    echo conflicto-archivo
+  else
+    echo falta
+  fi
+}
+
+# Ya viene hecha: una linea de informe por archivo.
+dotfiles_line() {
+  case "$1" in
+    ok) printf 'ok         .%s\n' "$2" ;;
+    falta) printf 'falta      .%s\n' "$2" ;;
+    conflicto-archivo) printf 'conflicto  .%s (archivo real)\n' "$2" ;;
+    conflicto-enlace) printf 'conflicto  .%s (enlace a otro destino)\n' "$2" ;;
+    conflicto-directorio) printf 'conflicto  .%s (directorio)\n' "$2" ;;
+  esac
+}
+
+dotfiles_parse() {
+  local accion=$1
+  shift
+  DOT_REPO="${DOTFILES_REPO:-${HOME}/dotfiles}"
+  DOT_HOME=$HOME
+  DOT_FORCE=0
+  DOT_DRY=0
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --repo | --home)
+        if [[ $# -lt 2 ]]; then
+          echo "toolkit dotfiles ${accion}: $1 necesita un valor" >&2
+          exit 1
+        fi
+        if [[ "$1" == --repo ]]; then
+          DOT_REPO=$2
+        else
+          DOT_HOME=$2
+        fi
+        shift 2
+        ;;
+      --force | --dry-run)
+        if [[ "$accion" != link ]]; then
+          echo "toolkit dotfiles ${accion}: $1 solo vale para link" >&2
+          exit 1
+        fi
+        if [[ "$1" == --force ]]; then
+          DOT_FORCE=1
+        else
+          DOT_DRY=1
+        fi
+        shift
+        ;;
+      *)
+        echo "toolkit dotfiles ${accion}: opcion desconocida: $1" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+dotfiles_prepare() {
+  if [[ ! -d "$DOT_REPO" ]]; then
+    echo "toolkit dotfiles: no existe el repositorio: ${DOT_REPO}" >&2
+    exit 1
+  fi
+  if [[ ! -d "$DOT_HOME" ]]; then
+    echo "toolkit dotfiles: no existe el directorio home: ${DOT_HOME}" >&2
+    exit 1
+  fi
+  # pwd -P: la ruta fisica, sin enlaces ni "..". Es la que se escribe en el
+  # enlace y la que se compara despues.
+  DOT_REPO=$(cd -- "$DOT_REPO" && pwd -P)
+  DOT_HOME=$(cd -- "$DOT_HOME" && pwd -P)
+  dotfiles_list "$DOT_REPO"
+  if [[ ${#DOT_FILES[@]} -eq 0 ]]; then
+    echo "toolkit dotfiles: el repositorio no tiene archivos para enlazar: ${DOT_REPO}" >&2
+    exit 1
+  fi
+}
+
+dotfiles_status() {
+  local nombre estado ok=0 falta=0 conflicto=0
+  for nombre in "${DOT_FILES[@]}"; do
+    estado=$(dotfiles_state "$nombre")
+    dotfiles_line "$estado" "$nombre"
+    case "$estado" in
+      ok) ok=$((ok + 1)) ;;
+      falta) falta=$((falta + 1)) ;;
+      *) conflicto=$((conflicto + 1)) ;;
+    esac
+  done
+  echo "resumen: ok=${ok} falta=${falta} conflicto=${conflicto}"
+  if [[ $((falta + conflicto)) -gt 0 ]]; then
+    exit 2
+  fi
+}
+
+# Valida TODO antes de tocar nada: un directorio nunca se reemplaza; un
+# archivo o enlace ajeno solo con --force, y solo si su copia .toolkit-bak
+# no existe ya (no se pisa un respaldo).
+dotfiles_link_check() {
+  local nombre estado problemas=0
+  for nombre in "${DOT_FILES[@]}"; do
+    estado=$(dotfiles_state "$nombre")
+    case "$estado" in
+      ok | falta) continue ;;
+      conflicto-directorio)
+        dotfiles_line "$estado" "$nombre" >&2
+        problemas=$((problemas + 1))
+        ;;
+      *)
+        if [[ "$DOT_FORCE" -eq 0 ]]; then
+          dotfiles_line "$estado" "$nombre" >&2
+          problemas=$((problemas + 1))
+        elif [[ -e "${DOT_HOME}/.${nombre}.toolkit-bak" || -L "${DOT_HOME}/.${nombre}.toolkit-bak" ]]; then
+          echo "conflicto  .${nombre} (ya existe .${nombre}.toolkit-bak)" >&2
+          problemas=$((problemas + 1))
+        fi
+        ;;
+    esac
+  done
+  if [[ "$problemas" -gt 0 ]]; then
+    echo "toolkit dotfiles link: ${problemas} conflictos; no se ha cambiado nada (--force respalda y reemplaza; anade --dry-run para ver antes el plan)" >&2
+    exit 2
+  fi
+}
+
+dotfiles_link() {
+  dotfiles_link_check
+  local nombre estado destino prefijo="" enlazados=0 existentes=0 respaldados=0
+  if [[ "$DOT_DRY" -eq 1 ]]; then
+    prefijo="[dry-run] "
+  fi
+  for nombre in "${DOT_FILES[@]}"; do
+    destino="${DOT_HOME}/.${nombre}"
+    estado=$(dotfiles_state "$nombre")
+    if [[ "$estado" == ok ]]; then
+      echo "${prefijo}ya enlazado .${nombre}"
+      existentes=$((existentes + 1))
+      continue
+    fi
+    if [[ "$estado" != falta ]]; then
+      echo "${prefijo}respaldado .${nombre} -> .${nombre}.toolkit-bak"
+      respaldados=$((respaldados + 1))
+      if [[ "$DOT_DRY" -eq 0 ]]; then
+        mv -- "$destino" "${destino}.toolkit-bak"
+      fi
+    fi
+    echo "${prefijo}enlazado .${nombre} -> ${DOT_REPO}/${nombre}"
+    enlazados=$((enlazados + 1))
+    if [[ "$DOT_DRY" -eq 0 ]]; then
+      ln -s -- "${DOT_REPO}/${nombre}" "$destino"
+    fi
+  done
+  echo "${prefijo}enlazados: ${enlazados}, ya estaban: ${existentes}, respaldados: ${respaldados}"
+}
+
+dotfiles_unlink() {
+  local nombre estado destino quitados=0 restaurados=0 omitidos=0
+  for nombre in "${DOT_FILES[@]}"; do
+    destino="${DOT_HOME}/.${nombre}"
+    estado=$(dotfiles_state "$nombre")
+    case "$estado" in
+      ok)
+        rm -- "$destino"
+        if [[ -e "${destino}.toolkit-bak" || -L "${destino}.toolkit-bak" ]]; then
+          mv -- "${destino}.toolkit-bak" "$destino"
+          echo "restaurado .${nombre}"
+          restaurados=$((restaurados + 1))
+        else
+          echo "quitado    .${nombre}"
+          quitados=$((quitados + 1))
+        fi
+        ;;
+      falta)
+        echo "omitido    .${nombre} (no existe)"
+        omitidos=$((omitidos + 1))
+        ;;
+      *)
+        echo "omitido    .${nombre} (no es un enlace de este repositorio)"
+        omitidos=$((omitidos + 1))
+        ;;
+    esac
+  done
+  echo "quitados: ${quitados}, restaurados: ${restaurados}, omitidos: ${omitidos}"
+}
+
+# Ya viene hecha: reparte entre status, link y unlink.
+cmd_dotfiles() {
+  local accion="${1:-}"
+  shift || true
+  case "$accion" in
+    status | link | unlink)
+      dotfiles_parse "$accion" "$@"
+      dotfiles_prepare
+      "dotfiles_${accion}"
+      ;;
+    *)
+      echo "Uso: toolkit.sh dotfiles status|link|unlink [--repo DIR] [--home DIR] [--force] [--dry-run]" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# --- backup (Semana 18) -------------------------------------------------
+
+# Estado compartido entre las funciones de backup. Son globales porque una
+# funcion de bash no devuelve arrays ni variables a quien la llama.
+BK_ACTION=""
+BK_DEST=""
+BK_NAME=""
+BK_KEEP=""
+BK_TO=""
+BK_DRY=0
+BK_POS=""
+BK_SRC=""
+BK_ARCHIVE=""
+BK_EXCL=()
+BK_FILES=()
+
+# Ya viene hecha: rellena BK_FILES con los archivos NOMBRE-AAAAMMDD-HHMMSS.tar.gz
+# de DIR (solo el nombre base), en orden cronologico. Con un segundo argumento
+# no vacio, solo los de esa serie.
+backup_archives() {
+  local f base
+  BK_FILES=()
+  for f in "$1"/*.tar.gz; do
+    [[ -f "$f" ]] || continue
+    base=${f##*/}
+    if [[ "$base" =~ ^(.+)-[0-9]{8}-[0-9]{6}\.tar\.gz$ ]]; then
+      if [[ -z "${2:-}" || "${BASH_REMATCH[1]}" == "$2" ]]; then
+        BK_FILES+=("$base")
+      fi
+    fi
+  done
+}
+
+backup_parse() {
+  BK_ACTION=$1
+  shift
+  BK_DEST="${BACKUP_DEST:-${HOME}/backups}"
+  BK_NAME=""
+  BK_KEEP=""
+  BK_TO=""
+  BK_DRY=0
+  BK_POS=""
+  BK_EXCL=()
+  local permitidas
+  case "$BK_ACTION" in
+    create) permitidas=" --dest --name --exclude --dry-run " ;;
+    list) permitidas=" --dest " ;;
+    restore) permitidas=" --to " ;;
+    prune) permitidas=" --dest --name --keep --dry-run " ;;
+    *) permitidas=" " ;;
+  esac
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --*)
+        if [[ "$permitidas" != *" $1 "* ]]; then
+          echo "toolkit backup ${BK_ACTION}: opcion desconocida: $1" >&2
+          exit 1
+        fi
+        if [[ "$1" == --dry-run ]]; then
+          BK_DRY=1
+          shift
+          continue
+        fi
+        if [[ $# -lt 2 ]]; then
+          echo "toolkit backup ${BK_ACTION}: $1 necesita un valor" >&2
+          exit 1
+        fi
+        case "$1" in
+          --dest) BK_DEST=$2 ;;
+          --name) BK_NAME=$2 ;;
+          --exclude) BK_EXCL+=("$2") ;;
+          --keep) BK_KEEP=$2 ;;
+          --to) BK_TO=$2 ;;
+        esac
+        shift 2
+        ;;
+      *)
+        if [[ "$BK_ACTION" == list || "$BK_ACTION" == prune || -n "$BK_POS" ]]; then
+          echo "toolkit backup ${BK_ACTION}: demasiados argumentos: $1" >&2
+          exit 1
+        fi
+        BK_POS=$1
+        shift
+        ;;
+    esac
+  done
+  if [[ -n "$BK_KEEP" && ! "$BK_KEEP" =~ ^[0-9]+$ || "$BK_KEEP" == 0 ]]; then
+    echo "toolkit backup ${BK_ACTION}: --keep debe ser un entero >= 1" >&2
+    exit 1
+  fi
+}
+
+backup_prepare() {
+  local pre="toolkit backup ${BK_ACTION}:"
+  local re='^[A-Za-z0-9][A-Za-z0-9._-]*$'
+  case "$BK_ACTION" in
+    create)
+      if [[ -z "$BK_POS" ]]; then
+        echo "${pre} falta ORIGEN" >&2
+        exit 1
+      fi
+      if [[ ! -d "$BK_POS" ]]; then
+        echo "${pre} no existe el origen: ${BK_POS}" >&2
+        exit 1
+      fi
+      BK_SRC=$(cd -- "$BK_POS" && pwd -P)
+      if [[ -z "$BK_NAME" ]]; then
+        BK_NAME=${BK_SRC##*/}
+      fi
+      if [[ ! "$BK_NAME" =~ $re ]]; then
+        echo "${pre} nombre invalido: ${BK_NAME}" >&2
+        exit 1
+      fi
+      if [[ "$BK_DRY" -eq 0 ]]; then
+        mkdir -p -- "$BK_DEST"
+      fi
+      if [[ -d "$BK_DEST" ]]; then
+        BK_DEST=$(cd -- "$BK_DEST" && pwd -P)
+      fi
+      ;;
+    verify | restore)
+      if [[ -z "$BK_POS" ]]; then
+        echo "${pre} falta ARCHIVO" >&2
+        exit 1
+      fi
+      if [[ ! -f "$BK_POS" ]]; then
+        echo "${pre} no existe el archivo: ${BK_POS}" >&2
+        exit 1
+      fi
+      BK_ARCHIVE="$(cd -- "$(dirname -- "$BK_POS")" && pwd -P)/${BK_POS##*/}"
+      if [[ "$BK_ACTION" == restore ]]; then
+        if [[ -z "$BK_TO" ]]; then
+          echo "${pre} falta --to" >&2
+          exit 1
+        fi
+        if [[ ! -d "$BK_TO" ]]; then
+          echo "${pre} no existe el destino: ${BK_TO}" >&2
+          exit 1
+        fi
+        BK_TO=$(cd -- "$BK_TO" && pwd -P)
+        if [[ -n "$(ls -A -- "$BK_TO")" ]]; then
+          echo "${pre} el destino no esta vacio: ${BK_TO}" >&2
+          exit 1
+        fi
+      fi
+      ;;
+    list | prune)
+      if [[ "$BK_ACTION" == prune ]]; then
+        if [[ -z "$BK_KEEP" ]]; then
+          echo "${pre} falta --keep" >&2
+          exit 1
+        fi
+        if [[ -z "$BK_NAME" ]]; then
+          echo "${pre} falta --name" >&2
+          exit 1
+        fi
+        if [[ ! "$BK_NAME" =~ $re ]]; then
+          echo "${pre} nombre invalido: ${BK_NAME}" >&2
+          exit 1
+        fi
+      fi
+      if [[ ! -d "$BK_DEST" ]]; then
+        echo "${pre} no existe el directorio de copias: ${BK_DEST}" >&2
+        exit 1
+      fi
+      BK_DEST=$(cd -- "$BK_DEST" && pwd -P)
+      ;;
+  esac
+}
+
+# Rechaza (exit 2) un archivo que, al extraerse, escribiria fuera del destino:
+# un miembro con ruta absoluta o con un componente "..".
+backup_safe_members() {
+  local miembro
+  while IFS= read -r miembro; do
+    if [[ "$miembro" == /* || "/${miembro}/" == */../* ]]; then
+      echo "toolkit backup restore: ruta peligrosa en el archivo: ${miembro}" >&2
+      exit 2
+    fi
+  done < <(tar -tzf "$1")
+}
+
+backup_create() {
+  local base archivo tmp patron
+  base="${BK_NAME}-$(date +%Y%m%d-%H%M%S).tar.gz"
+  archivo="${BK_DEST}/${base}"
+  local -a excl=()
+  for patron in "${BK_EXCL[@]}"; do
+    excl+=("--exclude=${patron}")
+  done
+  if [[ "$BK_DRY" -eq 1 ]]; then
+    echo "[dry-run] crearia ${archivo}"
+    return 0
+  fi
+  if [[ -e "$archivo" ]]; then
+    echo "toolkit backup create: ya existe: ${archivo}" >&2
+    exit 1
+  fi
+  # Se escribe en un temporal y se renombra: un create interrumpido nunca deja
+  # un .tar.gz a medias con aspecto de copia buena.
+  tmp=$(mktemp "${BK_DEST}/.tmp.XXXXXX")
+  if ! tar -czf "$tmp" -C "${BK_SRC%/*}" "${excl[@]}" -- "${BK_SRC##*/}"; then
+    rm -f -- "$tmp"
+    echo "toolkit backup create: tar fallo" >&2
+    exit 1
+  fi
+  mv -- "$tmp" "$archivo"
+  (cd -- "$BK_DEST" && sha256sum -- "$base" > "${base}.sha256")
+  echo "creado ${archivo}"
+}
+
+backup_verify() {
+  local dir=${BK_ARCHIVE%/*} base=${BK_ARCHIVE##*/}
+  if [[ ! -f "${BK_ARCHIVE}.sha256" ]]; then
+    echo "falta ${base}.sha256" >&2
+    exit 2
+  fi
+  if ! (cd -- "$dir" && sha256sum --check --status -- "${base}.sha256"); then
+    echo "corrupto ${base} (la suma no coincide)" >&2
+    exit 2
+  fi
+  if ! tar -tzf "$BK_ARCHIVE" > /dev/null 2>&1; then
+    echo "corrupto ${base} (tar no puede leerlo)" >&2
+    exit 2
+  fi
+  echo "ok ${base}"
+}
+
+backup_list() {
+  local f
+  backup_archives "$BK_DEST" ""
+  for f in "${BK_FILES[@]}"; do
+    printf '%s  %s bytes\n' "$f" "$(stat -c %s -- "${BK_DEST}/${f}")"
+  done
+  echo "copias: ${#BK_FILES[@]}"
+}
+
+backup_restore() {
+  local n
+  backup_verify
+  backup_safe_members "$BK_ARCHIVE"
+  tar -xzf "$BK_ARCHIVE" -C "$BK_TO" --no-same-owner
+  n=$(tar -tzf "$BK_ARCHIVE" | wc -l)
+  echo "restaurado en ${BK_TO} (${n} entradas)"
+}
+
+backup_prune() {
+  local total sobran i f prefijo=""
+  backup_archives "$BK_DEST" "$BK_NAME"
+  total=${#BK_FILES[@]}
+  sobran=$((total - BK_KEEP))
+  if [[ "$sobran" -lt 0 ]]; then
+    sobran=0
+  fi
+  if [[ "$BK_DRY" -eq 1 ]]; then
+    prefijo="[dry-run] "
+  fi
+  for ((i = 0; i < sobran; i++)); do
+    f=${BK_FILES[i]}
+    echo "${prefijo}borrado ${f}"
+    if [[ "$BK_DRY" -eq 0 ]]; then
+      rm -f -- "${BK_DEST}/${f}" "${BK_DEST}/${f}.sha256"
+    fi
+  done
+  echo "${prefijo}conservados: $((total - sobran)), borrados: ${sobran}"
+}
+
+# Ya viene hecha: reparte entre create, verify, list, restore y prune.
+cmd_backup() {
+  local accion="${1:-}"
+  shift || true
+  case "$accion" in
+    create | verify | list | restore | prune)
+      backup_parse "$accion" "$@"
+      backup_prepare
+      "backup_${accion}"
+      ;;
+    *)
+      echo "Uso: toolkit.sh backup create|verify|list|restore|prune ..." >&2
+      exit 1
+      ;;
+  esac
+}
+
+# --- harden (Semana 19) -------------------------------------------------
+
+# Estado compartido entre las funciones de harden. Son globales porque una
+# funcion de bash no devuelve variables a quien la llama.
+HD_ACTION=""
+HD_POS=""
+HD_QUIET=0
+HD_DEPTH=""
+HD_COUNT=0
+
+# Ya viene hecha: imprime un resultado. ESTADO es "ok" o "riesgo". Un riesgo
+# se cuenta y se imprime siempre; un ok solo si no se pidio --quiet.
+harden_line() {
+  if [[ "$1" == riesgo ]]; then
+    HD_COUNT=$((HD_COUNT + 1))
+    echo "riesgo $2: $3"
+  elif [[ "$HD_QUIET" -eq 0 ]]; then
+    echo "ok $2"
+  fi
+}
+
+# Ya viene hecha: reparte entre unit, ssh, perms y container, imprime el
+# resumen y sale con 2 si hay algun riesgo.
+cmd_harden() {
+  local accion="${1:-}"
+  shift || true
+  case "$accion" in
+    unit | ssh | perms | container)
+      harden_parse "$accion" "$@"
+      harden_prepare
+      HD_COUNT=0
+      "harden_${accion}"
+      echo "hallazgos: ${HD_COUNT}"
+      if [[ "$HD_COUNT" -gt 0 ]]; then
+        exit 2
+      fi
+      ;;
+    *)
+      echo "Uso: toolkit.sh harden unit|ssh|perms|container ..." >&2
+      exit 1
+      ;;
+  esac
+}
+
+harden_parse() {
+  HD_ACTION=$1
+  shift
+  HD_POS=""
+  HD_QUIET=0
+  HD_DEPTH=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --quiet)
+        HD_QUIET=1
+        shift
+        ;;
+      --depth)
+        if [[ "$HD_ACTION" != perms ]]; then
+          echo "toolkit harden ${HD_ACTION}: opcion desconocida: $1" >&2
+          exit 1
+        fi
+        if [[ $# -lt 2 ]]; then
+          echo "toolkit harden ${HD_ACTION}: --depth necesita un valor" >&2
+          exit 1
+        fi
+        HD_DEPTH=$2
+        shift 2
+        ;;
+      --*)
+        echo "toolkit harden ${HD_ACTION}: opcion desconocida: $1" >&2
+        exit 1
+        ;;
+      *)
+        if [[ -n "$HD_POS" ]]; then
+          echo "toolkit harden ${HD_ACTION}: demasiados argumentos: $1" >&2
+          exit 1
+        fi
+        HD_POS=$1
+        shift
+        ;;
+    esac
+  done
+  if [[ -n "$HD_DEPTH" && ! "$HD_DEPTH" =~ ^[0-9]+$ || "$HD_DEPTH" == 0 ]]; then
+    echo "toolkit harden ${HD_ACTION}: --depth debe ser un entero >= 1" >&2
+    exit 1
+  fi
+}
+
+harden_prepare() {
+  local pre="toolkit harden ${HD_ACTION}:"
+  if [[ "$HD_ACTION" == perms ]]; then
+    if [[ -z "$HD_POS" ]]; then
+      echo "${pre} falta DIRECTORIO" >&2
+      exit 1
+    fi
+    if [[ ! -d "$HD_POS" ]]; then
+      echo "${pre} no existe el directorio: ${HD_POS}" >&2
+      exit 1
+    fi
+    return 0
+  fi
+  if [[ -z "$HD_POS" ]]; then
+    echo "${pre} falta ARCHIVO" >&2
+    exit 1
+  fi
+  if [[ ! -f "$HD_POS" ]]; then
+    echo "${pre} no existe el archivo: ${HD_POS}" >&2
+    exit 1
+  fi
+  if [[ "$HD_ACTION" == container ]] && ! grep -q '"HostConfig"' "$HD_POS"; then
+    echo "${pre} no parece la salida de docker inspect: ${HD_POS}" >&2
+    exit 1
+  fi
+}
+
+harden_value() {
+  local modo=$1 clave=$2 archivo=$3
+  local linea valor="" re
+  if [[ "$modo" == first ]]; then
+    re="^[[:space:]]*${clave}([[:space:]]*=[[:space:]]*|[[:space:]]+)(.*[^[:space:]])?[[:space:]]*$"
+    shopt -s nocasematch
+  else
+    re="^[[:space:]]*${clave}[[:space:]]*=[[:space:]]*(.*[^[:space:]])?[[:space:]]*$"
+  fi
+  while IFS= read -r linea || [[ -n "$linea" ]]; do
+    if [[ "$modo" == first && "$linea" =~ ^[[:space:]]*Match[[:space:]] ]]; then
+      break
+    fi
+    if [[ "$linea" =~ ^[[:space:]]*[#\;] ]]; then
+      continue
+    fi
+    if [[ "$linea" =~ $re ]]; then
+      if [[ "$modo" == first ]]; then
+        valor=${BASH_REMATCH[2]}
+        break
+      fi
+      valor=${BASH_REMATCH[1]}
+    fi
+  done <"$archivo"
+  shopt -u nocasematch
+  echo "$valor"
+}
+
+harden_check() {
+  local nombre=$1 valor=${2,,} patron=$3 detalle=$4
+  if [[ "$valor" =~ $patron ]]; then
+    harden_line ok "$nombre"
+  else
+    harden_line riesgo "$nombre" "$detalle"
+  fi
+}
+
+harden_unit() {
+  local usuario dinamico
+  usuario=$(harden_value last User "$HD_POS")
+  dinamico=$(harden_value last DynamicUser "$HD_POS")
+  if [[ -n "$usuario" && "$usuario" != root || "${dinamico,,}" == yes ]]; then
+    harden_line ok User
+  else
+    harden_line riesgo User "corre como root (falta User= o DynamicUser=yes)"
+  fi
+  harden_check NoNewPrivileges "$(harden_value last NoNewPrivileges "$HD_POS")" '^(yes|true|1|on)$' "falta NoNewPrivileges=yes"
+  harden_check ProtectSystem "$(harden_value last ProtectSystem "$HD_POS")" '^(yes|true|full|strict)$' "falta ProtectSystem=strict"
+  harden_check PrivateTmp "$(harden_value last PrivateTmp "$HD_POS")" '^(yes|true|1|on)$' "falta PrivateTmp=yes"
+  harden_check ProtectHome "$(harden_value last ProtectHome "$HD_POS")" '^(yes|true|read-only|tmpfs)$' "falta ProtectHome=yes"
+}
+
+harden_ssh() {
+  local v
+  v=$(harden_value first PermitRootLogin "$HD_POS")
+  harden_check PermitRootLogin "$v" '^(no|prohibit-password|without-password|forced-commands-only|)$' "permite entrar como root (valor: ${v})"
+  v=$(harden_value first PasswordAuthentication "$HD_POS")
+  harden_check PasswordAuthentication "$v" '^no$' "admite contrasenas (valor: ${v:-por defecto, yes})"
+  v=$(harden_value first PermitEmptyPasswords "$HD_POS")
+  harden_check PermitEmptyPasswords "$v" '^(no|)$' "admite contrasenas vacias (valor: ${v})"
+  v=$(harden_value first X11Forwarding "$HD_POS")
+  harden_check X11Forwarding "$v" '^(no|)$' "reenvia X11 (valor: ${v})"
+}
+
+harden_perms() {
+  local opciones=(-xdev)
+  local tipo ruta
+  local antes=$HD_COUNT
+  if [[ -n "$HD_DEPTH" ]]; then
+    opciones=(-maxdepth "$HD_DEPTH" -xdev)
+  fi
+  while IFS=' ' read -r -d '' tipo ruta; do
+    harden_line riesgo "$tipo" "$ruta"
+  done < <(
+    {
+      find "$HD_POS" "${opciones[@]}" -type f -perm -4000 -printf 'suid %p\0'
+      find "$HD_POS" "${opciones[@]}" -type f -perm -2000 -printf 'sgid %p\0'
+      find "$HD_POS" "${opciones[@]}" -type f -perm -0002 -printf 'escribible %p\0'
+      find "$HD_POS" "${opciones[@]}" -type d -perm -0002 ! -perm -1000 -printf 'dir-sin-sticky %p\0'
+    } | LC_ALL=C sort -z
+  )
+  if [[ "$HD_COUNT" -eq "$antes" ]]; then
+    harden_line ok perms
+  fi
+}
+
+harden_container() {
+  local usuario
+  if grep -qE '"Privileged": *true' "$HD_POS"; then
+    harden_line riesgo Privileged "el contenedor es privilegiado"
+  else
+    harden_line ok Privileged
+  fi
+  usuario=$(grep -m1 -E '"User":' "$HD_POS" | sed -E 's/.*"User": *"([^"]*)".*/\1/')
+  if [[ -z "$usuario" || "$usuario" =~ ^(root|0)(:.*)?$ ]]; then
+    harden_line riesgo User "corre como root (User vacio o root)"
+  else
+    harden_line ok User
+  fi
+  if grep -qE '"ReadonlyRootfs": *false' "$HD_POS"; then
+    harden_line riesgo ReadonlyRootfs "el sistema de archivos raiz es escribible"
+  else
+    harden_line ok ReadonlyRootfs
+  fi
+  if grep -qE '"NetworkMode": *"host"' "$HD_POS"; then
+    harden_line riesgo NetworkMode "comparte la red del anfitrion (host)"
+  else
+    harden_line ok NetworkMode
+  fi
+  if grep -qE '"HostIp": *"(|0\.0\.0\.0|::)"' "$HD_POS"; then
+    harden_line riesgo Ports "hay puertos publicados en todas las interfaces"
+  else
+    harden_line ok Ports
+  fi
+}
+
+# --- release y selftest (Semana 20) -------------------------------------
+
+# Version de la herramienta. Es lo que imprime "version" y lo que usa "release
+# build" si no le pasas --version.
+TOOLKIT_VERSION="1.0.0"
+
+# Ruta real de este script, con los enlaces resueltos. "release" lo copia dentro
+# del paquete y "selftest" lo lanza como un proceso aparte.
+TK_SELF=$(readlink -f "${BASH_SOURCE[0]}")
+
+# Ya viene hecha: imprime la version. Con --short, solo el numero.
+cmd_version() {
+  case "${1:-}" in
+    "") echo "toolkit ${TOOLKIT_VERSION}" ;;
+    --short) echo "$TOOLKIT_VERSION" ;;
+    *)
+      echo "toolkit version: opcion desconocida: $1" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# Estado compartido entre las funciones de release y selftest. Son globales
+# porque una funcion de bash no devuelve variables a quien la llama.
+RL_ACTION=""
+RL_POS=""
+RL_OUT=""
+RL_VERSION=""
+RL_DRY=0
+RL_QUIET=0
+RL_COUNT=0
+ST_QUIET=0
+ST_TOTAL=0
+ST_FAILS=0
+ST_DIR=""
+
+# Ya viene hecha: imprime un resultado de "release verify". ESTADO es "ok" o
+# "falla". Una falla se cuenta y se imprime siempre; un ok solo sin --quiet.
+release_line() {
+  if [[ "$1" == falla ]]; then
+    RL_COUNT=$((RL_COUNT + 1))
+    echo "falla $2: $3"
+  elif [[ "$RL_QUIET" -eq 0 ]]; then
+    echo "ok $2"
+  fi
+}
+
+# Ya viene hecha: escribe en la salida estandar la pagina de manual (formato
+# roff) de toolkit. release_stage la comprime dentro del paquete.
+release_manpage() {
+  cat <<EOF
+.TH TOOLKIT 1 "" "toolkit ${RL_VERSION}" "Comandos de usuario"
+.SH NAME
+toolkit \- caja de herramientas personal de sysadmin
+.SH SYNOPSIS
+.B toolkit
+.I subcomando
+[opciones]
+.SH DESCRIPTION
+Una sola orden con subcomandos para inspeccionar, auditar y automatizar una
+maquina Linux desde la linea de comandos. Cada subcomando sale con 0 si todo
+esta en orden, 1 si se uso mal y 2 si encontro algo que reportar.
+.SH SUBCOMMANDS
+.TP
+.B doctor, inventory, organize, audit, logreport
+Primeros pasos: entorno, archivos, permisos y registros.
+.TP
+.B logscan, topcount, sumfield, finddupes, procwatch
+Texto, datos, archivos duplicados y procesos.
+.TP
+.B acctaudit, pkgcheck, netcheck
+Usuarios, paquetes y red.
+.TP
+.B snapshot, healthcheck, guard, schedule
+Automatizacion: fotos del sistema, limites, ejecucion segura y tareas programadas.
+.TP
+.B dotfiles, backup, harden
+Entorno personal, copias de seguridad y endurecimiento.
+.TP
+.B version, release, selftest
+Version, empaquetado y autoprueba.
+.SH EXIT STATUS
+.TP
+.B 0
+Todo en orden.
+.TP
+.B 1
+Uso incorrecto o archivo inexistente.
+.TP
+.B 2
+Se encontro algo que reportar.
+.SH SEE ALSO
+.BR bash (1),
+.BR dpkg-deb (1)
+EOF
+}
+
+# Ya viene hecha: reparte entre build y verify. build imprime el paquete y su
+# suma; verify imprime una linea por comprobacion, "fallos: N" y sale con 2 si
+# alguna fallo.
+cmd_release() {
+  local accion="${1:-}"
+  shift || true
+  case "$accion" in
+    build | verify)
+      release_parse "$accion" "$@"
+      release_prepare
+      RL_COUNT=0
+      "release_${accion}"
+      if [[ "$accion" == verify ]]; then
+        echo "fallos: ${RL_COUNT}"
+        if [[ "$RL_COUNT" -gt 0 ]]; then
+          exit 2
+        fi
+      fi
+      ;;
+    *)
+      echo "Uso: toolkit.sh release build|verify ..." >&2
+      exit 1
+      ;;
+  esac
+}
+
+# Ya viene hecha: la ida y vuelta de una copia de seguridad. Sale con 0 solo si
+# create, verify y restore funcionan y el resultado es identico al origen.
+selftest_backup() {
+  "$TK_SELF" backup create "$ST_DIR/src" --dest "$ST_DIR/copias" --name st >/dev/null &&
+    "$TK_SELF" backup verify "$ST_DIR"/copias/st-*.tar.gz >/dev/null &&
+    mkdir "$ST_DIR/rest" &&
+    "$TK_SELF" backup restore "$ST_DIR"/copias/st-*.tar.gz --to "$ST_DIR/rest" >/dev/null &&
+    diff -r "$ST_DIR/src" "$ST_DIR/rest/src"
+}
+
+# TODO 1: release_parse ACCION [ARGS]. ACCION es "$1" (haz "shift"). Valores por
+# defecto: RL_ACTION=ACCION, RL_POS="", RL_OUT="", RL_VERSION=$TOOLKIT_VERSION,
+# RL_DRY=0 y RL_QUIET=0. Con un "while [[ $# -gt 0 ]]" y un "case" sobre
+# "${RL_ACTION}:$1". Opciones admitidas:
+#   build   --out DIR, --version V (las dos con valor), --dry-run
+#   verify  --quiet
+# Mensajes a stderr, con "exit 1" y el prefijo "toolkit release ACCION: ":
+#   una opcion que empieza por "--" y no esta admitida para esa accion
+#                                              opcion desconocida: OPCION
+#   --out o --version sin valor                OPCION necesita un valor
+#   un posicional en build, o un segundo en verify
+#                                              demasiados argumentos: ARG
+# El primer posicional de verify va a RL_POS.
+release_parse() {
+  RL_ACTION=$1
+  shift
+  : "${RL_POS}" "${RL_OUT}" "${RL_VERSION}" "${RL_DRY}" "${RL_QUIET}"
+}
+
+# TODO 2: release_prepare. Valida lo parseado. Prefijo de los mensajes (stderr,
+# "exit 1"): "toolkit release ACCION: ".
+#   build    falta --out (RL_OUT vacio)
+#            version invalida: V (usa MAYOR.MENOR.PARCHE)   (la version debe casar
+#            con ^[0-9]+\.[0-9]+\.[0-9]+$, en una variable sin comillas)
+#            no existe el directorio: DIR   (RL_OUT no es un directorio)
+#   verify   falta ARCHIVO | no existe el archivo: RUTA (no es un archivo regular)
+#   ambas    falta dpkg-deb   (si "command -v dpkg-deb" no lo encuentra)
+# Comprueba en el orden indicado: el primer fallo termina.
+release_prepare() {
+  : "${RL_ACTION}"
+}
+
+# TODO 3: release_stage DIR. Deja en DIR (un directorio vacio de mktemp -d) el
+# arbol del paquete. Ojo con los permisos: mktemp -d crea 0700, y dpkg-deb
+# rechaza una raiz o un DEBIAN que no sean 0755. Hazlo asi:
+#   - chmod 0755 DIR, e "install -d -m 0755" para DEBIAN, usr/bin y
+#     usr/share/man/man1
+#   - usr/bin/toolkit: copia de $TK_SELF con "install -m 0755"
+#   - estampa la version en la COPIA instalada (no en tu script): con "sed -i" cambia
+#     la linea  TOOLKIT_VERSION="..."  por  TOOLKIT_VERSION="$RL_VERSION"  (el patron
+#     empieza por ^ y acaba por $, para tocar solo esa linea)
+#   - usr/share/man/man1/toolkit.1.gz: release_manpage | gzip -9n, modo 0644
+#   - DEBIAN/control con los campos Package: toolkit, Version: $RL_VERSION,
+#     Architecture: all, Maintainer: Toolkit <toolkit@example.invalid>,
+#     Depends: bash (>= 5.0), Section: utils, Priority: optional,
+#     Installed-Size: (KiB de usr, con "du -sk DIR/usr | cut -f1") y
+#     Description: caja de herramientas personal de sysadmin, seguida de una
+#     linea de descripcion extendida que EMPIEZA por un espacio
+#   - DEBIAN/md5sums: "md5sum" de cada archivo bajo usr (rutas relativas a DIR),
+#     ordenado con LC_ALL=C sort -z; usa find -print0 y xargs -0, desde "(cd DIR && ...)"
+release_stage() {
+  : "$1"
+}
+
+# TODO 4: release_build. Construye el paquete en el directorio RL_OUT. Nombre:
+# toolkit_VERSION_all.deb. Con --dry-run solo imprime
+#   [dry-run] paquete: RUTA
+# y no crea ni borra nada. Sin --dry-run:
+#   1. stage=$(mktemp -d) y release_stage "$stage". Un "trap ... EXIT" borra stage
+#      y el temporal aunque algo falle; quitalo con "trap - EXIT" al terminar.
+#   2. Escribe el .deb en un temporal de mktemp DENTRO de RL_OUT ("$RL_OUT/.toolkit.XXXXXX")
+#      con "dpkg-deb --build --root-owner-group" y renombralo (mv) al nombre final:
+#      un corte nunca deja un .deb a medias. Modo 0644 para el .deb.
+#   3. SHA256SUMS en RL_OUT: calcula la suma DESDE RL_OUT con el nombre sin ruta,
+#      conserva las lineas de otros paquetes (awk '$2 != nombre') y anade la
+#      nueva "HASH  NOMBRE" (dos espacios). Tambien con temporal + mv, modo 0644.
+#   4. Imprime dos lineas:  paquete: RUTA   y   sha256: HASH
+release_build() {
+  : "${RL_OUT}" "${RL_VERSION}" "${RL_DRY}"
+}
+
+# TODO 5: release_verify. Comprueba el paquete RL_POS. SHA256SUMS se busca en el
+# mismo directorio que el paquete. Seis comprobaciones, en este orden, cada una
+# con "release_line ok NOMBRE" o "release_line falla NOMBRE DETALLE":
+#   suma         falla "no hay SHA256SUMS junto al paquete" | "NOMBRE no esta en
+#                SHA256SUMS" | "la suma de NOMBRE no coincide" (usa awk para
+#                sacar la linea del paquete y "sha256sum -c --status -" desde su
+#                directorio)
+#   paquete      si "dpkg-deb -I" no puede leerlo: falla "no es un .deb legible"
+#                y TERMINA (return). Si Package no es toolkit: falla
+#                "Package es 'X', no toolkit"
+#   version      la de "dpkg-deb -f ... Version" debe ser igual a la del nombre
+#                toolkit_VERSION_all.deb. Detalle: el control dice 'A' y el nombre 'B'
+#   ejecutable   en "dpkg-deb -c" debe haber una linea -rwxr-xr-x de ./usr/bin/toolkit.
+#                Detalle: falta ./usr/bin/toolkit con modo 755
+#   manual       debe estar ./usr/share/man/man1/toolkit.1.gz.
+#                Detalle: falta ./usr/share/man/man1/toolkit.1.gz
+#   permisos     ninguna entrada escribible por grupo ni por otros (caracteres 6 y
+#                9 de la columna de permisos). Detalle:
+#                escribible por grupo u otros: RUTA1 RUTA2
+release_verify() {
+  : "${RL_POS}"
+}
+
+# TODO 6: selftest_case NOMBRE ESPERADO COMANDO [ARGS]. Ejecuta COMANDO y compara
+# su codigo de salida con ESPERADO. Ejecutalo en un subshell "( "$@" )" con la
+# salida a /dev/null (el comando puede llamar a exit) y recoge el codigo con
+# "|| rc=$?". Suma 1 a ST_TOTAL. Si coincide: imprime "ok NOMBRE" (salvo con
+# ST_QUIET=1). Si no, suma 1 a ST_FAILS e imprime siempre
+#   falla NOMBRE: esperaba ESPERADO, salio CODIGO
+selftest_case() {
+  : "$1" "$2" "${ST_QUIET}"
+}
+
+# TODO 7: selftest_fixture. Crea la maqueta: ST_DIR=$(mktemp -d) y dentro
+#   audit/f   un archivo con modo 0777
+#   logs/a.log   con la linea "ERROR boom"
+#   src/a.txt    con la linea "hola"
+#   bad.service  con "[Service]" y "ExecStart=/bin/true" (dos lineas)
+selftest_fixture() {
+  : "${ST_DIR}"
+}
+
+# TODO 8: cmd_selftest. Pone ST_QUIET, ST_TOTAL y ST_FAILS a 0; acepta --quiet
+# (cualquier otra cosa: "toolkit selftest: opcion desconocida: X" a stderr con
+# exit 1). Llama a selftest_fixture y deja un "trap 'rm -rf "${ST_DIR}"' EXIT".
+# Ejecuta cinco casos con selftest_case, siempre lanzando el script como proceso
+# aparte ("$TK_SELF"):
+#   audit-detecta-riesgo         2   "$TK_SELF" audit "$ST_DIR/audit"
+#   logscan-detecta-error        2   "$TK_SELF" logscan "$ST_DIR/logs"
+#   backup-ida-y-vuelta          0   selftest_backup
+#   harden-detecta-riesgos       2   "$TK_SELF" harden unit "$ST_DIR/bad.service"
+#   schedule-rechaza-expresion   2   "$TK_SELF" schedule check '61 * * * *'
+# Al final imprime "pruebas: N, fallos: F" y sale con 2 si F es mayor que 0.
+cmd_selftest() {
+  echo "pruebas: ${ST_TOTAL}, fallos: ${ST_FAILS}"
+}
+
+main() {
+  local subcomando="${1:-}"
+  shift || true
+  case "$subcomando" in
+    doctor) cmd_doctor "$@" ;;
+    inventory) cmd_inventory "$@" ;;
+    organize) cmd_organize "$@" ;;
+    audit) cmd_audit "$@" ;;
+    logreport) cmd_logreport "$@" ;;
+    logscan) cmd_logscan "$@" ;;
+    topcount) cmd_topcount "$@" ;;
+    sumfield) cmd_sumfield "$@" ;;
+    finddupes) cmd_finddupes "$@" ;;
+    procwatch) cmd_procwatch "$@" ;;
+    acctaudit) cmd_acctaudit "$@" ;;
+    pkgcheck) cmd_pkgcheck "$@" ;;
+    netcheck) cmd_netcheck "$@" ;;
+    snapshot) cmd_snapshot "$@" ;;
+    healthcheck) cmd_healthcheck "$@" ;;
+    guard) cmd_guard "$@" ;;
+    schedule) cmd_schedule "$@" ;;
+    dotfiles) cmd_dotfiles "$@" ;;
+    backup) cmd_backup "$@" ;;
+    harden) cmd_harden "$@" ;;
+    version) cmd_version "$@" ;;
+    release) cmd_release "$@" ;;
+    selftest) cmd_selftest "$@" ;;
+    "")
+      echo "Uso: toolkit.sh <subcomando>" >&2
+      echo "Subcomandos disponibles: doctor, inventory, organize, audit, logreport, logscan, topcount, sumfield, finddupes, procwatch, acctaudit, pkgcheck, netcheck, snapshot, healthcheck, guard, schedule, dotfiles, backup, harden, version, release, selftest" >&2
+      exit 1
+      ;;
+    *)
+      echo "toolkit.sh: subcomando desconocido: $subcomando" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# Solo ejecuta main si lanzas el script; con "source toolkit.sh" cargas las funciones sin ejecutar nada.
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+  main "$@"
+fi

@@ -14,58 +14,79 @@ qué semana se explica a fondo.
 | Alias | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | alias | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| ar | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | archivado (archiving) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| arquitectura all (Architecture: all) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | auditoría (audit) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | auth.log | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| autoprueba (selftest) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | bash-completion | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | btmp | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | cadena crítica (critical chain) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | capacidades (capabilities) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | carga perezosa (lazy loading) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| caso negativo (negative test) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | cgroup | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | COMP_CWORD / COMP_WORDS / COMPREPLY | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | compgen | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | complete | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | compresión (compression) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | contenedor (container) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| control | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | copytruncate | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | create (logrotate) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| DEBIAN/ | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | diario (journal) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | dotfile | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| dpkg-deb | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | drop-in | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | DynamicUser | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | endurecer (harden) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | enlace simbólico (symbolic link) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | entorno (environment) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| estampar (stamp) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | ExecStart | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | facility | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| firma (signature) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
+| groff | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | hash | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | HISTCONTROL | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | historial (history) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | huella (checksum) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| integridad (integrity) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | journalctl | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | last / lastb / lastlog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | logger | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | logrotate | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| maqueta (fixture) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
+| md5sums | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | miembro (member) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | mínimo privilegio (least privilege) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | namespace | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | NoNewPrivileges | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| página de manual (man page) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | PID 1 | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| preliminar (pre-release) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | prioridad (priority) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | PrivateTmp | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | ProtectSystem | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| prueba de humo (smoke test) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
+| reproducible | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
+| roff | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
+| --root-owner-group | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | rotación (rotation) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | rsyslog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | serie (series) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | setuid / setgid | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | sha256sum | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| SHA256SUMS | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | sshd -T | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | sticky (bit sticky) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | syslog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | systemd-analyze security | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | systemd-cat | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | tar | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| versionado semántico (semantic versioning) | [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | wtmp | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | xz / zstd / bzip2 / gzip | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | ~/.inputrc | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
@@ -82,7 +103,7 @@ qué semana se explica a fondo.
 | array indexado (indexed array) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | at | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | atime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
-| atómico (atomic) | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| atómico (atomic) | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | AUR (Arch User Repository) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | authorized_keys | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | backlog | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
@@ -130,7 +151,7 @@ qué semana se explica a fondo.
 | División en palabras (word splitting) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | dnf | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | DNS | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
-| dpkg | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| dpkg | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | Dry-run | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | ed25519 | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Edición in-place | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
@@ -172,7 +193,7 @@ qué semana se explica a fondo.
 | here-string | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | huella (fingerprint) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Huérfano (orphan) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
-| Idempotente | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| Idempotente | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | IFS | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Inodo | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | InRelease | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
@@ -211,7 +232,7 @@ qué semana se explica a fondo.
 | pacman | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | panel / ventana / sesión (tmux) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Papelera de reciclaje | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
-| Paquete | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| Paquete | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | PATH | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Patrón (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Patrón literal (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -237,7 +258,7 @@ qué semana se explica a fondo.
 | PS4 | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | PTY (pseudo-terminal) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | puerto (port) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
-| purge | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| purge | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | Quoting (entrecomillado) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Readline | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | readline | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
@@ -263,7 +284,7 @@ qué semana se explica a fondo.
 | shebang | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Shell | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Shell de login | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
-| ShellCheck | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
+| ShellCheck | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | shells (/etc/shells) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | shift | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | SHLVL | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
@@ -294,13 +315,13 @@ qué semana se explica a fondo.
 | Sustitución (sed) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | Sustitución de comandos | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | TCP | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
-| temporal (temporary file) | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| temporal (temporary file) | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | temporizador (timer unit) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | test / [[ ]] | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | timeout (Connection timed out) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | tmux | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | .toolkit-bak | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
-| trap | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| trap | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/), [20](../bootcamp/week-20-proyecto_final_toolkit_integrado/5-glosario/) |
 | TTL | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | TTY | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | túnel (SSH) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
