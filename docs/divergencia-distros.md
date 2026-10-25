@@ -35,6 +35,12 @@ explica en profundidad.
 | Paquete de `shellcheck` | `shellcheck` | `ShellCheck`, **desde EPEL** (`dnf install epel-release` antes) | `shellcheck` | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
 | Comando `hostname` en la imagen mínima | presente | presente | **ausente**: `uname -n` es la forma portable | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
 | `patch` en la imagen mínima | ausente (`apt-get install patch`) | ausente (`dnf install patch`) | ausente (`pacman -S patch`) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
+| Archivo de login que carga `.bashrc` | `~/.profile` (esqueleto de Ubuntu) | `~/.bash_profile` (esqueleto de RHEL) | `~/.bash_profile` (esqueleto de Arch) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
+| `~/bin` y `~/.local/bin` en el `PATH` | los añade `~/.profile` **al hacer login, si existen** | los añade `~/.bashrc` (con guarda) | **ninguno** de los dos | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
+| `PS1` por defecto del usuario | `\u@\h:\w\$` | `[\u@\h \W]\$` | `[\u@\h \W]\$` | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
+| `chsh -l` (listar shells) | **no existe** (`chsh` viene de `passwd`); usa `cat /etc/shells` | `chsh` no viene instalado (paquete `util-linux-user`) | funciona (`util-linux`) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/) |
+| Paquete `bash-completion` | `bash-completion` | `bash-completion` | `bash-completion` (repositorio `extra`) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
+| Paquete `screen` | `screen` | **desde EPEL** (`dnf install epel-release` antes) | `screen` | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
 
 ## Por qué esto y no una semana por distro
 

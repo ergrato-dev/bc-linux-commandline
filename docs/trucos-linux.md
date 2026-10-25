@@ -215,6 +215,18 @@ primero).
   **próximas ejecuciones reales** de un calendario. Úsalo para contrastar
   cualquier expresión de `cron` que hayas traducido.
 
+## Semana 17 — Personalización del entorno y productividad
+
+- `echo "${PS1@P}"` expande una cadena **como si fuera el prompt**: iteras un
+  `PS1` con colores y `\w` sin abrir otra terminal. Usa comillas simples al
+  asignar `PS1`, o bash se come las barras.
+- `env -i HOME=/tmp/h TERM=xterm PATH=/usr/bin:/bin bash --noprofile --rcfile mi-rc -i`
+  arranca una shell interactiva **limpia**, sin tus archivos reales. Dentro de
+  `tmux`, con `send-keys` y `capture-pane -p`, es la forma de probar un prompt,
+  un historial o un `Tab` desde un script.
+- `find ~ -maxdepth 1 -type l -printf '%f -> %l\n'` lista los enlaces de tu home
+  y a dónde apuntan: quién cuelga de tu repositorio de dotfiles, de un vistazo.
+
 ---
 
 [← Volver al índice de documentación](README.md)

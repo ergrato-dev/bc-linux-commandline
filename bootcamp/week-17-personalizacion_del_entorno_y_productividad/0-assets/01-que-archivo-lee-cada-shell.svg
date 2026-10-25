@@ -1,0 +1,48 @@
+<svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-arr d-arr">
+  <title id="t-arr">Qué archivos lee cada tipo de shell</title>
+  <desc id="d-arr">Tres columnas. Una shell de login, que es la de ssh, su guion y las ventanas de tmux, lee /etc/profile y después solo el primero que exista de ~/.bash_profile, ~/.bash_login y ~/.profile, y al salir lee ~/.bash_logout. Una shell interactiva que no es de login, como una terminal nueva o escribir bash, lee /etc/bash.bashrc y ~/.bashrc. Una shell no interactiva, como un script o bash -c, no lee nada salvo que exista la variable BASH_ENV. En Ubuntu el ~/.profile contiene una línea que carga ~/.bashrc, y por eso la shell de login acaba leyendo también el .bashrc.</desc>
+  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e3b341"/></marker></defs>
+  <rect x="0" y="0" width="900" height="480" fill="#0d1117"/>
+  <text x="450" y="30" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Qué lee bash al arrancar, según cómo lo lanzas</text>
+
+  <rect x="20" y="52" width="270" height="300" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="36" y="76" font-family="sans-serif" font-size="14" fill="#3fb950" font-weight="bold">Shell de login</text>
+  <text x="36" y="96" font-family="sans-serif" font-size="11.5" fill="#8b949e">ssh · su - · bash -l · ventanas de tmux</text>
+  <rect x="36" y="110" width="238" height="34" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="48" y="132" font-family="monospace" font-size="12.5" fill="#f0f6fc">1. /etc/profile</text>
+  <rect x="36" y="154" width="238" height="92" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="48" y="174" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">2. solo el PRIMERO que exista:</text>
+  <text x="48" y="194" font-family="monospace" font-size="12.5" fill="#f0f6fc">~/.bash_profile</text>
+  <text x="48" y="212" font-family="monospace" font-size="12.5" fill="#f0f6fc">~/.bash_login</text>
+  <text x="48" y="230" font-family="monospace" font-size="12.5" fill="#e3b341" font-weight="bold">~/.profile</text>
+  <rect x="36" y="256" width="238" height="34" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="48" y="278" font-family="monospace" font-size="12.5" fill="#f0f6fc">al salir: ~/.bash_logout</text>
+  <text x="36" y="318" font-family="sans-serif" font-size="11.5" fill="#8b949e">aquí va lo que se hace UNA vez:</text>
+  <text x="36" y="336" font-family="sans-serif" font-size="11.5" fill="#8b949e">PATH, variables exportadas, umask</text>
+
+  <rect x="315" y="52" width="270" height="300" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="331" y="76" font-family="sans-serif" font-size="14" fill="#58a6ff" font-weight="bold">Interactiva, sin login</text>
+  <text x="331" y="96" font-family="sans-serif" font-size="11.5" fill="#8b949e">terminal nueva · escribir «bash» · bash -i</text>
+  <rect x="331" y="110" width="238" height="34" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="343" y="132" font-family="monospace" font-size="12.5" fill="#f0f6fc">1. /etc/bash.bashrc</text>
+  <rect x="331" y="154" width="238" height="34" rx="4" fill="#0d1117" stroke="#58a6ff" stroke-width="2"/>
+  <text x="343" y="176" font-family="monospace" font-size="12.5" fill="#e3b341" font-weight="bold">2. ~/.bashrc</text>
+  <text x="331" y="318" font-family="sans-serif" font-size="11.5" fill="#8b949e">aquí va lo que se hace en CADA shell:</text>
+  <text x="331" y="336" font-family="sans-serif" font-size="11.5" fill="#8b949e">alias, funciones, prompt, historial</text>
+
+  <rect x="610" y="52" width="270" height="300" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+  <text x="626" y="76" font-family="sans-serif" font-size="14" fill="#8b949e" font-weight="bold">No interactiva</text>
+  <text x="626" y="96" font-family="sans-serif" font-size="11.5" fill="#8b949e">scripts · bash -c · cron</text>
+  <rect x="626" y="110" width="238" height="64" rx="4" fill="#0d1117" stroke="#30363d"/>
+  <text x="638" y="136" font-family="sans-serif" font-size="12.5" fill="#f0f6fc">no lee ningún archivo</text>
+  <text x="638" y="158" font-family="sans-serif" font-size="11.5" fill="#8b949e">salvo el que diga $BASH_ENV</text>
+  <text x="626" y="318" font-family="sans-serif" font-size="11.5" fill="#8b949e">por eso un script no ve tus alias</text>
+  <text x="626" y="336" font-family="sans-serif" font-size="11.5" fill="#8b949e">ni tu PATH personal</text>
+
+  <path d="M274,226 C300,226 300,200 316,176" stroke="#e3b341" stroke-width="2" stroke-dasharray="5,4" fill="none" marker-end="url(#ar)"/>
+  <text x="24" y="382" font-family="sans-serif" font-size="12" fill="#e3b341">Línea discontinua: el ~/.profile de Ubuntu contiene «if [ -f ~/.bashrc ]; then . ~/.bashrc; fi»,</text>
+  <text x="24" y="400" font-family="sans-serif" font-size="12" fill="#e3b341">así que una shell de login acaba leyendo también el ~/.bashrc.</text>
+  <rect x="20" y="418" width="860" height="46" rx="6" fill="#161b22" stroke="#30363d"/>
+  <text x="36" y="438" font-family="monospace" font-size="12.5" fill="#f0f6fc">shopt login_shell      → on / off</text>
+  <text x="36" y="456" font-family="monospace" font-size="12.5" fill="#f0f6fc">echo $-                → contiene «i» si la shell es interactiva</text>
+</svg>

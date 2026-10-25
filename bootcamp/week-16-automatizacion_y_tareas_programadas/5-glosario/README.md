@@ -57,6 +57,6 @@ unas unidades y que sus ejecutables existen; no valida la semántica.
 
 ---
 
-[← Webgrafía](../4-recursos/webgrafia/README.md) · [Índice del bootcamp →](../../README.md)
+[← Webgrafía](../4-recursos/webgrafia/README.md) · [Semana 17: Personalización del entorno y productividad →](../../week-17-personalizacion_del_entorno_y_productividad/README.md)
 
 [Glosario global](../../../docs/glosario-global.md) · [Índice del bootcamp](../../README.md)

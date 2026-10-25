@@ -116,6 +116,6 @@ ambigua).
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 15](../week-15-scripts_robustos_manejo_de_errores/README.md) | Semana 16 | [Índice del bootcamp →](../README.md) |
+| [← Semana 15](../week-15-scripts_robustos_manejo_de_errores/README.md) | Semana 16 | [Semana 17 →](../week-17-personalizacion_del_entorno_y_productividad/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)

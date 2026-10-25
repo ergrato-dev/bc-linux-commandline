@@ -1,0 +1,42 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-dot d-dot">
+  <title id="t-dot">Dotfiles: un repositorio y enlaces simbólicos</title>
+  <desc id="d-dot">A la izquierda, el repositorio ~/dotfiles con los archivos bashrc, inputrc, tmux.conf, gitconfig y toolkit-completion, sin punto inicial, además de un README que se ignora. A la derecha, el directorio personal con los mismos nombres precedidos de un punto, cada uno un enlace simbólico que apunta al archivo del repositorio. En medio, toolkit dotfiles link crea los enlaces. Si ya había un archivo real en el destino, con --force se mueve a un respaldo con sufijo .toolkit-bak, y toolkit dotfiles unlink quita el enlace y devuelve el respaldo a su sitio.</desc>
+  <defs><marker id="dl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#3fb950"/></marker><marker id="dy" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e3b341"/></marker></defs>
+  <rect x="0" y="0" width="900" height="460" fill="#0d1117"/>
+  <text x="450" y="30" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Un repositorio de configuración, enlazado a tu home</text>
+
+  <rect x="20" y="52" width="270" height="260" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="36" y="76" font-family="monospace" font-size="14" fill="#58a6ff" font-weight="bold">~/dotfiles/</text>
+  <text x="36" y="94" font-family="sans-serif" font-size="11.5" fill="#8b949e">sin punto: se ven con ls y se versionan</text>
+  <text x="48" y="128" font-family="monospace" font-size="13" fill="#f0f6fc">bashrc</text>
+  <text x="48" y="156" font-family="monospace" font-size="13" fill="#f0f6fc">inputrc</text>
+  <text x="48" y="184" font-family="monospace" font-size="13" fill="#f0f6fc">tmux.conf</text>
+  <text x="48" y="212" font-family="monospace" font-size="13" fill="#f0f6fc">gitconfig</text>
+  <text x="48" y="240" font-family="monospace" font-size="13" fill="#f0f6fc">toolkit-completion</text>
+  <text x="48" y="276" font-family="monospace" font-size="13" fill="#8b949e">README.md   .git/</text>
+  <text x="48" y="294" font-family="sans-serif" font-size="11.5" fill="#8b949e">ignorados: no se enlazan</text>
+
+  <rect x="610" y="52" width="270" height="260" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="626" y="76" font-family="monospace" font-size="14" fill="#3fb950" font-weight="bold">~/ (tu home)</text>
+  <text x="626" y="94" font-family="sans-serif" font-size="11.5" fill="#8b949e">con punto: enlaces simbólicos</text>
+  <text x="626" y="128" font-family="monospace" font-size="13" fill="#f0f6fc">.bashrc</text>
+  <text x="626" y="156" font-family="monospace" font-size="13" fill="#f0f6fc">.inputrc</text>
+  <text x="626" y="184" font-family="monospace" font-size="13" fill="#f0f6fc">.tmux.conf</text>
+  <text x="626" y="212" font-family="monospace" font-size="13" fill="#f0f6fc">.gitconfig</text>
+  <text x="626" y="240" font-family="monospace" font-size="13" fill="#f0f6fc">.toolkit-completion</text>
+
+  <path d="M612,124 L292,124" stroke="#3fb950" stroke-width="1.5" fill="none" marker-end="url(#dl)"/>
+  <path d="M612,152 L292,152" stroke="#3fb950" stroke-width="1.5" fill="none" marker-end="url(#dl)"/>
+  <path d="M612,180 L292,180" stroke="#3fb950" stroke-width="1.5" fill="none" marker-end="url(#dl)"/>
+  <path d="M612,208 L292,208" stroke="#3fb950" stroke-width="1.5" fill="none" marker-end="url(#dl)"/>
+  <path d="M612,236 L292,236" stroke="#3fb950" stroke-width="1.5" fill="none" marker-end="url(#dl)"/>
+  <rect x="330" y="258" width="240" height="36" rx="6" fill="#0d1117" stroke="#3fb950" stroke-width="2"/>
+  <text x="450" y="281" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#3fb950" font-weight="bold">toolkit.sh dotfiles link</text>
+  <text x="450" y="112" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#8b949e">cada enlace apunta al repositorio</text>
+
+  <rect x="20" y="334" width="860" height="104" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="36" y="358" font-family="sans-serif" font-size="13" fill="#e3b341" font-weight="bold">Si ~/.gitconfig ya era un archivo real</text>
+  <text x="36" y="382" font-family="monospace" font-size="12.5" fill="#f0f6fc">link          → conflicto, sale con 2 y no cambia nada</text>
+  <text x="36" y="402" font-family="monospace" font-size="12.5" fill="#f0f6fc">link --force  → mv ~/.gitconfig ~/.gitconfig.toolkit-bak  y después  ln -s</text>
+  <text x="36" y="422" font-family="monospace" font-size="12.5" fill="#f0f6fc">unlink        → quita el enlace y devuelve el .toolkit-bak a su sitio</text>
+</svg>

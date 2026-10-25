@@ -12,7 +12,22 @@ qué semana se explica a fondo.
 | adduser | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | Agrupación (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Alias | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
+| alias | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| bash-completion | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| carga perezosa (lazy loading) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| COMP_CWORD / COMP_WORDS / COMPREPLY | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| compgen | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| complete | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| dotfile | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| enlace simbólico (symbolic link) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| entorno (environment) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| hash | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| HISTCONTROL | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| historial (history) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| ~/.inputrc | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| ~/.local/bin | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| login (login shell) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Ámbito (permisos) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | ámbito dinámico (dynamic scope) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | anacron | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
@@ -151,6 +166,7 @@ qué semana se explica a fondo.
 | oneshot | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | Orden estable | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | pacman | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| panel / ventana / sesión (tmux) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Papelera de reciclaje | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | Paquete | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | PATH | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
@@ -168,16 +184,20 @@ qué semana se explica a fondo.
 | PPA (Personal Package Archive) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | PPID (Parent Process ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | prefijo (CIDR) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
+| prefijo (prefix, tmux) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Principio de menor privilegio | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | print0 (find -print0) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | printf | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Prompt | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
+| PROMPT_COMMAND | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| PS1 | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | PS4 | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | PTY (pseudo-terminal) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | puerto (port) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | purge | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | Quoting (entrecomillado) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Readline | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
+| readline | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | readonly | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | recursión (recursion) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | Referencia hacia atrás (backreference) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -192,6 +212,7 @@ qué semana se explica a fondo.
 | Ruta absoluta | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | ruta por defecto | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Ruta relativa | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
+| screen | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Señal (signal) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | Set (tr) | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | SGID (Set Group ID) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
@@ -220,6 +241,7 @@ qué semana se explica a fondo.
 | stdin | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | stdout | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Sticky bit | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
+| stow | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | StrictHostKeyChecking | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | su | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | subshell | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
@@ -233,6 +255,8 @@ qué semana se explica a fondo.
 | temporizador (timer unit) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | test / [[ ]] | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | timeout (Connection timed out) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| tmux | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| .toolkit-bak | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | trap | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | TTL | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | TTY | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |

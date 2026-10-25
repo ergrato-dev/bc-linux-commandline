@@ -51,7 +51,7 @@ se escribe en orden, una semana por entrega.
 
 | Semana | Tema | Estado |
 |:--:|---|:--:|
-| [17](week-17-personalizacion_del_entorno_y_productividad/README.md) | Personalización del entorno y productividad | ⬜ |
+| [17](week-17-personalizacion_del_entorno_y_productividad/README.md) | Personalización del entorno y productividad | ✅ |
 | [18](week-18-archivado_compresion_y_registros_del_sistema/README.md) | Archivado, compresión y registros del sistema | ⬜ |
 | [19](week-19-systemd_seguridad_y_contenedores_desde_cli/README.md) | Inspección de systemd, seguridad y contenedores CLI | ⬜ |
 

@@ -185,8 +185,10 @@ sh mi_script.sh      # puede fallar si el script usa sintaxis de bash
 
 - `bash --version` te dice la versión exacta — relevante porque algunas
   features (arrays asociativos, `${var,,}`) requieren bash 4+.
-- `chsh -l` (o `cat /etc/shells`) lista los shells que el sistema reconoce
-  como válidos para iniciar sesión.
+- `cat /etc/shells` lista los shells que el sistema reconoce como válidos para
+  iniciar sesión. (`chsh -l` solo funciona con el `chsh` de `util-linux`, como en
+  Arch; el de Ubuntu y Debian viene de `passwd` y da `invalid option -- 'l'`.
+  En Rocky/RHEL `chsh` ni viene instalado: está en `util-linux-user`.)
 - Para probar algo rápido en otro shell sin cambiar nada permanente, basta con
   escribir su nombre (`dash`, `zsh`) y salir con `exit` cuando termines.
 - `bash -l` fuerza un shell de login sin tener que cerrar sesión — útil para

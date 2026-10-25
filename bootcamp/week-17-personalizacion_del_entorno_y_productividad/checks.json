@@ -1,0 +1,132 @@
+{
+  "semana": "17",
+  "titulo": "Personalizacion del entorno y productividad",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 9"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk17-org && mkdir -p /tmp/wk17-org && touch /tmp/wk17-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk17-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk17-lr.log && ~/bin/toolkit.sh logreport /tmp/wk17-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk17-reg && mkdir -p /tmp/wk17-reg && printf 'ERROR x\\n' > /tmp/wk17-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk17-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk17-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk17-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk17-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk17-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk17-reg/d1.dup && printf 'igual\\n' > /tmp/wk17-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk17-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk17-etc && mkdir -p /tmp/wk17-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk17-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk17-etc/group && printf '/bin/bash\\n' > /tmp/wk17-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk17-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-13-16",
+      "descripcion": "Los subcomandos snapshot, healthcheck, guard y schedule siguen funcionando (regresion de las Semanas 13 a 16)",
+      "cmd": "set -o pipefail; [ \"$(~/bin/toolkit.sh snapshot --umbral 100 | wc -l)\" = 11 ] && ~/bin/toolkit.sh healthcheck | grep -q 'resumen: 3 de 3 ok' && ~/bin/toolkit.sh guard -- echo hola-guard 2>/dev/null | grep -q hola-guard && { ~/bin/toolkit.sh guard -- false 2>/dev/null; [ $? -eq 2 ]; } && ~/bin/toolkit.sh schedule check '*/15 9-17 * * 1-5' | grep -q 'ejecuciones por dia: 36'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "dotfiles-status-cuenta",
+      "descripcion": "dotfiles status cuenta 2 archivos que faltan e ignora el README y los ocultos del repositorio",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && ~/bin/toolkit.sh dotfiles status --repo /tmp/wk17/repo --home /tmp/wk17/home || true",
+      "assert": "stdout~resumen: ok=0 falta=2 conflicto=0$",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 2"
+    },
+    {
+      "id": "dotfiles-status-sale-2",
+      "descripcion": "dotfiles status sale con codigo 2 cuando falta algun enlace",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && ~/bin/toolkit.sh dotfiles status --repo /tmp/wk17/repo --home /tmp/wk17/home >/dev/null",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 5"
+    },
+    {
+      "id": "dotfiles-repo-inexistente",
+      "descripcion": "dotfiles sale con codigo 1 si el repositorio no existe",
+      "cmd": "~/bin/toolkit.sh dotfiles status --repo /tmp/wk17-no-existe 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 4"
+    },
+    {
+      "id": "dotfiles-link-crea-enlaces",
+      "descripcion": "dotfiles link crea ~/.bashrc y ~/.vimrc como enlaces simbolicos al repositorio",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home >/dev/null && [ \"$(readlink /tmp/wk17/home/.bashrc)\" = /tmp/wk17/repo/bashrc ] && [ \"$(readlink /tmp/wk17/home/.vimrc)\" = /tmp/wk17/repo/vimrc ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 7"
+    },
+    {
+      "id": "dotfiles-link-idempotente",
+      "descripcion": "dotfiles link ejecutado dos veces no cambia nada la segunda",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home >/dev/null && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home",
+      "assert": "stdout~enlazados: 0, ya estaban: 2, respaldados: 0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 7"
+    },
+    {
+      "id": "dotfiles-status-ok",
+      "descripcion": "dotfiles status informa ok=2 y sale con codigo 0 cuando todo esta enlazado",
+      "cmd": "set -o pipefail; rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home >/dev/null && ~/bin/toolkit.sh dotfiles status --repo /tmp/wk17/repo --home /tmp/wk17/home | grep -q 'resumen: ok=2 falta=0 conflicto=0'",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 5"
+    },
+    {
+      "id": "dotfiles-link-conflicto",
+      "descripcion": "dotfiles link sale con codigo 2 si ya hay un archivo real y no se pide --force",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && printf 'mio\\n' > /tmp/wk17/home/.vimrc && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home 2>/dev/null",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 6"
+    },
+    {
+      "id": "dotfiles-link-no-toca-nada",
+      "descripcion": "Con un conflicto, dotfiles link no crea ningun enlace ni modifica el archivo real",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && printf 'mio\\n' > /tmp/wk17/home/.vimrc; ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home 2>&1 | grep -q 'no se ha cambiado nada' && test ! -e /tmp/wk17/home/.bashrc && [ \"$(cat /tmp/wk17/home/.vimrc)\" = mio ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 6"
+    },
+    {
+      "id": "dotfiles-link-force-respalda",
+      "descripcion": "dotfiles link --force guarda el original como .toolkit-bak y enlaza",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && printf 'mio\\n' > /tmp/wk17/home/.vimrc && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home --force >/dev/null && test -L /tmp/wk17/home/.vimrc && [ \"$(cat /tmp/wk17/home/.vimrc.toolkit-bak)\" = mio ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 7"
+    },
+    {
+      "id": "dotfiles-link-dry-run",
+      "descripcion": "dotfiles link --dry-run no crea ningun enlace",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home --dry-run | grep -q '\\[dry-run\\] enlazado .bashrc' && test ! -e /tmp/wk17/home/.bashrc && test ! -L /tmp/wk17/home/.bashrc",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 7"
+    },
+    {
+      "id": "dotfiles-unlink-restaura",
+      "descripcion": "dotfiles unlink quita los enlaces y restaura el archivo original guardado",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && printf 'mio\\n' > /tmp/wk17/home/.vimrc && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk17/repo --home /tmp/wk17/home --force >/dev/null && test -L /tmp/wk17/home/.vimrc && ~/bin/toolkit.sh dotfiles unlink --repo /tmp/wk17/repo --home /tmp/wk17/home >/dev/null && test ! -L /tmp/wk17/home/.vimrc && [ \"$(cat /tmp/wk17/home/.vimrc)\" = mio ] && test ! -e /tmp/wk17/home/.vimrc.toolkit-bak && test ! -e /tmp/wk17/home/.bashrc",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 8"
+    },
+    {
+      "id": "dotfiles-unlink-respeta-ajeno",
+      "descripcion": "dotfiles unlink no borra un archivo real que no es un enlace del repositorio",
+      "cmd": "rm -rf /tmp/wk17 && mkdir -p /tmp/wk17/repo/.git /tmp/wk17/home && printf 'a\\n' > /tmp/wk17/repo/bashrc && printf 'b\\n' > /tmp/wk17/repo/vimrc && printf 'r\\n' > /tmp/wk17/repo/README.md && printf 'ajeno\\n' > /tmp/wk17/home/.vimrc && ~/bin/toolkit.sh dotfiles unlink --repo /tmp/wk17/repo --home /tmp/wk17/home | grep -q 'omitido    .vimrc (no es un enlace' && [ \"$(cat /tmp/wk17/home/.vimrc)\" = ajeno ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-dotfiles-a-mano.md, paso 8"
+    }
+  ]
+}
