@@ -202,6 +202,19 @@ primero).
   sin lanzar ningún proceso: restando dos lecturas mides cuánto tardó un
   trozo del script con más precisión que `$SECONDS`.
 
+## Semana 16 — Automatización y tareas programadas
+
+- `run-parts --test /etc/cron.daily` lista qué scripts ejecutaría el
+  directorio **sin ejecutarlos**, ya filtrados por las reglas de `run-parts`
+  (no ejecutables y nombres con punto, descartados). Es la forma de saber por
+  qué «no corre» un script antes de esperar a las 6:25.
+- `env -i SHELL=/bin/sh PATH=/usr/bin:/bin HOME=/root /bin/sh -c '...'`
+  reproduce en tu terminal el entorno vacío de `cron`, sin esperar un minuto.
+  Si el comando falla ahí con `not found`, ya sabes qué le pasa en `cron`.
+- `systemd-analyze calendar 'Mon..Fri *-*-* 09:00' --iterations=3` enseña las
+  **próximas ejecuciones reales** de un calendario. Úsalo para contrastar
+  cualquier expresión de `cron` que hayas traducido.
+
 ---
 
 [← Volver al índice de documentación](README.md)

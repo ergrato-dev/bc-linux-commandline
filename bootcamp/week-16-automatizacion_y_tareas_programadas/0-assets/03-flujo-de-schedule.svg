@@ -1,0 +1,51 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-sched d-sched">
+  <title id="t-sched">Flujo de schedule</title>
+  <desc id="d-sched">La expresión de cron pasa por cron_parse, que llama a cron_expand una vez por campo y deja las listas de valores en variables globales. De ahí salen dos caminos: schedule check imprime los recuentos y el aviso de O entre día del mes y de la semana; schedule gen valida el nombre, el comando y la expresión y escribe tres archivos: el .cron con el porcentaje escapado, el .service con el porcentaje duplicado y el .timer con el OnCalendar que construye schedule_calendar. Los errores de uso salen con 1 y las expresiones inválidas o ambiguas con 2.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="460" fill="#0d1117"/>
+  <text x="450" y="30" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">De una expresión de cron a tres archivos</text>
+  <rect x="20" y="56" width="260" height="56" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="150" y="80" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">'*/15 9-17 * * 1-5'</text>
+  <text x="150" y="100" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#8b949e">la expresión, entre comillas</text>
+  <path d="M280,84 L320,84" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="320" y="56" width="300" height="56" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="470" y="78" text-anchor="middle" font-family="monospace" font-size="13" fill="#3fb950" font-weight="bold">cron_parse</text>
+  <text x="470" y="98" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">5 × cron_expand  ·  0 y 7 = domingo</text>
+  <path d="M620,84 L660,84" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="660" y="56" width="220" height="56" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="770" y="78" text-anchor="middle" font-family="monospace" font-size="12" fill="#58a6ff" font-weight="bold">CRON_RAW · CRON_LIST</text>
+  <text x="770" y="98" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">CRON_COUNT (globales)</text>
+  <text x="150" y="134" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#f85149">error → CRON_ERROR → exit 2</text>
+  <path d="M770,114 L770,150" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <path d="M770,150 L250,150 L250,176" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <path d="M770,150 L650,150 L650,176" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="20" y="178" width="460" height="96" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="36" y="202" text-anchor="start" font-family="monospace" font-size="13" fill="#58a6ff" font-weight="bold">schedule check</text>
+  <text x="36" y="224" text-anchor="start" font-family="monospace" font-size="12" fill="#f0f6fc">minutos: 4 · horas: 9 · dias del mes: 31 · …</text>
+  <text x="36" y="244" text-anchor="start" font-family="monospace" font-size="12" fill="#f0f6fc">ejecuciones por dia: 36   (minutos × horas)</text>
+  <text x="36" y="264" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#e3b341">aviso si día del mes y día de la semana van restringidos (O frente a Y)</text>
+  <rect x="500" y="178" width="380" height="96" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="516" y="202" text-anchor="start" font-family="monospace" font-size="13" fill="#3fb950" font-weight="bold">schedule gen NOMBRE … -- CMD</text>
+  <text x="516" y="224" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">1. valida nombre, comando (type -P), valores</text>
+  <text x="516" y="242" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">2. valida expresión y que no sea ambigua</text>
+  <text x="516" y="260" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">3. no pisa archivos sin --force</text>
+  <path d="M690,276 L690,292 L160,292 L160,306" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <path d="M450,292 L450,306" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <path d="M740,292 L740,306" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="20" y="308" width="280" height="110" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="36" y="332" text-anchor="start" font-family="monospace" font-size="13" fill="#e3b341" font-weight="bold">NOMBRE.cron</text>
+  <text x="36" y="354" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">SHELL · PATH · MAILTO</text>
+  <text x="36" y="372" text-anchor="start" font-family="monospace" font-size="11.5" fill="#f0f6fc">guard … date +\%F &gt;&gt; log 2&gt;&amp;1</text>
+  <text x="36" y="396" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">% → \%   (crontab de usuario)</text>
+  <rect x="310" y="308" width="280" height="110" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="326" y="332" text-anchor="start" font-family="monospace" font-size="13" fill="#3fb950" font-weight="bold">NOMBRE.service</text>
+  <text x="326" y="354" text-anchor="start" font-family="monospace" font-size="11.5" fill="#f0f6fc">Type=oneshot</text>
+  <text x="326" y="372" text-anchor="start" font-family="monospace" font-size="11.5" fill="#f0f6fc">ExecStart=guard … +%%F</text>
+  <text x="326" y="396" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">% → %%   (salida a journald)</text>
+  <rect x="600" y="308" width="280" height="110" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="616" y="332" text-anchor="start" font-family="monospace" font-size="13" fill="#58a6ff" font-weight="bold">NOMBRE.timer</text>
+  <text x="616" y="354" text-anchor="start" font-family="monospace" font-size="11.5" fill="#f0f6fc">OnCalendar=schedule_calendar</text>
+  <text x="616" y="372" text-anchor="start" font-family="monospace" font-size="11.5" fill="#f0f6fc">Persistent=true</text>
+  <text x="616" y="396" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">listas de valores, sin traducir</text>
+  <text x="450" y="444" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">códigos de salida:  0 todo generado o válido   ·   1 uso inválido o ya existe   ·   2 expresión inválida o ambigua</text>
+</svg>

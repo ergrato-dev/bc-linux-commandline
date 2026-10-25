@@ -69,6 +69,6 @@ al primero.
 
 ---
 
-[← Webgrafía](../4-recursos/webgrafia/README.md) · [Índice del bootcamp →](../../README.md)
+[← Webgrafía](../4-recursos/webgrafia/README.md) · [Semana 16 →](../../week-16-automatizacion_y_tareas_programadas/README.md)
 
 [Glosario global](../../../docs/glosario-global.md) · [Índice del bootcamp](../../README.md)

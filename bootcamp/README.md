@@ -45,7 +45,7 @@ se escribe en orden, una semana por entrega.
 | [13](week-13-fundamentos_de_bash_scripting/README.md) | Fundamentos de bash scripting | ✅ |
 | [14](week-14-control_de_flujo_y_funciones_en_bash/README.md) | Control de flujo y funciones en bash | ✅ |
 | [15](week-15-scripts_robustos_manejo_de_errores/README.md) | Scripts robustos: manejo de errores | ✅ |
-| [16](week-16-automatizacion_y_tareas_programadas/README.md) | Automatización y tareas programadas | ⬜ |
+| [16](week-16-automatizacion_y_tareas_programadas/README.md) | Automatización y tareas programadas | ✅ |
 
 ### Fase 5 — Avanzado (S17-19, 30 h)
 

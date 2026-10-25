@@ -116,6 +116,6 @@ tiempo, reintentos, registro y limpieza, y sale con `0`, `1`, `2`, `3`, `4`,
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 14](../week-14-control_de_flujo_y_funciones_en_bash/README.md) | Semana 15 | [Índice del bootcamp →](../README.md) |
+| [← Semana 14](../week-14-control_de_flujo_y_funciones_en_bash/README.md) | Semana 15 | [Semana 16 →](../week-16-automatizacion_y_tareas_programadas/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)

@@ -1,0 +1,132 @@
+{
+  "semana": "16",
+  "titulo": "Automatizacion y tareas programadas",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 9"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk16-org && mkdir -p /tmp/wk16-org && touch /tmp/wk16-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk16-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk16-lr.log && ~/bin/toolkit.sh logreport /tmp/wk16-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk16-reg && mkdir -p /tmp/wk16-reg && printf 'ERROR x\\n' > /tmp/wk16-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk16-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk16-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk16-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk16-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk16-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk16-reg/d1.dup && printf 'igual\\n' > /tmp/wk16-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk16-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk16-etc && mkdir -p /tmp/wk16-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk16-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk16-etc/group && printf '/bin/bash\\n' > /tmp/wk16-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk16-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-13-15",
+      "descripcion": "Los subcomandos snapshot, healthcheck y guard siguen funcionando (regresion de las Semanas 13 a 15)",
+      "cmd": "set -o pipefail; [ \"$(~/bin/toolkit.sh snapshot --umbral 100 | wc -l)\" = 11 ] && ~/bin/toolkit.sh healthcheck | grep -q 'resumen: 3 de 3 ok' && ~/bin/toolkit.sh guard -- echo hola-guard 2>/dev/null | grep -q hola-guard && { ~/bin/toolkit.sh guard -- false 2>/dev/null; [ $? -eq 2 ]; }",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "schedule-check-cuenta",
+      "descripcion": "schedule check cuenta 36 ejecuciones por dia para '*/15 9-17 * * 1-5'",
+      "cmd": "~/bin/toolkit.sh schedule check '*/15 9-17 * * 1-5'",
+      "assert": "stdout~ejecuciones por dia: 36",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 4"
+    },
+    {
+      "id": "schedule-check-domingo",
+      "descripcion": "schedule check trata 0 y 7 como el mismo domingo (0-7 son 7 dias, no 8)",
+      "cmd": "~/bin/toolkit.sh schedule check '0 0 * * 0-7'",
+      "assert": "stdout~dias de la semana: 7$",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 3"
+    },
+    {
+      "id": "schedule-check-fuera-de-rango",
+      "descripcion": "schedule check sale con codigo 2 si un valor esta fuera de rango",
+      "cmd": "~/bin/toolkit.sh schedule check '60 * * * *' 2>/dev/null",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 2"
+    },
+    {
+      "id": "schedule-check-campos",
+      "descripcion": "schedule check sale con codigo 2 si la expresion no tiene 5 campos",
+      "cmd": "~/bin/toolkit.sh schedule check '* * * *' 2>/dev/null",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 3"
+    },
+    {
+      "id": "schedule-gen-tres-archivos",
+      "descripcion": "schedule gen crea los archivos .cron, .service y .timer",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F >/dev/null && test -f /tmp/wk16-out/tarea.cron && test -f /tmp/wk16-out/tarea.service && test -f /tmp/wk16-out/tarea.timer",
+      "assert": "exit0",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 8"
+    },
+    {
+      "id": "schedule-cron-con-guard",
+      "descripcion": "La linea de cron envuelve el comando en guard con bloqueo y redirige stdout y stderr al registro",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F >/dev/null && grep -qE '^[*]/15 9-17 [*] [*] 1-5 /.*toolkit[.]sh guard -k /var/tmp/toolkit-tarea[.]lock .*>> /var/tmp/toolkit-tarea[.]log 2>&1$' /tmp/wk16-out/tarea.cron",
+      "assert": "exit0",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 7"
+    },
+    {
+      "id": "schedule-cron-escapa-porcentaje",
+      "descripcion": "En el archivo de cron el % del comando se escribe \\%",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F >/dev/null && grep -q '[+]\\\\%F' /tmp/wk16-out/tarea.cron",
+      "assert": "exit0",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 7"
+    },
+    {
+      "id": "schedule-timer-persistente",
+      "descripcion": "El .timer lleva OnCalendar con los dias laborables y Persistent=true",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F >/dev/null && grep -q '^OnCalendar=Mon,Tue,Wed,Thu,Fri ' /tmp/wk16-out/tarea.timer && grep -q '^Persistent=true$' /tmp/wk16-out/tarea.timer",
+      "assert": "exit0",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 8"
+    },
+    {
+      "id": "schedule-unidades-validas",
+      "descripcion": "systemd-analyze verify acepta el .service y el .timer generados",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F >/dev/null && cd /tmp/wk16-out && systemd-analyze verify ./tarea.service ./tarea.timer",
+      "assert": "exit0",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 8"
+    },
+    {
+      "id": "schedule-no-sobrescribe",
+      "descripcion": "schedule gen sale con codigo 1 si los archivos ya existen y no se pide --force",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F >/dev/null && ~/bin/toolkit.sh schedule gen tarea --cron '*/15 9-17 * * 1-5' --salida /tmp/wk16-out -- /usr/bin/date +%F 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 6"
+    },
+    {
+      "id": "schedule-nombre-invalido",
+      "descripcion": "schedule gen rechaza con codigo 1 un nombre que intenta salir del directorio",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen ../tarea --cron '0 3 * * *' --salida /tmp/wk16-out -- /usr/bin/date 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 6"
+    },
+    {
+      "id": "schedule-dom-y-dow",
+      "descripcion": "schedule gen sale con codigo 2 si restringes dia del mes y dia de la semana a la vez",
+      "cmd": "rm -rf /tmp/wk16-out && mkdir -p /tmp/wk16-out && ~/bin/toolkit.sh schedule gen tarea --cron '0 3 13 * 5' --salida /tmp/wk16-out -- /usr/bin/date 2>/dev/null",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-schedule-a-mano.md, paso 6"
+    }
+  ]
+}

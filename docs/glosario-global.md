@@ -7,6 +7,7 @@ qué semana se explica a fondo.
 | Término | Semana |
 |---|:--:|
 | Acción (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| AccuracySec | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | ACL (Access Control List) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | adduser | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | Agrupación (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -14,12 +15,14 @@ qué semana se explica a fondo.
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Ámbito (permisos) | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | ámbito dinámico (dynamic scope) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| anacron | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | Ancla (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | apt | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | argumento posicional | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | Array asociativo | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/), [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | array disperso (sparse array) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | array indexado (indexed array) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
+| at | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | atime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | atómico (atomic) | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | AUR (Arch User Repository) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
@@ -37,6 +40,8 @@ qué semana se explica a fondo.
 | Buffering | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | Builtin (comando interno) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | Byte nulo | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
+| calendario (calendar event) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
+| campo (field) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | CDPATH | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | chage | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | CIDR | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
@@ -50,6 +55,8 @@ qué semana se explica a fondo.
 | Control de trabajos (job control) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Cortocircuito (evaluación) | [05](../bootcamp/week-05-redireccion_pipes_y_flujo_de_datos/5-glosario/) |
 | CRLF | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
+| cron | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
+| crontab | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | ctime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | Cuantificador (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | Cuantificador perezoso (lazy) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
@@ -76,9 +83,12 @@ qué semana se explica a fondo.
 | ERE (Extended Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | errexit | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | Escritura atómica | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
+| especificador (specifier) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
+| /etc/cron.d | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | exec (find -exec) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | Expansión de parámetros | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | export | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
+| expresión de cron (cron expression) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | FHS (Filesystem Hierarchy Standard) | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | flock | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | FNR | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
@@ -120,6 +130,7 @@ qué semana se explica a fondo.
 | maxdepth / mindepth (find) | [09](../bootcamp/week-09-busqueda_de_archivos_find_y_xargs/5-glosario/) |
 | Mínimo privilegio | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | mktemp | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| monotónico (monotonic timer) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | mtime | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
 | MTU | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | nameref (name reference) | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
@@ -136,6 +147,8 @@ qué semana se explica a fondo.
 | NXDOMAIN | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Octal (trampa de $(( ))) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | OFS (Output Field Separator) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
+| OnCalendar | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
+| oneshot | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | Orden estable | [07](../bootcamp/week-07-procesamiento_de_texto_sed_cut_sort_uniq/5-glosario/) |
 | pacman | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | Papelera de reciclaje | [03](../bootcamp/week-03-manipulacion_de_archivos_y_directorios/5-glosario/) |
@@ -144,6 +157,7 @@ qué semana se explica a fondo.
 | Patrón (awk) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/5-glosario/) |
 | Patrón literal (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | PCRE (Perl Compatible Regular Expressions) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| Persistent | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | PGID (Process Group ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | PID (Process ID) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/) |
 | Pila de directorios | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
@@ -174,6 +188,7 @@ qué semana se explica a fondo.
 | Repositorio | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | return | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | rpm | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
+| run-parts | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | Ruta absoluta | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | ruta por defecto | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | Ruta relativa | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
@@ -215,6 +230,7 @@ qué semana se explica a fondo.
 | Sustitución de comandos | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | TCP | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/) |
 | temporal (temporary file) | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| temporizador (timer unit) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | test / [[ ]] | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/5-glosario/) |
 | timeout (Connection timed out) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
 | trap | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/5-glosario/), [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
@@ -225,9 +241,11 @@ qué semana se explica a fondo.
 | UID 0 | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | umask | [04](../bootcamp/week-04-permisos_y_propiedad/5-glosario/) |
 | unbound variable | [15](../bootcamp/week-15-scripts_robustos_manejo_de_errores/5-glosario/) |
+| unidad (unit) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | until | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |
 | usr-merge | [02](../bootcamp/week-02-navegacion_y_sistema_de_archivos/5-glosario/) |
 | UUOC (Useless Use of Cat) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| verify (systemd-analyze) | [16](../bootcamp/week-16-automatizacion_y_tareas_programadas/5-glosario/) |
 | visudo | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | wheel | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/5-glosario/) |
 | while | [14](../bootcamp/week-14-control_de_flujo_y_funciones_en_bash/5-glosario/) |

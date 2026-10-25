@@ -1,0 +1,44 @@
+<svg viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-vs d-vs">
+  <title id="t-vs">Cron frente a un temporizador de systemd</title>
+  <desc id="d-vs">A la izquierda, el demonio cron lee la tabla cada minuto y lanza sh -c con la línea; la salida va por correo o se pierde. A la derecha, una unidad .timer con OnCalendar y Persistent activa una unidad .service de tipo oneshot; la salida va a journald. Debajo, tres diferencias: el entorno, el destino de la salida y qué pasa con la máquina apagada.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="440" fill="#0d1117"/>
+  <text x="450" y="30" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">La misma tarea, dos mecanismos</text>
+  <text x="215" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#e3b341" font-weight="bold">cron</text>
+  <text x="685" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#58a6ff" font-weight="bold">temporizador de systemd</text>
+  <rect x="30" y="76" width="370" height="64" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="215" y="100" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#f0f6fc" font-weight="bold">demonio cron · despierta cada minuto</text>
+  <text x="215" y="122" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#8b949e">lee crontab · /etc/crontab · /etc/cron.d</text>
+  <path d="M215,142 L215,166" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="30" y="168" width="370" height="64" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="215" y="192" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">/bin/sh -c «la línea»</text>
+  <text x="215" y="214" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#8b949e">entorno mínimo · sin terminal · cwd = HOME</text>
+  <path d="M215,234 L215,258" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="30" y="260" width="370" height="56" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="215" y="284" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#f0f6fc" font-weight="bold">salida → correo local o se pierde</text>
+  <text x="215" y="304" text-anchor="middle" font-family="sans-serif" font-size="11.5" fill="#8b949e">si no la rediriges tú, no queda rastro</text>
+  <rect x="500" y="76" width="370" height="64" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="685" y="100" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc" font-weight="bold">tarea.timer</text>
+  <text x="685" y="122" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">OnCalendar=…  ·  Persistent=true</text>
+  <path d="M685,142 L685,166" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <text x="700" y="160" text-anchor="start" font-family="sans-serif" font-size="11" fill="#8b949e">activa</text>
+  <rect x="500" y="168" width="370" height="64" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="685" y="192" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc" font-weight="bold">tarea.service</text>
+  <text x="685" y="214" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">Type=oneshot · ExecStart=ruta absoluta · User=</text>
+  <path d="M685,234 L685,258" stroke="#8b949e" stroke-width="2" fill="none" marker-end="url(#fl)"/>
+  <rect x="500" y="260" width="370" height="56" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="685" y="284" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#f0f6fc" font-weight="bold">salida → journald</text>
+  <text x="685" y="304" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">journalctl -u tarea.service</text>
+  <line x1="30" y1="334" x2="870" y2="334" stroke="#30363d" stroke-width="1"/>
+  <text x="30" y="352" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">accidental: lo que fije el demonio</text>
+  <text x="450" y="352" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#d2a8ff" font-weight="bold">Entorno</text>
+  <text x="870" y="352" text-anchor="end" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">escrito en la unidad, revisable</text>
+  <line x1="30" y1="368" x2="870" y2="368" stroke="#30363d" stroke-width="1"/>
+  <text x="30" y="386" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">tuya: &gt;&gt; log 2&gt;&amp;1</text>
+  <text x="450" y="386" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#d2a8ff" font-weight="bold">Salida</text>
+  <text x="870" y="386" text-anchor="end" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">incluida: journald</text>
+  <line x1="30" y1="402" x2="870" y2="402" stroke="#30363d" stroke-width="1"/>
+  <text x="30" y="420" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">la ejecución se pierde (salvo anacron)</text>
+  <text x="450" y="420" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#d2a8ff" font-weight="bold">Máquina apagada</text>
+  <text x="870" y="420" text-anchor="end" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">Persistent=true la recupera al arrancar</text>
+</svg>

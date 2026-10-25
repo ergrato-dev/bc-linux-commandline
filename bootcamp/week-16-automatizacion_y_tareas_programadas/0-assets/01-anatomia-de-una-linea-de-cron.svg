@@ -1,0 +1,57 @@
+<svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-cron d-cron">
+  <title id="t-cron">Anatomía de una línea de crontab</title>
+  <desc id="d-cron">Una línea de crontab tiene cinco campos de horario (minuto 0-59, hora 0-23, día del mes 1-31, mes 1-12, día de la semana 0-7) seguidos del comando. Debajo se resumen los cuatro operadores (asterisco, coma, guion, barra) y el escape de porcentaje, y se avisa de que las variables SHELL, PATH y MAILTO se fijan antes de las tareas y de que día del mes y día de la semana se unen con O.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="430" fill="#0d1117"/>
+  <text x="450" y="30" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Una línea de crontab, de izquierda a derecha</text>
+  <rect x="20" y="52" width="120" height="100" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="80" y="76" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#3fb950" font-weight="bold">minuto</text>
+  <text x="80" y="112" text-anchor="middle" font-family="monospace" font-size="22" fill="#f0f6fc">*/15</text>
+  <text x="80" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">0-59</text>
+  <rect x="150" y="52" width="120" height="100" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="210" y="76" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#3fb950" font-weight="bold">hora</text>
+  <text x="210" y="112" text-anchor="middle" font-family="monospace" font-size="22" fill="#f0f6fc">9-17</text>
+  <text x="210" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">0-23</text>
+  <rect x="280" y="52" width="120" height="100" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="340" y="76" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#58a6ff" font-weight="bold">día del mes</text>
+  <text x="340" y="112" text-anchor="middle" font-family="monospace" font-size="22" fill="#f0f6fc">*</text>
+  <text x="340" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">1-31</text>
+  <rect x="410" y="52" width="120" height="100" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="470" y="76" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#58a6ff" font-weight="bold">mes</text>
+  <text x="470" y="112" text-anchor="middle" font-family="monospace" font-size="22" fill="#f0f6fc">*</text>
+  <text x="470" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">1-12</text>
+  <rect x="540" y="52" width="120" height="100" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="600" y="76" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#e3b341" font-weight="bold">día semana</text>
+  <text x="600" y="112" text-anchor="middle" font-family="monospace" font-size="22" fill="#f0f6fc">1-5</text>
+  <text x="600" y="140" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#8b949e">0-7</text>
+  <rect x="670" y="52" width="210" height="100" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="775" y="76" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#d2a8ff" font-weight="bold">comando</text>
+  <text x="775" y="104" text-anchor="middle" font-family="monospace" font-size="12" fill="#f0f6fc">toolkit.sh guard -- …</text>
+  <text x="775" y="124" text-anchor="middle" font-family="monospace" font-size="12" fill="#f0f6fc">date +\%F &gt;&gt; log 2&gt;&amp;1</text>
+  <text x="775" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">todo el resto de la línea</text>
+  <text x="450" y="176" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#e3b341">Los cinco campos se combinan con Y. Excepción: si día del mes y día de la semana están restringidos, cron usa O.</text>
+  <rect x="20" y="196" width="164" height="98" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="102" y="226" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950">*</text>
+  <text x="102" y="248" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">cualquier valor</text>
+  <text x="102" y="274" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">*  →  0-59</text>
+  <rect x="199" y="196" width="164" height="98" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="281" y="226" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950">,</text>
+  <text x="281" y="248" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">lista</text>
+  <text x="281" y="274" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">0,15,45</text>
+  <rect x="378" y="196" width="164" height="98" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="460" y="226" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950">-</text>
+  <text x="460" y="248" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">rango, incluye extremos</text>
+  <text x="460" y="274" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">9-17  →  9…17</text>
+  <rect x="557" y="196" width="164" height="98" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="639" y="226" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950">/</text>
+  <text x="639" y="248" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">paso desde el inicio</text>
+  <text x="639" y="274" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">*/7  →  0,7,14…56</text>
+  <rect x="736" y="196" width="164" height="98" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="818" y="226" text-anchor="middle" font-family="monospace" font-size="24" fill="#3fb950">\%</text>
+  <text x="818" y="248" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">un % literal</text>
+  <text x="818" y="274" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8b949e">date +\%F</text>
+  <rect x="20" y="314" width="860" height="92" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="36" y="340" text-anchor="start" font-family="sans-serif" font-size="13" fill="#58a6ff" font-weight="bold">Antes de las tareas: variables que valen para todas las líneas siguientes</text>
+  <text x="36" y="364" text-anchor="start" font-family="monospace" font-size="12.5" fill="#f0f6fc">SHELL=/bin/bash     PATH=/usr/local/bin:/usr/bin:/bin     MAILTO=""</text>
+  <text x="36" y="388" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">No hay expansión: Y=$X-mundo guarda el texto literal.  Sin SHELL, cron usa /bin/sh (dash en Debian y Ubuntu); sin PATH, solo /usr/bin:/bin.</text>
+</svg>
