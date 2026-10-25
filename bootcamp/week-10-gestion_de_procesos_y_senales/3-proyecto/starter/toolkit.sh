@@ -135,7 +135,7 @@ cmd_organize() {
   done
   echo "total movimientos planeados: $plan_count"
   if [[ "$aplicar" != true && "$plan_count" -gt 0 ]]; then
-    echo "nada se movio todavia. Repeti con --apply para ejecutar el plan."
+    echo "nada se movio todavia. Repite con --apply para ejecutar el plan."
   fi
 }
 
@@ -463,9 +463,9 @@ cmd_procwatch() {
   # (no se le puede enviar ninguna senal)" — un zombie ya esta muerto, no
   # hay nada que matar. Si NO es zombie y "$senal" no esta vacio: si
   # "$aplicar" es true, enviala de verdad con
-  # "kill -s "$senal" "$pid" 2>/dev/null || true" e imprimi "senal $senal
+  # "kill -s "$senal" "$pid" 2>/dev/null || true" e imprime "senal $senal
   # enviada a PID $pid"; si "$aplicar" es false (el default), solo
-  # imprimi "dry-run: kill -s $senal $pid (usa --apply para enviarla de
+  # imprime "dry-run: kill -s $senal $pid (usa --apply para enviarla de
   # verdad)", sin enviar nada todavia.
   local zombies="TODO"
 

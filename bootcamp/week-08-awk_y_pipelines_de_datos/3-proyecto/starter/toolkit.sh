@@ -129,7 +129,7 @@ cmd_organize() {
   done
   echo "total movimientos planeados: $plan_count"
   if [[ "$aplicar" != true && "$plan_count" -gt 0 ]]; then
-    echo "nada se movio todavia. Repeti con --apply para ejecutar el plan."
+    echo "nada se movio todavia. Repite con --apply para ejecutar el plan."
   fi
 }
 
@@ -321,7 +321,7 @@ cmd_sumfield() {
     exit 1
   fi
 
-  # TODO 2: si "$archivo" no es un archivo regular (test -f), imprimi un
+  # TODO 2: si "$archivo" no es un archivo regular (test -f), imprime un
   # error a stderr con el nombre del comando y la ruta, y termina con
   # exit 1.
 
@@ -356,7 +356,7 @@ cmd_sumfield() {
   local total="TODO"
   echo "suma total: $total"
 
-  # TODO 6: si "$no_numericos" es mayor a 0, imprimi a stderr "riesgo:
+  # TODO 6: si "$no_numericos" es mayor a 0, imprime a stderr "riesgo:
   # hay $no_numericos valores no numericos en el campo $campo" y termina
   # con exit 2. Si llegaste hasta aca sin haber salido antes, el codigo
   # final es 0 (implicito).

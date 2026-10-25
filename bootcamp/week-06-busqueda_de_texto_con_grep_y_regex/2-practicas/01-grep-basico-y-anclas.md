@@ -155,7 +155,7 @@ literalmente los caracteres `[t]ail` — con los corchetes de por medio, esa
 línea ya no tiene la subcadena exacta `tail` seguida sin interrupción, así
 que el patrón no se matchea a sí mismo.
 
-Terminá el proceso de fondo antes de seguir:
+Termina el proceso de fondo antes de seguir:
 
 ```bash
 kill %1

@@ -120,7 +120,7 @@ cmd_organize() {
   done
   echo "total movimientos planeados: $plan_count"
   if [[ "$aplicar" != true && "$plan_count" -gt 0 ]]; then
-    echo "nada se movio todavia. Repeti con --apply para ejecutar el plan."
+    echo "nada se movio todavia. Repite con --apply para ejecutar el plan."
   fi
 }
 
@@ -177,7 +177,7 @@ cmd_logreport() {
     exit 1
   fi
 
-  # TODO 2: si "$archivo" no es un archivo regular (test -f), imprimi un
+  # TODO 2: si "$archivo" no es un archivo regular (test -f), imprime un
   # error a stderr con el nombre del comando y la ruta, y termina con
   # exit 1.
 

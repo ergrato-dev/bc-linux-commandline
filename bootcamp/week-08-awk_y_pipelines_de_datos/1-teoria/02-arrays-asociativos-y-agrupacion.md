@@ -175,7 +175,7 @@ toolkit.sh sumfield ventas.log --campo 2 --grupo 1
   dentro del programa, sin depender de un `sort` externo — pero son
   extensiones de `gawk`, ausentes en `mawk` (el `awk` por defecto de
   `ubuntu-lab`; ver la divergencia completa en el archivo 06 de esta
-  semana). Confirmá con `awk --version` antes de depender de ellas.
+  semana). Confirma con `awk --version` antes de depender de ellas.
 - Para depurar un array asociativo, `for (k in a) print k, "=", a[k]`
   siempre funciona, sin importar qué `awk` esté instalado.
 

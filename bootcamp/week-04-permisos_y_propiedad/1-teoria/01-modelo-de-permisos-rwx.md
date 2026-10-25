@@ -78,7 +78,7 @@ es el comportamiento real de Linux — `root` existe justamente para poder
 saltarse estas reglas cuando hace falta administrar el sistema.
 
 Eso significa que, para ver de verdad un "Permission denied" en el resto de
-esta semana, hace falta operar como un usuario normal. Creá uno ahora, una
+esta semana, hace falta operar como un usuario normal. Crea uno ahora, una
 sola vez, y vas a reutilizarlo en el resto de los archivos:
 
 ```bash

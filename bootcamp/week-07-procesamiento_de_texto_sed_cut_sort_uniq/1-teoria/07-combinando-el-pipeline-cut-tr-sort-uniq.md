@@ -166,7 +166,7 @@ toolkit.sh topcount eventos.log
 
 ## 5. Trucos
 
-- Construí el pipeline de atrás para adelante en tu cabeza: "quiero un
+- Construye el pipeline de atrás para adelante en tu cabeza: "quiero un
   ranking" → necesita `sort -rn` sobre un conteo → el conteo necesita
   `uniq -c` sobre datos agrupados → agrupar necesita `sort` → y recién
   ahí preguntate qué columna y qué normalización hacen falta antes.
@@ -175,8 +175,8 @@ toolkit.sh topcount eventos.log
   número de dígitos — útil para inspección visual, no para seguir
   procesando el resultado.
 - Si el ranking final tiene más entradas de las que importan, `head -N`
-  al final del pipeline es más barato que filtrar antes — dejá que el
-  pipeline completo procese todo, y recortá solo al mostrar.
+  al final del pipeline es más barato que filtrar antes — deja que el
+  pipeline completo procese todo, y recorta solo al mostrar.
 
 ## Resumen
 

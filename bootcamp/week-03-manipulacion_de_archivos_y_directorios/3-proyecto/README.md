@@ -56,8 +56,9 @@ trabajo — la segunda corrida simplemente no encuentra nada nuevo que mover.
 ## 🚦 Cómo entregarlo
 
 ```bash
-cp bootcamp/week-03-manipulacion_de_archivos_y_directorios/3-proyecto/starter/toolkit.sh ~/bin/toolkit.sh
-chmod +x ~/bin/toolkit.sh
+docker exec ubuntu-lab mkdir -p /root/bin
+docker cp bootcamp/week-03-manipulacion_de_archivos_y_directorios/3-proyecto/starter/toolkit.sh ubuntu-lab:/root/bin/toolkit.sh
+docker exec ubuntu-lab chmod +x /root/bin/toolkit.sh
 # completa los TODO de cmd_organize
 ./scripts/verificar-semana.sh 03
 ```

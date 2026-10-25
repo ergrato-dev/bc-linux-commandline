@@ -126,7 +126,7 @@ cmd_organize() {
   done
   echo "total movimientos planeados: $plan_count"
   if [[ "$aplicar" != true && "$plan_count" -gt 0 ]]; then
-    echo "nada se movio todavia. Repeti con --apply para ejecutar el plan."
+    echo "nada se movio todavia. Repite con --apply para ejecutar el plan."
   fi
 }
 
@@ -268,7 +268,7 @@ cmd_topcount() {
     exit 1
   fi
 
-  # TODO 2: si "$archivo" no es un archivo regular (test -f), imprimi un
+  # TODO 2: si "$archivo" no es un archivo regular (test -f), imprime un
   # error a stderr con el nombre del comando y la ruta, y termina con
   # exit 1.
 
@@ -283,7 +283,7 @@ cmd_topcount() {
   # eso con "tr -s "$delim"" (comprime delimitadores repetidos), despues
   # "cut -d"$delim" -f"$campo"" (extrae la columna), despues
   # "tr '[:upper:]' '[:lower:]'" (normaliza mayusculas/minusculas), y
-  # contá el resultado con "wc -l". Imprime "entradas validas: N".
+  # cuenta el resultado con "wc -l". Imprime "entradas validas: N".
   local total="TODO"
 
   if [[ "$total" -eq 0 ]]; then
@@ -291,7 +291,7 @@ cmd_topcount() {
     exit 0
   fi
 
-  # TODO 4: repeti EXACTAMENTE el mismo pipeline del TODO 3 (sed + tr -s +
+  # TODO 4: repite EXACTAMENTE el mismo pipeline del TODO 3 (sed + tr -s +
   # cut + tr minusculas), pero en vez de contar con "wc -l" al final,
   # encadena "sort | uniq -c | sort -rn" para armar una tabla de
   # frecuencias (cada linea: "  N valor", de mas a menos frecuente).
@@ -303,11 +303,11 @@ cmd_topcount() {
   # TODO 5: la primera linea de "$tabla" (echo "$tabla" | head -1) tiene
   # el conteo y el valor mas frecuente, separados por espacios: "  N
   # valor". Usa "read -r var1 var2 <<< \"...\"" para separarlos en dos
-  # variables (por ejemplo top1_count y top1_valor) e imprimi "valor mas
+  # variables (por ejemplo top1_count y top1_valor) e imprime "valor mas
   # frecuente: $top1_valor ($top1_count de $total)".
 
   # TODO 6: si "top1_count * 2" es mayor a "$total" (ese valor aparece en
-  # mas de la mitad de las entradas), imprimi a stderr "riesgo:
+  # mas de la mitad de las entradas), imprime a stderr "riesgo:
   # '$top1_valor' domina mas de la mitad de las entradas" y termina con
   # exit 2. Si llegaste hasta aca sin haber salido antes, el codigo final
   # es 0 (implicito).

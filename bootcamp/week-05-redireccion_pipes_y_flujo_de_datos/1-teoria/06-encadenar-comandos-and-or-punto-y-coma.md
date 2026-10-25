@@ -13,7 +13,7 @@
 
 ## 1. Qué problema resuelve
 
-Sin estas tres herramientas, encadenar "hacé esto, y si funciona hacé lo
+Sin estas tres herramientas, encadenar "haz esto, y si funciona haz lo
 otro" requeriría un `if` completo para cada paso. `&&`, `||` y `;` resuelven
 los tres casos más comunes de encadenamiento condicional en una sola línea,
 reutilizando exactamente el código de salida visto en el archivo anterior.
@@ -54,8 +54,8 @@ equivalente a escribirlos en líneas separadas.
 mkdir -p /tmp/proyecto && cd /tmp/proyecto || { echo "no se pudo preparar el directorio" >&2; exit 1; }
 ```
 
-Leé esto de corrido: "creá el directorio y entrá; si cualquiera de los dos
-falla, avisá y salí con error". El bloque `{ ... }` agrupa varios comandos
+Lee esto de corrido: "crea el directorio y entra; si cualquiera de los dos
+falla, avisa y sal con error". El bloque `{ ... }` agrupa varios comandos
 para que `||` los trate como una sola unidad — sin las llaves, el `exit 1`
 correría siempre, no solo cuando algo falla.
 

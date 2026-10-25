@@ -17,10 +17,10 @@
 | 1 | ¿Por qué la misma ruta relativa puede apuntar a dos archivos completamente distintos según desde dónde la escribas? |
 | 2 | ¿Qué diferencia conceptual separa `/usr` de `/var` en el FHS, y por qué un sistema con `/usr` de solo lectura puede seguir funcionando mientras que uno con `/var` de solo lectura no? |
 | 3 | ¿Por qué `/proc` no ocupa espacio real en disco, y qué significa eso para comandos que "leen" información de ahí? |
-| 4 | Explicá la diferencia entre lo que ves en el "total" de `ls -l` y el tamaño real de un directorio. ¿Qué comando usarías en su lugar? |
+| 4 | Explica la diferencia entre lo que ves en el "total" de `ls -l` y el tamaño real de un directorio. ¿Qué comando usarías en su lugar? |
 | 5 | ¿Qué diferencia práctica hay entre un enlace simbólico roto y un enlace duro cuyo "original" fue borrado? |
 | 6 | ¿Por qué `file` puede contradecir la extensión de un archivo, y por qué eso no es un error de `file`? |
-| 7 | Explicá con tus palabras qué significa que bash "expanda" un glob antes de que el comando lo reciba, y qué efecto práctico tiene eso sobre `echo *.txt` en una carpeta vacía. |
+| 7 | Explica con tus palabras qué significa que bash "expanda" un glob antes de que el comando lo reciba, y qué efecto práctico tiene eso sobre `echo *.txt` en una carpeta vacía. |
 | 8 | ¿Qué hace `nullglob`, y por qué su ausencia puede romper un script que filtra archivos por extensión? |
 | 9 | ¿En qué se diferencia la expansión de llaves (`{a,b,c}`) de un glob real como `*.txt`? |
 | 10 | ¿Cuándo preferirías `pushd`/`popd` sobre `cd -`, y cuándo sería al revés? |

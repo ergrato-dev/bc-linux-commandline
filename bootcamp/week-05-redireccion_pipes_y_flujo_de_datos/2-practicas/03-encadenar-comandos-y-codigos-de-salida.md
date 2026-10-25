@@ -92,7 +92,7 @@ true && echo "ok" | false || echo "esto se imprime aunque 'true' funciono"
 
 **Verifica**: el `|| echo` se dispara aunque el primer comando (`true`)
 haya sido exitoso — porque el `|| ` está evaluando el resultado de todo el
-pipeline `echo "ok" | false`, no solo el `true` inicial. Explicá con tus
+pipeline `echo "ok" | false`, no solo el `true` inicial. Explica con tus
 palabras por qué este caso confirma la recomendación de usar `if`/`else`
 cuando la lógica es crítica.
 

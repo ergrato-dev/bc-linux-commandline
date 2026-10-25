@@ -59,8 +59,9 @@ patrón de validación temprano que vas a repetir en cada subcomando nuevo.
 # Si sigues desde la Semana 01, extiende tu propio ~/bin/toolkit.sh.
 # Si prefieres partir del esqueleto de esta semana (ya trae doctor
 # completo mas los TODO de inventory):
-cp bootcamp/week-02-navegacion_y_sistema_de_archivos/3-proyecto/starter/toolkit.sh ~/bin/toolkit.sh
-chmod +x ~/bin/toolkit.sh
+docker exec ubuntu-lab mkdir -p /root/bin
+docker cp bootcamp/week-02-navegacion_y_sistema_de_archivos/3-proyecto/starter/toolkit.sh ubuntu-lab:/root/bin/toolkit.sh
+docker exec ubuntu-lab chmod +x /root/bin/toolkit.sh
 # completa los TODO de cmd_inventory
 ./scripts/verificar-semana.sh 02
 ```

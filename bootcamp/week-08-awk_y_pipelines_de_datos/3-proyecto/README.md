@@ -67,8 +67,9 @@ Esta capa reutiliza, de forma explícita, dos patrones ya vistos:
 ## 🚦 Cómo entregarlo
 
 ```bash
-cp bootcamp/week-08-awk_y_pipelines_de_datos/3-proyecto/starter/toolkit.sh ~/bin/toolkit.sh
-chmod +x ~/bin/toolkit.sh
+docker exec ubuntu-lab mkdir -p /root/bin
+docker cp bootcamp/week-08-awk_y_pipelines_de_datos/3-proyecto/starter/toolkit.sh ubuntu-lab:/root/bin/toolkit.sh
+docker exec ubuntu-lab chmod +x /root/bin/toolkit.sh
 # completa los TODO de cmd_sumfield
 ./scripts/verificar-semana.sh 08
 ```

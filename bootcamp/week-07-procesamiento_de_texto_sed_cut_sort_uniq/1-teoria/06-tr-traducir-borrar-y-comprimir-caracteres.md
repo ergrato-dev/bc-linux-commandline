@@ -108,7 +108,7 @@ ___123_
 
 `-c` invierte el set: en vez de "estos caracteres", significa "todo
 **excepto** estos caracteres". El resultado anterior parece correcto a
-primera vista (`abc` se volvió `___`), pero mirá de cerca el final: el
+primera vista (`abc` se volvió `___`), pero mira de cerca el final: el
 **salto de línea también se tradujo**, porque `\n` tampoco está en el set
 `0-9`. La línea perdió su `\n` final, reemplazado por `_`.
 

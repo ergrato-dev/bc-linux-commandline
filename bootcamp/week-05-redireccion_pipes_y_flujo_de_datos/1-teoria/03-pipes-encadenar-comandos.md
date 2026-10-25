@@ -23,7 +23,7 @@ directamente un proceso con el siguiente, sin tocar el disco.
 
 ### 2.1 El mecanismo: stdout de uno, stdin del siguiente
 
-(Recordá: stdout y stdin son los descriptores 1 y 0 vistos en el primer
+(Recuerda: stdout y stdin son los descriptores 1 y 0 vistos en el primer
 archivo de esta semana — un pipe no inventa nada nuevo, reutiliza el mismo
 mecanismo de redirección, apuntando un descriptor directo a otro proceso
 en vez de a un archivo.)
@@ -51,7 +51,7 @@ salida va directo al pipe, que `wc -l` lee y cuenta.
 cat /var/log/syslog | grep "error" | sort | uniq -c | sort -rn
 ```
 
-Cada `|` agrega una conexión más en la cadena. Pensá cada pipeline como una
+Cada `|` agrega una conexión más en la cadena. Piensa cada pipeline como una
 línea de ensamblaje: cada comando recibe lo que el anterior produjo, hace
 **una** transformación puntual, y pasa el resultado al siguiente. El valor
 real de los pipes está en que cada comando individual hace una sola cosa
@@ -159,8 +159,8 @@ echo $?
 
 ## 5. Trucos
 
-- Construí un pipeline largo probándolo comando por comando: corré
-  `comando1`, confirmá la salida, agregá `| comando2`, confirmá de nuevo, y
+- Construye un pipeline largo probándolo comando por comando: corre
+  `comando1`, confirma la salida, agrega `| comando2`, confirma de nuevo, y
   así siguiendo — mucho más rápido que depurar los diez comandos juntos
   después de que algo falla.
 - `comando | less` es la forma más rápida de "paginar" cualquier salida

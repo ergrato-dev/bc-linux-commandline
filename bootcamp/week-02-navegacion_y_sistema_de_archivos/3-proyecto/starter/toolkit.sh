@@ -46,7 +46,7 @@ cmd_inventory() {
   # y avanza una posicion con "shift"). Pista: mismo patron que viste en
   # 3-proyecto/README.md de esta semana, seccion "Que anade esta capa".
 
-  # TODO 2: si "$objetivo" no es un directorio (test -d), imprimi un error
+  # TODO 2: si "$objetivo" no es un directorio (test -d), imprime un error
   # a stderr con el nombre del comando y la ruta, y termina con exit 1.
 
   # TODO 3: resuelve "$objetivo" a su ruta absoluta. Pista: "cd ... && pwd"
@@ -67,7 +67,7 @@ cmd_inventory() {
 
   # TODO 5: si "$extension" no esta vacia, arma un array con
   # "shopt -s nullglob" + "$absoluta"/*."$extension" (no te olvides
-  # "shopt -u nullglob" despues), imprimi cuantas coincidencias hay y
+  # "shopt -u nullglob" despues), imprime cuantas coincidencias hay y
   # despues cada nombre con "basename".
 }
 

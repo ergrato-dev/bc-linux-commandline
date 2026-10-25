@@ -55,8 +55,9 @@ distinga "no pude auditar nada" de "auditié, y encontré algo".
 ## 🚦 Cómo entregarlo
 
 ```bash
-cp bootcamp/week-04-permisos_y_propiedad/3-proyecto/starter/toolkit.sh ~/bin/toolkit.sh
-chmod +x ~/bin/toolkit.sh
+docker exec ubuntu-lab mkdir -p /root/bin
+docker cp bootcamp/week-04-permisos_y_propiedad/3-proyecto/starter/toolkit.sh ubuntu-lab:/root/bin/toolkit.sh
+docker exec ubuntu-lab chmod +x /root/bin/toolkit.sh
 # completa los TODO de cmd_audit
 ./scripts/verificar-semana.sh 04
 ```

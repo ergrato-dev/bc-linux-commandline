@@ -16,7 +16,7 @@
 |:--:|---|
 | 1 | ¿Por qué `x` en un directorio significa "tránsito" y no "ejecución", y qué pasa si falta? |
 | 2 | ¿De qué depende realmente poder borrar un archivo: sus propios permisos, o algo más? |
-| 3 | Calculá, sin tabla, el octal de `rwxr-x---` y explicá cada dígito. |
+| 3 | Calcula, sin tabla, el octal de `rwxr-x---` y explica cada dígito. |
 | 4 | ¿Por qué `chown` casi siempre requiere privilegios elevados mientras `chgrp` no, siempre que sea a un grupo propio? |
 | 5 | ¿Qué permisos recibe un archivo nuevo bajo `umask 027`, y por qué nunca recibe `x` sin importar el `umask`? |
 | 6 | ¿Qué hace SUID en un binario, y por qué el kernel lo ignora en scripts interpretados? |

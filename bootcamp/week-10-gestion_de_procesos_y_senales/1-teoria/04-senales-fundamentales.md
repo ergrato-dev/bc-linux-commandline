@@ -99,7 +99,7 @@ telefónica de módem se cortaba — hoy, el mismo mecanismo se dispara al
 cerrar una sesión de terminal. Es la razón por la que `nohup` (archivo
 03 de esta semana) existe específicamente para esta señal, y por la
 que muchos demonios usan `SIGHUP` con un significado reinterpretado:
-"recargá tu configuración", no "terminá" (archivo 06 de esta semana).
+"recarga tu configuración", no "termina" (archivo 06 de esta semana).
 
 ### 2.6 `SIGUSR1`/`SIGUSR2`: señales sin significado fijo
 
@@ -173,7 +173,7 @@ kill -INT 1234
 cada programa. `SIGTERM` (15) pide terminación ordenada y se puede ignorar; `SIGKILL`
 (9) termina sin excepción, nunca se puede ignorar ni atrapar; `SIGINT`
 (2) es el equivalente de `Ctrl+C`; `SIGHUP` (1) se dispara al cerrar
-una terminal, y muchos demonios lo reinterpretan como "recargá
+una terminal, y muchos demonios lo reinterpretan como "recarga
 configuración". El código de salida `128+N` identifica qué señal
 terminó un proceso. `kill` sin bandera envía `SIGTERM`, no `SIGKILL` —
 un pedido antes que una orden incondicional.

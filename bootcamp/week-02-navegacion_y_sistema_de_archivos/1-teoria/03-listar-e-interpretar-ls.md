@@ -51,7 +51,7 @@ ls -a
 # .  ..  .bashrc  .bash_history  bin  documentos
 ```
 
-Notá que `-a` también muestra `.` (el directorio actual) y `..` (el padre) —
+Nota que `-a` también muestra `.` (el directorio actual) y `..` (el padre) —
 son entradas reales del sistema de archivos, no decoración.
 
 ### 2.3 Leer `ls -l`, columna por columna

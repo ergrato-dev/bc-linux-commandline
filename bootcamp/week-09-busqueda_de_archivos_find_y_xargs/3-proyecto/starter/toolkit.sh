@@ -132,7 +132,7 @@ cmd_organize() {
   done
   echo "total movimientos planeados: $plan_count"
   if [[ "$aplicar" != true && "$plan_count" -gt 0 ]]; then
-    echo "nada se movio todavia. Repeti con --apply para ejecutar el plan."
+    echo "nada se movio todavia. Repite con --apply para ejecutar el plan."
   fi
 }
 

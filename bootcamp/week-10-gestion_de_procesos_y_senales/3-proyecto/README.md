@@ -66,8 +66,9 @@ Esta capa reutiliza, de forma explícita, varios patrones ya vistos:
 ## 🚦 Cómo entregarlo
 
 ```bash
-cp bootcamp/week-10-gestion_de_procesos_y_senales/3-proyecto/starter/toolkit.sh ~/bin/toolkit.sh
-chmod +x ~/bin/toolkit.sh
+docker exec ubuntu-lab mkdir -p /root/bin
+docker cp bootcamp/week-10-gestion_de_procesos_y_senales/3-proyecto/starter/toolkit.sh ubuntu-lab:/root/bin/toolkit.sh
+docker exec ubuntu-lab chmod +x /root/bin/toolkit.sh
 # completa los TODO de cmd_procwatch
 ./scripts/verificar-semana.sh 10
 ```

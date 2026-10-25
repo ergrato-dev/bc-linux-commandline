@@ -13,7 +13,7 @@ scripts lo ignoran, y configura un sticky bit real.
 find / -perm -4000 -type f 2>/dev/null
 ```
 
-**Verifica**: aparece al menos `/usr/bin/passwd` — explicá en una frase por
+**Verifica**: aparece al menos `/usr/bin/passwd` — explica en una frase por
 qué ese binario puntual necesita SUID (pista: escribe en `/etc/shadow`).
 
 ## Paso 2: Confirmar que un script ignora SUID

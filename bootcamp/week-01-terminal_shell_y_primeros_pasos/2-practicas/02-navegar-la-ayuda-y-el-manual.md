@@ -62,7 +62,7 @@ man -k "synchronize files"
 ```
 
 **Verifica**: la salida incluye al menos `rsync (1)` entre los resultados.
-Repetí la búsqueda con otra frase ("list open files", "show disk usage") y
+Repite la búsqueda con otra frase ("list open files", "show disk usage") y
 confirma que `apropos` siempre te acerca al comando correcto sin que lo
 conocieras antes.
 

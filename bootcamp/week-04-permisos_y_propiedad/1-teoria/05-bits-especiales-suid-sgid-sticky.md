@@ -112,7 +112,7 @@ borrarlo o renombrarlo**, aunque el directorio sea escribible por
 cualquiera.
 
 Sin sticky bit, cualquier usuario con permiso de escritura sobre `/tmp`
-podría borrar archivos de otros usuarios ahí (recordá: borrar depende del
+podría borrar archivos de otros usuarios ahí (recuerda: borrar depende del
 permiso del directorio, visto en el archivo 01). Con sticky bit, ese
 permiso de escritura sobre el directorio ya no alcanza para borrar lo
 ajeno.

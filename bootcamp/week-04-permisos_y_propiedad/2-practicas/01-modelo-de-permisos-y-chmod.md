@@ -35,7 +35,7 @@ calcular nada.
 ls -l /etc/hostname /etc/shadow /usr/bin/passwd
 ```
 
-**Verifica**: para cada línea, identificá en voz alta dueño/grupo/otros y
+**Verifica**: para cada línea, identifica en voz alta dueño/grupo/otros y
 qué letra falta en cada ámbito.
 
 ## Paso 2: Reproducir que `root` ignora el permiso de tránsito
@@ -75,7 +75,7 @@ ls -l script-privado.sh datos.csv clave.pem
 ```
 
 **Verifica**: los tres archivos muestran exactamente los permisos
-calculados — compará cada letra con la suma `r=4, w=2, x=1` antes de seguir.
+calculados — compara cada letra con la suma `r=4, w=2, x=1` antes de seguir.
 
 ## Paso 4: Notación simbólica para un cambio puntual
 

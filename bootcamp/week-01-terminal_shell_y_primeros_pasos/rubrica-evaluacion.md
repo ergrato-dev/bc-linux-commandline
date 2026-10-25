@@ -20,7 +20,7 @@
 | 4 | Si un cron job falla con "command not found" para un comando que funciona perfecto en tu terminal, ¿cuál es la primera hipótesis que deberías probar, y por qué? |
 | 5 | ¿Qué diferencia hay entre `$SHELL` y el resultado de `ps -p $$ -o comm=`, y por qué uno puede mentir y el otro no? |
 | 6 | ¿Por qué `man passwd` y `man 5 passwd` pueden mostrar contenido completamente distinto? |
-| 7 | Explicá, con tus palabras, qué significa que el directorio actual no esté en `$PATH`, y por qué eso es una decisión de seguridad, no un descuido. |
+| 7 | Explica, con tus palabras, qué significa que el directorio actual no esté en `$PATH`, y por qué eso es una decisión de seguridad, no un descuido. |
 | 8 | ¿Qué problema concreto resuelve `HISTCONTROL=ignorespace`, y en qué situación real lo usarías? |
 | 9 | Si `which miprograma` encuentra el binario pero bash igual dice "command not found" al escribir `miprograma`, ¿qué deberías revisar antes que nada? |
 | 10 | ¿Por qué el prompt por defecto no muestra el código de salida del último comando, y qué riesgo concreto genera no verlo? |

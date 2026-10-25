@@ -14,10 +14,10 @@
 sudo apt update
 sudo apt install -y docker.io docker-compose-plugin
 sudo usermod -aG docker "$USER"
-# cerrá sesión y volvé a entrar para que el grupo tome efecto
+# cierra sesión y vuelve a entrar para que el grupo tome efecto
 ```
 
-Verificá:
+Verifica:
 
 ```bash
 docker --version
@@ -41,7 +41,7 @@ cd bc-linux-commandline
 ```
 
 Esto levanta cuatro contenedores (`ubuntu-lab`, `debian-lab`, `rhel-lab`,
-`arch-lab`). Verificá que `ubuntu-lab` responde:
+`arch-lab`). Verifica que `ubuntu-lab` responde:
 
 ```bash
 docker exec -it ubuntu-lab cat /etc/os-release | grep VERSION_ID
@@ -63,7 +63,28 @@ y se levanta de nuevo sin arriesgar tu sistema real:
 ./scripts/start.sh
 ```
 
-## 5. Diagnóstico rápido
+## 5. Entregar `toolkit` al laboratorio
+
+`verificar-semana.sh` ejecuta cada comprobación **dentro de `ubuntu-lab`**,
+así que `toolkit.sh` tiene que estar en el `~/bin` **del contenedor** (para
+`root`, `/root/bin`), no solo en tu máquina. El repositorio no se monta en el
+contenedor: se copia el archivo con `docker cp`.
+
+```bash
+docker exec ubuntu-lab mkdir -p /root/bin
+docker cp bootcamp/week-NN-tema/3-proyecto/starter/toolkit.sh ubuntu-lab:/root/bin/toolkit.sh
+docker exec ubuntu-lab chmod +x /root/bin/toolkit.sh
+```
+
+Edita el archivo en tu editor, en tu máquina, y **vuelve a ejecutar el
+`docker cp`** tras cada cambio. Dos avisos:
+
+- Si recreas el laboratorio (`./scripts/stop.sh` y luego `./scripts/start.sh`),
+  `/root/bin` desaparece con el contenedor: vuelve a copiar.
+- Cada semana trae su propio `starter/toolkit.sh` con todas las capas
+  anteriores ya completas; cópialo encima del anterior.
+
+## 6. Diagnóstico rápido
 
 ```bash
 ./scripts/verificar-semana.sh --doctor

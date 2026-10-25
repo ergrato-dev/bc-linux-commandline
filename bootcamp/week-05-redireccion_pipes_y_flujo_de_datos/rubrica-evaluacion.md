@@ -17,7 +17,7 @@
 | 1 | ¿Por qué stdout y stderr pueden parecer "un solo canal" aunque sean dos descriptores independientes? |
 | 2 | ¿Por qué `sort archivo.txt > archivo.txt` pierde los datos del archivo, en vez de ordenarlos? |
 | 3 | ¿Qué diferencia hay entre `comando 2>&1 > archivo` y `comando > archivo 2>&1`? |
-| 4 | Explicá con tus palabras qué hace un pipe a nivel de mecanismo — no "conecta dos comandos", sino qué conecta exactamente. |
+| 4 | Explica con tus palabras qué hace un pipe a nivel de mecanismo — no "conecta dos comandos", sino qué conecta exactamente. |
 | 5 | ¿Por qué `$?` después de un pipe sin `pipefail` puede ocultar que el primer comando de la cadena falló? |
 | 6 | ¿Por qué `sudo comando > archivo-protegido` falla, mientras que `comando | sudo tee archivo-protegido` funciona? |
 | 7 | ¿Qué significan los códigos de salida 126 y 127, y quién los genera — el programa que intentaste correr, o bash? |

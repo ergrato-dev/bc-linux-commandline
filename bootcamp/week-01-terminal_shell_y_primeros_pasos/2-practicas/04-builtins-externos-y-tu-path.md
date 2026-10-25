@@ -71,7 +71,7 @@ hola.sh
 ```
 
 **Verifica**: falla con `command not found`, aunque `ls` muestre el archivo
-ahí mismo. Corregí con:
+ahí mismo. Corrige con:
 
 ```bash
 ./hola.sh

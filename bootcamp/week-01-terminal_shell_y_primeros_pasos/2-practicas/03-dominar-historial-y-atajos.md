@@ -37,7 +37,7 @@ escribe: os-release
 ```
 
 **Verifica**: la línea del prompt cambia a `(reverse-i-search)` y muestra
-`cat /etc/os-release` resaltado. Apretá `Enter` para ejecutarlo, o `Ctrl+G`
+`cat /etc/os-release` resaltado. Aprieta `Enter` para ejecutarlo, o `Ctrl+G`
 para cancelar sin correr nada.
 
 ## Paso 3: Repetir con `!!` y reutilizar argumentos con `!$`

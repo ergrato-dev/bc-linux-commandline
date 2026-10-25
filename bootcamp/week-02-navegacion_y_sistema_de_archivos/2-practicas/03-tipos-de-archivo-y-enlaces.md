@@ -15,7 +15,7 @@ leer una línea de `ls -l` de corrido, sin contar con los dedos.
 ls -l /etc/hostname /etc/shadow /bin
 ```
 
-**Verifica**: para cada línea, identificá en voz alta (o por escrito):
+**Verifica**: para cada línea, identifica en voz alta (o por escrito):
 tipo, permisos, enlaces duros, dueño, grupo, tamaño, fecha, nombre. `/bin`
 debería aparecer como enlace simbólico (`l` al inicio, con `->`).
 
