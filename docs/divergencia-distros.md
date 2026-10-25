@@ -31,6 +31,10 @@ explica en profundidad.
 | Cliente SSH (`ssh`, `scp`) | `openssh-client` | `openssh-clients` | `openssh` (cliente y servidor juntos) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
 | Servicio del servidor SSH | `ssh` (`ssh.service`); servidor en `openssh-server` | `sshd` (`sshd.service`) | `sshd` (`sshd.service`) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
 | Configuración de red persistente | Ubuntu: `netplan`; Debian: `ifupdown` o `systemd-networkd` | NetworkManager (`nmcli`) | `systemd-networkd` o NetworkManager, a elegir | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
+| `/bin/sh` (el intérprete POSIX) | `dash` (no conoce `[[ ]]`: da `[[: not found`) | `bash` | `bash` | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
+| Paquete de `shellcheck` | `shellcheck` | `ShellCheck`, **desde EPEL** (`dnf install epel-release` antes) | `shellcheck` | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
+| Comando `hostname` en la imagen mínima | presente | presente | **ausente**: `uname -n` es la forma portable | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
+| `patch` en la imagen mínima | ausente (`apt-get install patch`) | ausente (`dnf install patch`) | ausente (`pacman -S patch`) | [13](../bootcamp/week-13-fundamentos_de_bash_scripting/) |
 
 ## Por qué esto y no una semana por distro
 

@@ -154,6 +154,24 @@ primero).
   resource busy`) porque Docker lo monta como archivo: se escribe **dentro**
   con `>>` o `cat >`, y se restaura con `cp`.
 
+## Semana 13 — Fundamentos de bash scripting
+
+- Dentro de un script, `PS4='+ ${BASH_SOURCE##*/}:${LINENO}: '` antes de `set -x`
+  hace que cada línea trazada lleve `archivo:línea`: `+ ps4b.sh:4: x=5`.
+  (Como variable de entorno delante de `bash -x`, no surtió efecto en la
+  prueba del laboratorio: va **dentro** del script.)
+- `shellcheck -f diff script.sh | patch -p1 script.sh` **aplica** los
+  arreglos que `shellcheck` sabe hacer solo (comillas, `cd ... || exit`). La imagen
+  mínima no trae `patch`: `apt-get install -y patch`. Revisa el resultado
+  con `git diff` o `diff` antes de fiarte.
+- `printf -v variable 'formato' args` guarda el resultado **en una variable**
+  sin subshell ni `$( )`: `printf -v fecha '%(%F)T' -1` deja `2026-10-25` en
+  `$fecha`.
+- `: "${DIR:?falta DIR}"` exige una variable **sin ejecutar nada más**: `:`
+  es un comando que no hace nada y su argumento se expande, así que
+  `${DIR:?}` aborta el script con el mensaje. Mensaje en `stderr` y código
+  `1`, y una sola línea al principio del script para sus requisitos.
+
 ---
 
 [← Volver al índice de documentación](README.md)

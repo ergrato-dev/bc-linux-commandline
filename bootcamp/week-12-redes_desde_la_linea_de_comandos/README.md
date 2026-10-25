@@ -116,6 +116,6 @@ puerto TCP hacia un destino y sale con `0` o `2`.
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 11](../week-11-usuarios_grupos_y_gestion_de_paquetes/README.md) | Semana 12 | [Índice del bootcamp →](../README.md) |
+| [← Semana 11](../week-11-usuarios_grupos_y_gestion_de_paquetes/README.md) | Semana 12 | [Semana 13 →](../week-13-fundamentos_de_bash_scripting/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)

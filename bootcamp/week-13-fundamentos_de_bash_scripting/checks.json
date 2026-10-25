@@ -1,0 +1,132 @@
+{
+  "semana": "13",
+  "titulo": "Fundamentos de bash scripting",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/01-primer-script-y-shellcheck.md, paso 5"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk13-org && mkdir -p /tmp/wk13-org && touch /tmp/wk13-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk13-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk13-lr.log && ~/bin/toolkit.sh logreport /tmp/wk13-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk13-reg && mkdir -p /tmp/wk13-reg && printf 'ERROR x\\n' > /tmp/wk13-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk13-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk13-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk13-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk13-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk13-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk13-reg/d1.dup && printf 'igual\\n' > /tmp/wk13-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk13-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk13-etc && mkdir -p /tmp/wk13-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk13-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk13-etc/group && printf '/bin/bash\\n' > /tmp/wk13-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk13-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "snapshot-cabecera",
+      "descripcion": "snapshot sale con codigo 0 e imprime su cabecera cuando el disco esta bajo el umbral",
+      "cmd": "set -o pipefail; ~/bin/toolkit.sh snapshot --umbral 100 | grep -q '== toolkit snapshot =='",
+      "assert": "exit0",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 5"
+    },
+    {
+      "id": "snapshot-host",
+      "descripcion": "snapshot imprime el nombre de la maquina que da uname -n",
+      "cmd": "set -o pipefail; ~/bin/toolkit.sh snapshot --umbral 100 | grep -qx \"host: $(uname -n)\"",
+      "assert": "exit0",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 2"
+    },
+    {
+      "id": "snapshot-usuario-sin-user",
+      "descripcion": "snapshot imprime el usuario aunque la variable USER no exista",
+      "cmd": "env -u USER ~/bin/toolkit.sh snapshot --umbral 100",
+      "assert": "stdout~usuario: [a-z]+",
+      "pista": "1-teoria/02-variables-y-expansion-de-parametros.md, seccion valores por defecto"
+    },
+    {
+      "id": "snapshot-sistema",
+      "descripcion": "snapshot lee el nombre del sistema de /etc/os-release",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 100",
+      "assert": "stdout~sistema: Ubuntu 24[.]04",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 2"
+    },
+    {
+      "id": "snapshot-fecha",
+      "descripcion": "snapshot imprime la fecha en formato AAAA-MM-DD",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 100",
+      "assert": "stdout~fecha: [0-9]{4}-[0-9]{2}-[0-9]{2}",
+      "pista": "1-teoria/06-sustitucion-de-comandos-heredocs-y-printf.md"
+    },
+    {
+      "id": "snapshot-memoria",
+      "descripcion": "snapshot convierte la memoria total de kB a MiB con aritmetica de bash",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 100",
+      "assert": "stdout~memoria: [0-9]+ MiB",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 3"
+    },
+    {
+      "id": "snapshot-procesos",
+      "descripcion": "snapshot cuenta al menos un proceso en /proc",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 100",
+      "assert": "stdout~procesos: [1-9][0-9]*",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 3"
+    },
+    {
+      "id": "snapshot-disco",
+      "descripcion": "snapshot imprime el porcentaje de uso del disco raiz",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 100",
+      "assert": "stdout~disco /: [0-9]+%$",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 3"
+    },
+    {
+      "id": "snapshot-umbral-invalido",
+      "descripcion": "snapshot sale con codigo 1 si el umbral no es un entero de 0 a 100",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral abc",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 1"
+    },
+    {
+      "id": "snapshot-opcion-desconocida",
+      "descripcion": "snapshot sale con codigo 1 ante una opcion que no conoce",
+      "cmd": "~/bin/toolkit.sh snapshot --nada",
+      "assert": "exit=1",
+      "pista": "1-teoria/04-argumentos-y-codigos-de-salida.md"
+    },
+    {
+      "id": "snapshot-alerta-exit-2",
+      "descripcion": "snapshot sale con codigo 2 cuando el disco llega al umbral",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 0",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 4"
+    },
+    {
+      "id": "snapshot-alerta-mensaje",
+      "descripcion": "snapshot explica la alerta con el porcentaje y el umbral",
+      "cmd": "~/bin/toolkit.sh snapshot --umbral 0",
+      "assert": "stdout~alerta: disco / al [0-9]+% [(]umbral 0%[)]",
+      "pista": "2-practicas/04-snapshot-a-mano.md, paso 4"
+    },
+    {
+      "id": "snapshot-salida-con-espacios",
+      "descripcion": "snapshot guarda el informe en una ruta con espacios (comillas bien puestas)",
+      "cmd": "rm -rf '/tmp/wk13 dir' && ~/bin/toolkit.sh snapshot --umbral 100 --salida '/tmp/wk13 dir/rep final.txt' >/dev/null && grep -q '== toolkit snapshot ==' '/tmp/wk13 dir/rep final.txt'",
+      "assert": "exit0",
+      "pista": "1-teoria/03-quoting-comillas-y-expansiones.md"
+    }
+  ]
+}

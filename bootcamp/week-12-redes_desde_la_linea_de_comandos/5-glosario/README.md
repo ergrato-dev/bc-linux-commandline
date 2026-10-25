@@ -83,6 +83,6 @@ segundos que una respuesta puede guardarse en caché.
 
 ---
 
-[← Webgrafía](../4-recursos/webgrafia/README.md) · [Índice del bootcamp →](../../README.md)
+[← Webgrafía](../4-recursos/webgrafia/README.md) · [Semana 13 →](../../week-13-fundamentos_de_bash_scripting/README.md)
 
 [Glosario global](../../../docs/glosario-global.md) · [Índice del bootcamp](../../README.md)
