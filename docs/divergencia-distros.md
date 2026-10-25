@@ -46,6 +46,9 @@ explica en profundidad.
 | Registros de texto del sistema | `syslog` y `auth.log` (los escribe `rsyslog`, ausente en la imagen mínima) | `messages` y `secure` con `rsyslog`; en `rhel-lab` mínima no hay ninguno | solo el diario de `journald`; no hay `rsyslog` | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
 | `/var/log/journal` (diario persistente) | existe | **ausente** en `rhel-lab`: con `Storage=auto` el diario es volátil | existe en `arch-lab` | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
 | Paquete `logrotate` | `logrotate` (ausente en la imagen mínima) | `logrotate` (repositorio `baseos`) | `logrotate` (repositorio `core`) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
+| Carpeta de las unidades del paquete | `/lib/systemd/system/` (es un enlace a `/usr/lib/...`) | `/usr/lib/systemd/system/` | `/usr/lib/systemd/system/` | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
+| Unidad del planificador `cron` | `cron.service` | `crond.service` (paquete `cronie`) | `cronie.service` (paquete `cronie`, repositorio `extra`) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
+| Directorio `sshd_config.d/` | existe; `sshd_config` lo incluye con `Include` al principio | existe y trae `50-redhat.conf` del paquete | existe en el paquete `openssh` | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/) |
 
 ## Por qué esto y no una semana por distro
 

@@ -240,6 +240,18 @@ primero).
   `salida/`, aunque el archivo traiga los ficheros sueltos en la raíz y
   ensucie tu directorio actual (lo que se conoce como *tarbomb*).
 
+## Semana 19 — Inspección de systemd, seguridad básica y contenedores desde la CLI
+
+- `find /usr/bin -xdev -type f -perm /6000` encuentra setuid **o** setgid en una
+  sola pasada: el `/` delante del modo significa «cualquiera de estos bits». Con
+  `-6000` (guion) exigiría los dos a la vez y no saldría casi nada.
+- `diff <(sshd -T | sort) <(sshd -T -f otro.conf | sort)` compara la configuración
+  **efectiva** de SSH antes y después de un cambio: ves exactamente qué valores
+  cambian (`passwordauthentication yes` → `no`) y nada más, sin releer el archivo.
+- `docker inspect -f '{{range .Mounts}}{{.Type}} {{.Source}} -> {{.Destination}}
+  (rw={{.RW}}){{"\n"}}{{end}}' NOMBRE` lista los montajes de un contenedor con su
+  modo de escritura: el riesgo que `harden container` no mira.
+
 ---
 
 [← Volver al índice de documentación](README.md)

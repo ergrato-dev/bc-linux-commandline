@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="img" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Dónde busca systemd una unidad: /etc gana a /run y a /usr/lib, y los drop-ins .d se fusionan encima del archivo elegido</title>
+  <rect width="900" height="360" fill="#0d1117"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b949e"/></marker>
+  </defs>
+
+  <text x="20" y="28" fill="#8b949e" font-size="13">systemctl cat ssh.service  →  el primer archivo que exista, de arriba abajo</text>
+
+  <rect x="20" y="45" width="330" height="62" rx="8" fill="#161b22" stroke="#3fb950"/>
+  <text x="185" y="72" fill="#3fb950" font-size="15" text-anchor="middle" font-weight="600">/etc/systemd/system/</text>
+  <text x="185" y="93" fill="#8b949e" font-size="12" text-anchor="middle">lo que tú escribes · gana a todo</text>
+
+  <rect x="20" y="127" width="330" height="62" rx="8" fill="#161b22" stroke="#58a6ff"/>
+  <text x="185" y="154" fill="#79c0ff" font-size="15" text-anchor="middle" font-weight="600">/run/systemd/system/</text>
+  <text x="185" y="175" fill="#8b949e" font-size="12" text-anchor="middle">temporal: desaparece al reiniciar</text>
+
+  <rect x="20" y="209" width="330" height="62" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="185" y="236" fill="#f0f6fc" font-size="15" text-anchor="middle" font-weight="600">/usr/lib/systemd/system/</text>
+  <text x="185" y="257" fill="#8b949e" font-size="12" text-anchor="middle">lo que instalan los paquetes · no se edita</text>
+
+  <line x1="360" y1="76" x2="360" y2="240" stroke="#8b949e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="372" y="162" fill="#8b949e" font-size="11">menos</text>
+  <text x="372" y="176" fill="#8b949e" font-size="11">prioridad</text>
+
+  <rect x="520" y="45" width="360" height="100" rx="8" fill="#161b22" stroke="#d2a8ff"/>
+  <text x="700" y="72" fill="#d2a8ff" font-size="14" text-anchor="middle" font-weight="600">ssh.service.d/*.conf  (drop-ins)</text>
+  <text x="700" y="96" fill="#f0f6fc" font-size="12" text-anchor="middle">[Service]</text>
+  <text x="700" y="114" fill="#f0f6fc" font-size="12" text-anchor="middle">NoNewPrivileges=yes</text>
+  <text x="700" y="133" fill="#8b949e" font-size="11" text-anchor="middle">se añaden o sustituyen directivas sin copiar el archivo</text>
+
+  <rect x="520" y="185" width="360" height="86" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="700" y="212" fill="#f0f6fc" font-size="14" text-anchor="middle" font-weight="600">unidad efectiva</text>
+  <text x="700" y="236" fill="#8b949e" font-size="12" text-anchor="middle">archivo elegido + drop-ins, en orden alfabético</text>
+  <text x="700" y="254" fill="#79c0ff" font-size="12" text-anchor="middle">systemctl cat · systemctl show</text>
+
+  <line x1="350" y1="76" x2="515" y2="212" stroke="#3fb950" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="700" y1="147" x2="700" y2="181" stroke="#d2a8ff" stroke-width="2" marker-end="url(#a)"/>
+
+  <text x="20" y="312" fill="#e3b341" font-size="13">Para cambiar una unidad de un paquete: systemctl edit NOMBRE  (crea el drop-in).  Copiar el archivo a /etc también vale,</text>
+  <text x="20" y="332" fill="#e3b341" font-size="13">pero te quedas con una copia que no recibe las correcciones del paquete.</text>
+</svg>

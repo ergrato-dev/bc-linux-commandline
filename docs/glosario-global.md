@@ -15,20 +15,29 @@ qué semana se explica a fondo.
 | alias | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
 | archivado (archiving) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| auditoría (audit) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | auth.log | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | bash-completion | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | btmp | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| cadena crítica (critical chain) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| capacidades (capabilities) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | carga perezosa (lazy loading) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| cgroup | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | COMP_CWORD / COMP_WORDS / COMPREPLY | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | compgen | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | complete | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | compresión (compression) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| contenedor (container) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | copytruncate | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | create (logrotate) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | diario (journal) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | dotfile | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| drop-in | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| DynamicUser | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| endurecer (harden) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | enlace simbólico (symbolic link) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | entorno (environment) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| ExecStart | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | facility | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | hash | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | HISTCONTROL | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
@@ -39,12 +48,22 @@ qué semana se explica a fondo.
 | logger | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | logrotate | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | miembro (member) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| mínimo privilegio (least privilege) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| namespace | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| NoNewPrivileges | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| PID 1 | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | prioridad (priority) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| PrivateTmp | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| ProtectSystem | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | rotación (rotation) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | rsyslog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | serie (series) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| setuid / setgid | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | sha256sum | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| sshd -T | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
+| sticky (bit sticky) | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | syslog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| systemd-analyze security | [19](../bootcamp/week-19-systemd_seguridad_y_contenedores_desde_cli/5-glosario/) |
 | systemd-cat | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | tar | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | wtmp | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |

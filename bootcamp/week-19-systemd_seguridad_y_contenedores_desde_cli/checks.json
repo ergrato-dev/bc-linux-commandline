@@ -1,0 +1,132 @@
+{
+  "semana": "19",
+  "titulo": "Inspeccion de systemd, seguridad basica y contenedores desde la CLI",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 5"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk19-org && mkdir -p /tmp/wk19-org && touch /tmp/wk19-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk19-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk19-lr.log && ~/bin/toolkit.sh logreport /tmp/wk19-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk19-reg && mkdir -p /tmp/wk19-reg && printf 'ERROR x\\n' > /tmp/wk19-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk19-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk19-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk19-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk19-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk19-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk19-reg/d1.dup && printf 'igual\\n' > /tmp/wk19-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk19-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk19-etc && mkdir -p /tmp/wk19-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk19-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk19-etc/group && printf '/bin/bash\\n' > /tmp/wk19-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk19-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-13-18",
+      "descripcion": "Los subcomandos snapshot, healthcheck, guard, schedule, dotfiles y backup siguen funcionando (regresion de las Semanas 13 a 18)",
+      "cmd": "set -o pipefail; [ \"$(~/bin/toolkit.sh snapshot --umbral 100 | wc -l)\" = 11 ] && ~/bin/toolkit.sh healthcheck | grep -q 'resumen: 3 de 3 ok' && ~/bin/toolkit.sh guard -- echo hola-guard 2>/dev/null | grep -q hola-guard && { ~/bin/toolkit.sh guard -- false 2>/dev/null; [ $? -eq 2 ]; } && ~/bin/toolkit.sh schedule check '*/15 9-17 * * 1-5' | grep -q 'ejecuciones por dia: 36' && rm -rf /tmp/wk19-reg/dot && mkdir -p /tmp/wk19-reg/dot/repo /tmp/wk19-reg/dot/home && printf 'a\\n' > /tmp/wk19-reg/dot/repo/bashrc && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk19-reg/dot/repo --home /tmp/wk19-reg/dot/home >/dev/null && ~/bin/toolkit.sh dotfiles status --repo /tmp/wk19-reg/dot/repo --home /tmp/wk19-reg/dot/home | grep -q 'resumen: ok=1 falta=0 conflicto=0' && rm -rf /tmp/wk19-bk && mkdir -p /tmp/wk19-bk/src/p /tmp/wk19-bk/dest && printf 'a\\n' > /tmp/wk19-bk/src/p/a && ~/bin/toolkit.sh backup create /tmp/wk19-bk/src/p --dest /tmp/wk19-bk/dest >/dev/null && ~/bin/toolkit.sh backup verify /tmp/wk19-bk/dest/p-*.tar.gz | grep -q '^ok '",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "harden-unit-detecta-riesgos",
+      "descripcion": "harden unit sobre una unidad sin aislamiento da 5 riesgos y sale con codigo 2",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && out=$(~/bin/toolkit.sh harden unit /tmp/wk19/bad.service); rc=$?; [ $rc -eq 2 ] && [ \"$(printf '%s\\n' \"$out\" | grep -c '^riesgo ')\" = 5 ] && printf '%s\\n' \"$out\" | grep -qx 'hallazgos: 5'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 1"
+    },
+    {
+      "id": "harden-unit-limpia",
+      "descripcion": "harden unit sobre una unidad con User y aislamiento da hallazgos: 0 y sale con codigo 0",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && ~/bin/toolkit.sh harden unit /tmp/wk19/good.service | grep -qx 'hallazgos: 0'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 1"
+    },
+    {
+      "id": "harden-unit-ultimo-valor-gana",
+      "descripcion": "harden unit toma el ultimo valor cuando una directiva de la unidad se repite",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && ~/bin/toolkit.sh harden unit /tmp/wk19/last.service | grep -qx 'ok User' && ~/bin/toolkit.sh harden unit /tmp/wk19/last.service | grep -qx 'ok PrivateTmp'",
+      "assert": "exit0",
+      "pista": "2-practicas/05-harden-a-mano.md, paso 4"
+    },
+    {
+      "id": "harden-ssh-primera-aparicion",
+      "descripcion": "harden ssh usa la primera aparicion de una directiva, no la ultima",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && ~/bin/toolkit.sh harden ssh /tmp/wk19/a.conf | grep -qx 'riesgo PermitRootLogin: permite entrar como root (valor: yes)'",
+      "assert": "exit0",
+      "pista": "2-practicas/05-harden-a-mano.md, paso 4"
+    },
+    {
+      "id": "harden-ssh-defecto-contrasenas",
+      "descripcion": "harden ssh marca como riesgo que falte PasswordAuthentication, porque por defecto es yes",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && ~/bin/toolkit.sh harden ssh /tmp/wk19/e.conf | grep -qx 'riesgo PasswordAuthentication: admite contrasenas (valor: por defecto, yes)'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 2"
+    },
+    {
+      "id": "harden-ssh-para-en-match",
+      "descripcion": "harden ssh ignora lo que viene despues de una linea Match",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && ~/bin/toolkit.sh harden ssh /tmp/wk19/a.conf | grep -qx 'ok PermitEmptyPasswords'",
+      "assert": "exit0",
+      "pista": "2-practicas/05-harden-a-mano.md, paso 4"
+    },
+    {
+      "id": "harden-perms-clasifica",
+      "descripcion": "harden perms clasifica suid, sgid, escribible y dir-sin-sticky, ordenados, y no marca un directorio con sticky",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && echo x > /tmp/wk19/p/a && chmod 4755 /tmp/wk19/p/a && echo x > /tmp/wk19/p/b && chmod 2755 /tmp/wk19/p/b && echo x > /tmp/wk19/p/sub/w && chmod 666 /tmp/wk19/p/sub/w && chmod 777 /tmp/wk19/p/tmpd && mkdir /tmp/wk19/p/st && chmod 1777 /tmp/wk19/p/st && out=$(~/bin/toolkit.sh harden perms /tmp/wk19/p --quiet); rc=$?; [ $rc -eq 2 ] && [ \"$out\" = \"$(printf 'riesgo dir-sin-sticky: /tmp/wk19/p/tmpd\\nriesgo escribible: /tmp/wk19/p/sub/w\\nriesgo sgid: /tmp/wk19/p/b\\nriesgo suid: /tmp/wk19/p/a\\nhallazgos: 4')\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 3"
+    },
+    {
+      "id": "harden-perms-depth",
+      "descripcion": "harden perms --depth 1 no baja a los subdirectorios y un directorio limpio da hallazgos: 0",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && echo x > /tmp/wk19/p/a && chmod 4755 /tmp/wk19/p/a && echo x > /tmp/wk19/p/b && chmod 2755 /tmp/wk19/p/b && echo x > /tmp/wk19/p/sub/w && chmod 666 /tmp/wk19/p/sub/w && chmod 777 /tmp/wk19/p/tmpd && mkdir /tmp/wk19/p/st && chmod 1777 /tmp/wk19/p/st && ~/bin/toolkit.sh harden perms /tmp/wk19/p --depth 1 --quiet | grep -qx 'hallazgos: 3' && ~/bin/toolkit.sh harden perms /tmp/wk19/clean | grep -qx 'ok perms'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 3"
+    },
+    {
+      "id": "harden-container-riesgos",
+      "descripcion": "harden container sobre un contenedor privilegiado, root y con puerto abierto da 5 riesgos y sale con codigo 2",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && printf '[\\n{\\n\"HostConfig\": {\\n\"NetworkMode\": \"host\",\\n\"PortBindings\": {\"80/tcp\": [{\"HostIp\": \"0.0.0.0\", \"HostPort\": \"8080\"}]},\\n\"Privileged\": true,\\n\"ReadonlyRootfs\": false\\n},\\n\"Config\": {\\n\"User\": \"\"\\n}\\n}\\n]\\n' > /tmp/wk19/bad.json && out=$(~/bin/toolkit.sh harden container /tmp/wk19/bad.json); rc=$?; [ $rc -eq 2 ] && [ \"$(printf '%s\\n' \"$out\" | grep -c '^riesgo ')\" = 5 ]",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 4"
+    },
+    {
+      "id": "harden-container-limpio",
+      "descripcion": "harden container acepta un contenedor con usuario, sistema raiz de solo lectura y puerto en 127.0.0.1",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && printf '[\\n{\\n\"HostConfig\": {\\n\"NetworkMode\": \"bridge\",\\n\"PortBindings\": {\"80/tcp\": [{\"HostIp\": \"127.0.0.1\", \"HostPort\": \"8080\"}]},\\n\"Privileged\": false,\\n\"ReadonlyRootfs\": true\\n},\\n\"Config\": {\\n\"User\": \"1000\"\\n}\\n}\\n]\\n' > /tmp/wk19/good.json && ~/bin/toolkit.sh harden container /tmp/wk19/good.json | grep -qx 'hallazgos: 0'",
+      "assert": "exit0",
+      "pista": "2-practicas/06-harden-las-cuatro-auditorias.md, paso 4"
+    },
+    {
+      "id": "harden-uso-invalido",
+      "descripcion": "harden sale con codigo 1 ante un archivo inexistente y ante una opcion desconocida",
+      "cmd": "~/bin/toolkit.sh harden unit /tmp/wk19-no-existe 2>/dev/null; [ $? -eq 1 ] && ~/bin/toolkit.sh harden ssh --zz x 2>/dev/null; [ $? -eq 1 ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-harden-a-mano.md, paso 3"
+    },
+    {
+      "id": "harden-quiet-solo-riesgos",
+      "descripcion": "harden --quiet no imprime las lineas ok",
+      "cmd": "rm -rf /tmp/wk19 && mkdir -p /tmp/wk19/p/sub /tmp/wk19/p/tmpd /tmp/wk19/clean && printf '[Service]\\nExecStart=/usr/bin/sleep 100\\n' > /tmp/wk19/bad.service && printf '[Service]\\nUser=svc\\nNoNewPrivileges=yes\\nProtectSystem=strict\\nPrivateTmp=yes\\nProtectHome=yes\\n' > /tmp/wk19/good.service && printf '[Service]\\nUser=root\\nUser=svc\\nPrivateTmp=no\\nPrivateTmp=yes\\n' > /tmp/wk19/last.service && printf 'PermitRootLogin yes\\nPasswordAuthentication no\\nPermitRootLogin no\\nMatch User bob\\n PermitEmptyPasswords yes\\n' > /tmp/wk19/a.conf && : > /tmp/wk19/e.conf && out=$(~/bin/toolkit.sh harden unit /tmp/wk19/bad.service --quiet); ! printf '%s\\n' \"$out\" | grep -q '^ok '; out=$(~/bin/toolkit.sh harden unit /tmp/wk19/good.service --quiet); [ \"$out\" = 'hallazgos: 0' ]",
+      "assert": "exit0",
+      "pista": "2-practicas/05-harden-a-mano.md, paso 2"
+    }
+  ]
+}
