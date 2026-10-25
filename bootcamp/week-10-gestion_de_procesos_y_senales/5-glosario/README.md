@@ -61,6 +61,6 @@ procesos no se liberó todavía, porque su padre no llamó a `wait()`.
 
 ---
 
-[← Webgrafía](../4-recursos/webgrafia/README.md) · [Índice del bootcamp →](../../README.md)
+[← Webgrafía](../4-recursos/webgrafia/README.md) · [Semana 11 →](../../week-11-usuarios_grupos_y_gestion_de_paquetes/README.md)
 
 [Glosario global](../../../docs/glosario-global.md) · [Índice del bootcamp](../../README.md)

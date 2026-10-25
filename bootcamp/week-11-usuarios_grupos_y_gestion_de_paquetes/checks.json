@@ -1,0 +1,118 @@
+{
+  "semana": "11",
+  "titulo": "Usuarios, grupos y gestion de paquetes",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, paso 1"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk11-org && mkdir -p /tmp/wk11-org && touch /tmp/wk11-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk11-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk11-lr.log && ~/bin/toolkit.sh logreport /tmp/wk11-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk11-reg && mkdir -p /tmp/wk11-reg && printf 'ERROR x\\n' > /tmp/wk11-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk11-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk11-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk11-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk11-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk11-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk11-reg/d1.dup && printf 'igual\\n' > /tmp/wk11-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk11-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "acctaudit-exit-1-directorio-invalido",
+      "descripcion": "acctaudit sale con codigo 1 si el directorio no tiene passwd, group y shells",
+      "cmd": "~/bin/toolkit.sh acctaudit /tmp/wk11-no-existe",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 1 de cmd_acctaudit"
+    },
+    {
+      "id": "acctaudit-cuenta-regulares",
+      "descripcion": "acctaudit cuenta las cuentas regulares (UID 1000-60000) de un directorio de prueba",
+      "cmd": "rm -rf /tmp/wk11-limpio && mkdir -p /tmp/wk11-limpio && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\n' > /tmp/wk11-limpio/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\n' > /tmp/wk11-limpio/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-limpio/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-limpio",
+      "assert": "stdout~cuentas regulares [(]UID 1000-60000[)]: 2",
+      "pista": "1-teoria/01-usuarios-uid-y-los-archivos-de-cuentas.md"
+    },
+    {
+      "id": "acctaudit-limpio-sin-hallazgos",
+      "descripcion": "acctaudit informa sin hallazgos y sale con 0 en cuentas limpias, sync incluida (su shell /bin/sync no figura en shells)",
+      "cmd": "set -o pipefail; rm -rf /tmp/wk11-limpio0 && mkdir -p /tmp/wk11-limpio0 && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\n' > /tmp/wk11-limpio0/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\n' > /tmp/wk11-limpio0/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-limpio0/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-limpio0 | grep -q 'sin hallazgos'",
+      "assert": "exit0",
+      "pista": "2-practicas/04-acctaudit-y-pkgcheck-a-mano.md, paso 3"
+    },
+    {
+      "id": "acctaudit-detecta-uid0-extra",
+      "descripcion": "acctaudit detecta una segunda cuenta con UID 0",
+      "cmd": "rm -rf /tmp/wk11-uid0 && mkdir -p /tmp/wk11-uid0 && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\ntoor:x:0:0:toor:/root:/bin/bash\\n' > /tmp/wk11-uid0/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\n' > /tmp/wk11-uid0/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-uid0/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-uid0",
+      "assert": "stdout~hallazgo: UID 0 extra: toor",
+      "pista": "1-teoria/01-usuarios-uid-y-los-archivos-de-cuentas.md"
+    },
+    {
+      "id": "acctaudit-detecta-sistema-con-shell",
+      "descripcion": "acctaudit detecta una cuenta de sistema con una shell de login valida",
+      "cmd": "rm -rf /tmp/wk11-sis && mkdir -p /tmp/wk11-sis && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\nsvc:x:998:998:svc:/opt/svc:/bin/bash\\n' > /tmp/wk11-sis/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\nsvc:x:998:\\n' > /tmp/wk11-sis/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-sis/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-sis",
+      "assert": "stdout~hallazgo: cuenta de sistema con shell: svc [(]/bin/bash[)]",
+      "pista": "2-practicas/04-acctaudit-y-pkgcheck-a-mano.md, paso 2"
+    },
+    {
+      "id": "acctaudit-detecta-uid-duplicado",
+      "descripcion": "acctaudit detecta dos cuentas que comparten el mismo UID",
+      "cmd": "rm -rf /tmp/wk11-dup && mkdir -p /tmp/wk11-dup && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\npepe:x:1001:1001:Pepe:/home/pepe:/bin/bash\\n' > /tmp/wk11-dup/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\n' > /tmp/wk11-dup/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-dup/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-dup",
+      "assert": "stdout~hallazgo: UID duplicado: 1001 [(]luis, pepe[)]",
+      "pista": "2-practicas/04-acctaudit-y-pkgcheck-a-mano.md, paso 2"
+    },
+    {
+      "id": "acctaudit-detecta-grupo-inexistente",
+      "descripcion": "acctaudit detecta una cuenta cuyo grupo primario no existe en group",
+      "cmd": "rm -rf /tmp/wk11-gid && mkdir -p /tmp/wk11-gid && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\npepe:x:1002:4242:Pepe:/home/pepe:/bin/bash\\n' > /tmp/wk11-gid/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\n' > /tmp/wk11-gid/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-gid/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-gid",
+      "assert": "stdout~hallazgo: grupo primario inexistente: pepe [(]GID 4242[)]",
+      "pista": "2-practicas/04-acctaudit-y-pkgcheck-a-mano.md, paso 2"
+    },
+    {
+      "id": "acctaudit-exit-2-con-hallazgos",
+      "descripcion": "acctaudit sale con codigo 2 si encuentra al menos un hallazgo",
+      "cmd": "rm -rf /tmp/wk11-exit2 && mkdir -p /tmp/wk11-exit2 && printf 'root:x:0:0:root:/root:/bin/bash\\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\\nsync:x:4:65534:sync:/bin:/bin/sync\\nana:x:1000:1000:Ana:/home/ana:/bin/bash\\nluis:x:1001:1001:Luis:/home/luis:/bin/bash\\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\\ntoor:x:0:0:toor:/root:/bin/bash\\n' > /tmp/wk11-exit2/passwd && printf 'root:x:0:\\ndaemon:x:1:\\nana:x:1000:\\nluis:x:1001:\\nnogroup:x:65534:\\n' > /tmp/wk11-exit2/group && printf '# /etc/shells: valid login shells\\n/bin/sh\\n/bin/bash\\n' > /tmp/wk11-exit2/shells && ~/bin/toolkit.sh acctaudit /tmp/wk11-exit2",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 4 de cmd_acctaudit"
+    },
+    {
+      "id": "pkgcheck-exit-1-sin-nombre",
+      "descripcion": "pkgcheck sale con codigo 1 si no se le pasa ningun paquete",
+      "cmd": "~/bin/toolkit.sh pkgcheck",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 1 de cmd_pkgcheck"
+    },
+    {
+      "id": "pkgcheck-detecta-gestor",
+      "descripcion": "pkgcheck identifica el gestor de paquetes de la maquina (apt en ubuntu-lab)",
+      "cmd": "~/bin/toolkit.sh pkgcheck bash",
+      "assert": "stdout~gestor: apt [(]dpkg[)]",
+      "pista": "1-teoria/04-que-es-un-gestor-de-paquetes.md"
+    },
+    {
+      "id": "pkgcheck-paquete-instalado",
+      "descripcion": "pkgcheck reporta como instalado un paquete que sabemos que lo esta (bash)",
+      "cmd": "~/bin/toolkit.sh pkgcheck bash",
+      "assert": "stdout~estado: instalado",
+      "pista": "1-teoria/04-que-es-un-gestor-de-paquetes.md"
+    },
+    {
+      "id": "pkgcheck-version",
+      "descripcion": "pkgcheck imprime la version instalada del paquete",
+      "cmd": "~/bin/toolkit.sh pkgcheck bash",
+      "assert": "stdout~version: [0-9]+[.][0-9]+",
+      "pista": "2-practicas/04-acctaudit-y-pkgcheck-a-mano.md, paso 5"
+    },
+    {
+      "id": "pkgcheck-exit-2-no-instalado",
+      "descripcion": "pkgcheck sale con codigo 2 si el paquete no esta instalado",
+      "cmd": "~/bin/toolkit.sh pkgcheck paquete-que-no-existe-wk11",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 3 de cmd_pkgcheck"
+    }
+  ]
+}

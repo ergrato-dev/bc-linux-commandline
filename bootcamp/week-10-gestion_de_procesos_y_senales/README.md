@@ -101,6 +101,6 @@ enviar señales con criterio.
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 09](../week-09-busqueda_de_archivos_find_y_xargs/README.md) | Semana 10 | [Índice del bootcamp →](../README.md) |
+| [← Semana 09](../week-09-busqueda_de_archivos_find_y_xargs/README.md) | Semana 10 | [Semana 11 →](../week-11-usuarios_grupos_y_gestion_de_paquetes/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)

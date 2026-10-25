@@ -122,6 +122,20 @@ primero).
 - `kill -l 143` traduce un código de salida de vuelta al nombre de la
   señal que lo causó, sin tener que hacer la resta a mano.
 
+## Semana 11 — Usuarios, grupos y gestión de paquetes
+
+- `su -s /bin/bash www-data -c id` ejecuta algo como una cuenta de
+  servicio **con shell `nologin`**: `-s` fuerza una shell para esa orden,
+  sin tocar `/etc/passwd`. Sin `-s`, `su www-data -c id` solo imprime
+  `This account is currently not available.`
+- `dpkg-query -W -f='${Installed-Size}\t${Package}\n' | sort -rn | head -3`
+  lista los paquetes que más espacio ocupan (en KiB), sin parsear
+  `dpkg -l`: el formato lo eliges tú con `-f`.
+- `passwd -Sa | awk '$2 == "L"'` lista de golpe todas las cuentas con la
+  contraseña bloqueada; `passwd -Sa` sola da el estado de **todas**.
+- `getent passwd 1000` busca por **UID numérico** (y `getent group 27` por
+  GID): la forma de traducir el número que ves en `ls -n` a un nombre.
+
 ---
 
 [← Volver al índice de documentación](README.md)

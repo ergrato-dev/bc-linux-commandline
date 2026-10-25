@@ -1,0 +1,47 @@
+<svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titulo-pw desc-pw">
+  <title id="titulo-pw">Anatomía de una línea de /etc/passwd y a qué archivos apunta cada campo</title>
+  <desc id="desc-pw">Una línea de /etc/passwd tiene siete campos separados por dos puntos: nombre, contraseña (una x que remite a /etc/shadow), UID, GID primario (que se resuelve contra /etc/group), comentario, directorio home y shell de login (que debe figurar en /etc/shells).</desc>
+  <rect x="0" y="0" width="900" height="430" fill="#0d1117"/>
+  <text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Una línea de /etc/passwd: siete campos separados por «:»</text>
+  <text x="450" y="58" text-anchor="middle" font-family="monospace" font-size="14" fill="#8b949e">ana:x:1001:1001:Ana Prueba:/home/ana:/bin/bash</text>
+  <defs><marker id="flecha" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="20" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="78" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">1. nombre</text>
+  <text x="78" y="136" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">ana</text>
+  <rect x="144" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="202" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">2. contraseña</text>
+  <text x="202" y="136" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">x</text>
+  <rect x="268" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="326" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">3. UID</text>
+  <text x="326" y="136" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">1001</text>
+  <rect x="392" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="450" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">4. GID primario</text>
+  <text x="450" y="136" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">1001</text>
+  <rect x="516" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#8b949e" stroke-width="2"/>
+  <text x="574" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">5. comentario</text>
+  <text x="574" y="136" text-anchor="middle" font-family="monospace" font-size="11" fill="#f0f6fc">Ana Prueba</text>
+  <rect x="640" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="698" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">6. directorio home</text>
+  <text x="698" y="136" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">/home/ana</text>
+  <rect x="764" y="82" width="116" height="74" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="822" y="104" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">7. shell de login</text>
+  <text x="822" y="136" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">/bin/bash</text>
+  <path d="M202,156 L140,268" stroke="#d2a8ff" stroke-width="2" fill="none" marker-end="url(#flecha)"/>
+  <rect x="20" y="270" width="240" height="64" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="140" y="294" text-anchor="middle" font-family="monospace" font-size="14" fill="#d2a8ff">/etc/shadow</text>
+  <text x="140" y="316" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f0f6fc">hash de la contraseña, legible solo</text>
+  <text x="140" y="329" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f0f6fc">por root y el grupo shadow</text>
+  <path d="M450,156 L450,268" stroke="#58a6ff" stroke-width="2" fill="none" marker-end="url(#flecha)"/>
+  <rect x="330" y="270" width="240" height="64" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="450" y="294" text-anchor="middle" font-family="monospace" font-size="14" fill="#58a6ff">/etc/group</text>
+  <text x="450" y="316" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f0f6fc">resuelve el GID al nombre del grupo y sus </text>
+  <text x="450" y="329" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f0f6fc">y lista sus miembros adicionales</text>
+  <path d="M822,156 L760,268" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#flecha)"/>
+  <rect x="640" y="270" width="240" height="64" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="760" y="294" text-anchor="middle" font-family="monospace" font-size="14" fill="#3fb950">/etc/shells</text>
+  <text x="760" y="316" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f0f6fc">lista de shells válidas: si no figura, no </text>
+  <text x="760" y="329" text-anchor="middle" font-family="sans-serif" font-size="10.5" fill="#f0f6fc">no es un login real</text>
+  <rect x="20" y="360" width="860" height="50" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="450" y="382" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#e3b341" font-weight="bold">El kernel solo mira el UID (campo 3)</text>
+  <text x="450" y="399" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">El nombre existe para humanos: dos nombres con el mismo UID son, para el kernel, la misma persona.</text>
+</svg>

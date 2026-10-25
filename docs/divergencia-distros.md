@@ -19,6 +19,12 @@ explica en profundidad.
 | ACLs | `acl` paquete aparte en bases mínimas | preinstalado en la mayoría | paquete `acl` aparte | [04](../bootcamp/week-04-permisos_y_propiedad/) |
 | `awk` por defecto | `mawk` (liviano, sin extensiones de gawk) | `gawk` (GNU Awk completo) | `gawk` (GNU Awk completo) | [08](../bootcamp/week-08-awk_y_pipelines_de_datos/) |
 | `ps`/`pgrep`/`pkill` (paquete `procps`) | preinstalado en `ubuntu-lab`; ausente en imágenes `debian` mínimas | ausente en imágenes `rhel`/UBI mínimas, requiere `dnf install procps-ng` | preinstalado (`procps-ng`) | [10](../bootcamp/week-10-gestion_de_procesos_y_senales/) |
+| Grupo que da acceso a `sudo` | `sudo` (regla `%sudo` activa) | `wheel` (regla `%wheel` activa) | `wheel` (regla **comentada** en `sudoers`: hay que activarla con `visudo`) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
+| `sudo` en la imagen mínima | ausente (`apt install sudo`) | ausente (`dnf install sudo`) | ausente (`pacman -S sudo`) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
+| Asistente de alta de usuarios | `useradd` y también `adduser` (Perl, interactivo) | solo `useradd` | solo `useradd` | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
+| Quitar paquete y su configuración | `apt remove` (conserva config, estado `rc`) / `apt purge` | `dnf remove` (config modificada queda como `.rpmsave`; no hay `purge`) | `pacman -R` (`.pacsave`) / `pacman -Rn` | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
+| Dónde vive la firma del paquete | En el **índice** del repositorio (`InRelease`); un `.deb` suelto no se verifica | En **cada `.rpm`** (`rpm -K` lo comprueba) | En cada paquete (`SigLevel` de `pacman.conf`) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
+| Base de datos de paquetes instalados | `/var/lib/dpkg/status` (texto) | `/var/lib/rpm/rpmdb.sqlite` (SQLite) | `/var/lib/pacman/local/` (un directorio por paquete) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
 
 ## Por qué esto y no una semana por distro
 
