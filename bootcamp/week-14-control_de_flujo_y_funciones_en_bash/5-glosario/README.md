@@ -76,6 +76,6 @@ inverso de `while`.
 
 ---
 
-[← Webgrafía](../4-recursos/webgrafia/README.md) · [Índice del bootcamp →](../../README.md)
+[← Webgrafía](../4-recursos/webgrafia/README.md) · [Semana 15 →](../../week-15-scripts_robustos_manejo_de_errores/README.md)
 
 [Glosario global](../../../docs/glosario-global.md) · [Índice del bootcamp](../../README.md)

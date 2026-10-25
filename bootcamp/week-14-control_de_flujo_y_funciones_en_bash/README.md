@@ -114,6 +114,6 @@ configurables y sale con `0`, `1` o `2`.
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 13](../week-13-fundamentos_de_bash_scripting/README.md) | Semana 14 | [Índice del bootcamp →](../README.md) |
+| [← Semana 13](../week-13-fundamentos_de_bash_scripting/README.md) | Semana 14 | [Semana 15 →](../week-15-scripts_robustos_manejo_de_errores/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)

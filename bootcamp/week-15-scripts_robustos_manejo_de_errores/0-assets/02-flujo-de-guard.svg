@@ -1,0 +1,31 @@
+<svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-guard d-guard">
+  <title id="t-guard">Flujo interno de guard</title>
+  <desc id="d-guard">Cinco etapas: primero getopts y validación, con exit 1 ante un uso inválido; luego mktemp e instalación de los traps, con INT y TERM saliendo con 130 y 143; después flock sin esperar, con exit 3 si otra ejecución tiene el bloqueo; un bucle de intentos que ejecuta el comando en segundo plano con timeout opcional y lo espera con wait, repitiendo según los reintentos; y el cierre, que muestra la salida del comando, copia sus últimas líneas al registro si falló y sale con 0, 4 o 2. El trap EXIT registra el código final.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="400" fill="#0d1117"/>
+  <text x="450" y="32" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Cómo guard ejecuta un comando de forma robusta</text>
+  <rect x="20" y="60" width="270" height="92" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="34" y="86" text-anchor="start" font-family="sans-serif" font-size="13" fill="#d2a8ff" font-weight="bold">1  getopts + validar</text>
+  <text x="34" y="108" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">falta comando, opción o valor malo</text>
+  <text x="34" y="134" text-anchor="start" font-family="monospace" font-size="12" fill="#f85149">exit 1</text>
+  <path d="M290,106 L320,106" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="320" y="60" width="270" height="92" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="334" y="86" text-anchor="start" font-family="sans-serif" font-size="13" fill="#58a6ff" font-weight="bold">2  mktemp + traps</text>
+  <text x="334" y="108" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">EXIT limpia · INT/TERM matan al hijo</text>
+  <text x="334" y="134" text-anchor="start" font-family="monospace" font-size="12" fill="#e3b341">exit 130 / 143</text>
+  <path d="M590,106 L620,106" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="620" y="60" width="270" height="92" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="634" y="86" text-anchor="start" font-family="sans-serif" font-size="13" fill="#e3b341" font-weight="bold">3  flock -n</text>
+  <text x="634" y="108" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#f0f6fc">otra ejecución tiene el bloqueo</text>
+  <text x="634" y="134" text-anchor="start" font-family="monospace" font-size="12" fill="#f85149">exit 3</text>
+  <path d="M755,154 L755,186" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="20" y="188" width="860" height="106" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="36" y="214" text-anchor="start" font-family="sans-serif" font-size="13" fill="#3fb950" font-weight="bold">4  bucle de intentos (1 + reintentos)</text>
+  <text x="36" y="238" text-anchor="start" font-family="monospace" font-size="12" fill="#f0f6fc">guard_run: timeout SEG cmd &gt; temporal &amp;   →   wait $GUARD_PID</text>
+  <text x="36" y="262" text-anchor="start" font-family="sans-serif" font-size="12" fill="#f0f6fc">rc = 0 → break   ·   rc = 124 → aviso de timeout   ·   otro rc → aviso de fallo, sleep, repetir</text>
+  <text x="36" y="284" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">cada intento deja una línea INFO/WARN en el registro</text>
+  <path d="M450,296 L450,322" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="20" y="324" width="860" height="56" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="450" y="348" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#79c0ff" font-weight="bold">5  cat temporal · últimas 5 líneas al registro si falló</text>
+  <text x="450" y="368" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f0f6fc">rc 0 → exit 0   ·   rc 124 → exit 4   ·   otro → exit 2     (y el trap EXIT registra el código final)</text>
+</svg>

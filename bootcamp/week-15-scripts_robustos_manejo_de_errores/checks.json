@@ -1,0 +1,132 @@
+{
+  "semana": "15",
+  "titulo": "Scripts robustos: manejo de errores",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 8"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk15-org && mkdir -p /tmp/wk15-org && touch /tmp/wk15-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk15-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk15-lr.log && ~/bin/toolkit.sh logreport /tmp/wk15-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk15-reg && mkdir -p /tmp/wk15-reg && printf 'ERROR x\\n' > /tmp/wk15-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk15-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk15-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk15-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk15-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk15-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk15-reg/d1.dup && printf 'igual\\n' > /tmp/wk15-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk15-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk15-etc && mkdir -p /tmp/wk15-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk15-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk15-etc/group && printf '/bin/bash\\n' > /tmp/wk15-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk15-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-13-14",
+      "descripcion": "Los subcomandos snapshot y healthcheck siguen funcionando (regresion de las Semanas 13 y 14)",
+      "cmd": "set -o pipefail; [ \"$(~/bin/toolkit.sh snapshot --umbral 100 | wc -l)\" = 11 ] && { ~/bin/toolkit.sh snapshot --umbral 0 >/dev/null; [ $? -eq 2 ]; } && ~/bin/toolkit.sh healthcheck | grep -q 'resumen: 3 de 3 ok' && { ~/bin/toolkit.sh healthcheck --umbral-disco 0 >/dev/null; [ $? -eq 2 ]; }",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "guard-salida-del-comando",
+      "descripcion": "guard ejecuta el comando y muestra su salida",
+      "cmd": "~/bin/toolkit.sh guard -- echo hola-guard 2>/dev/null",
+      "assert": "stdout~hola-guard",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 4"
+    },
+    {
+      "id": "guard-fallo-exit-2",
+      "descripcion": "guard sale con codigo 2 cuando el comando falla",
+      "cmd": "~/bin/toolkit.sh guard -- false 2>/dev/null",
+      "assert": "exit=2",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 4"
+    },
+    {
+      "id": "guard-sin-comando",
+      "descripcion": "guard sale con codigo 1 si no se le da ningun comando",
+      "cmd": "~/bin/toolkit.sh guard 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 2"
+    },
+    {
+      "id": "guard-opcion-desconocida",
+      "descripcion": "guard sale con codigo 1 ante una opcion que no conoce",
+      "cmd": "~/bin/toolkit.sh guard -z -- true 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 2"
+    },
+    {
+      "id": "guard-timeout-invalido",
+      "descripcion": "guard sale con codigo 1 si el limite de tiempo no es un entero",
+      "cmd": "~/bin/toolkit.sh guard -t abc -- true 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 2"
+    },
+    {
+      "id": "guard-timeout-exit-4",
+      "descripcion": "guard sale con codigo 4 cuando el comando agota el limite de tiempo",
+      "cmd": "~/bin/toolkit.sh guard -t 1 -- sleep 5 2>/dev/null",
+      "assert": "exit=4",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 4"
+    },
+    {
+      "id": "guard-lock-ocupado",
+      "descripcion": "guard sale con codigo 3 si otra ejecucion tiene el bloqueo",
+      "cmd": "L=/tmp/wk15-guard.lock; rm -f $L; ~/bin/toolkit.sh guard -k $L -- sleep 2 2>/dev/null & p=$!; sleep 0.5; ~/bin/toolkit.sh guard -k $L -- true 2>/dev/null; rc=$?; wait $p; exit $rc",
+      "assert": "exit=3",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 5"
+    },
+    {
+      "id": "guard-log-intento",
+      "descripcion": "guard registra cada intento en el archivo de registro",
+      "cmd": "rm -f /tmp/wk15-guard.log; ~/bin/toolkit.sh guard -l /tmp/wk15-guard.log -- true; grep -q 'INFO intento 1/1: true' /tmp/wk15-guard.log",
+      "assert": "exit0",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 6"
+    },
+    {
+      "id": "guard-log-codigo-final",
+      "descripcion": "guard registra el codigo de salida final aunque el comando falle",
+      "cmd": "rm -f /tmp/wk15-guard.log; ~/bin/toolkit.sh guard -l /tmp/wk15-guard.log -- false; grep -q 'fin: codigo de salida 2' /tmp/wk15-guard.log",
+      "assert": "exit0",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 3"
+    },
+    {
+      "id": "guard-reintentos",
+      "descripcion": "guard reintenta el comando las veces pedidas",
+      "cmd": "rm -f /tmp/wk15-guard.log; ~/bin/toolkit.sh guard -l /tmp/wk15-guard.log -r 2 -w 0 -- false; grep -q 'intento 3/3' /tmp/wk15-guard.log",
+      "assert": "exit0",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 6"
+    },
+    {
+      "id": "guard-borra-temporal",
+      "descripcion": "guard no deja su archivo temporal aunque el comando falle",
+      "cmd": "rm -f /tmp/toolkit-guard.*; ~/bin/toolkit.sh guard -- false 2>/dev/null; [ -z \"$(ls /tmp/toolkit-guard.* 2>/dev/null)\" ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 3"
+    },
+    {
+      "id": "guard-term-exit-143",
+      "descripcion": "guard sale con codigo 143 al recibir TERM mientras el comando corre",
+      "cmd": "~/bin/toolkit.sh guard -- sleep 30 2>/dev/null & p=$!; sleep 0.5; kill -TERM $p; wait $p; exit $?",
+      "assert": "exit=143",
+      "pista": "2-practicas/04-guard-a-mano.md, paso 7"
+    }
+  ]
+}

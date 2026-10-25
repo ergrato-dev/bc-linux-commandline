@@ -188,6 +188,20 @@ primero).
   `hc_` (`hc_a hc_b`): para depurar "qué variables dejó mi script" sin
   `declare -p` entero.
 
+## Semana 15 — Scripts robustos: manejo de errores
+
+- `flock -n -E 9 archivo.lock comando` elige **tú** el código de salida cuando
+  el bloqueo está ocupado (aquí `9`), en lugar del `1` por defecto, que se
+  confunde con un fallo del propio comando. En el laboratorio dio `9` en las
+  cuatro distribuciones.
+- `wait -n` espera al **primero** de los trabajos en segundo plano que
+  termine y devuelve su código: con `sleep 1 & sleep 2 & wait -n` vuelve a
+  1 s, no a 2. Sirve para lanzar varias tareas y reaccionar a la primera que
+  acabe o falle.
+- `$EPOCHREALTIME` da la hora en segundos con microsegundos (`1761387302.481213`)
+  sin lanzar ningún proceso: restando dos lecturas mides cuánto tardó un
+  trozo del script con más precisión que `$SECONDS`.
+
 ---
 
 [← Volver al índice de documentación](README.md)
