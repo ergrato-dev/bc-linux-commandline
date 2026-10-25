@@ -14,17 +14,41 @@ qué semana se explica a fondo.
 | Alias | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/5-glosario/) |
 | alias | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | Alternancia (regex) | [06](../bootcamp/week-06-busqueda_de_texto_con_grep_y_regex/5-glosario/) |
+| archivado (archiving) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| auth.log | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | bash-completion | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| btmp | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | carga perezosa (lazy loading) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | COMP_CWORD / COMP_WORDS / COMPREPLY | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | compgen | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | complete | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| compresión (compression) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| copytruncate | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| create (logrotate) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| diario (journal) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | dotfile | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | enlace simbólico (symbolic link) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | entorno (environment) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| facility | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | hash | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | HISTCONTROL | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | historial (history) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
+| huella (checksum) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| journalctl | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| last / lastb / lastlog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| logger | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| logrotate | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| miembro (member) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| prioridad (priority) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| rotación (rotation) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| rsyslog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| serie (series) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| sha256sum | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| syslog | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| systemd-cat | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| tar | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| wtmp | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
+| xz / zstd / bzip2 / gzip | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/5-glosario/) |
 | ~/.inputrc | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | ~/.local/bin | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |
 | login (login shell) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/5-glosario/) |

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>De dónde salen los registros: las aplicaciones escriben a rsyslog o a journald, y rsyslog los guarda en archivos de /var/log que logrotate rota</title>
+  <rect width="900" height="330" fill="#0d1117"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b949e"/></marker>
+  </defs>
+
+  <rect x="20" y="40" width="170" height="70" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="105" y="70" fill="#f0f6fc" font-size="14" text-anchor="middle" font-weight="600">tu script, sshd, apt</text>
+  <text x="105" y="92" fill="#8b949e" font-size="12" text-anchor="middle">logger "mensaje"</text>
+
+  <rect x="20" y="190" width="170" height="70" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="105" y="220" fill="#f0f6fc" font-size="14" text-anchor="middle" font-weight="600">un servicio systemd</text>
+  <text x="105" y="242" fill="#8b949e" font-size="12" text-anchor="middle">systemd-cat, stdout</text>
+
+  <line x1="190" y1="75" x2="285" y2="75" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <text x="238" y="64" fill="#58a6ff" font-size="11" text-anchor="middle">/dev/log</text>
+  <line x1="190" y1="225" x2="285" y2="225" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <text x="238" y="214" fill="#58a6ff" font-size="11" text-anchor="middle">socket</text>
+
+  <rect x="290" y="40" width="170" height="70" rx="8" fill="#161b22" stroke="#58a6ff"/>
+  <text x="375" y="70" fill="#79c0ff" font-size="15" text-anchor="middle" font-weight="600">rsyslogd</text>
+  <text x="375" y="92" fill="#8b949e" font-size="12" text-anchor="middle">reglas facility.priority</text>
+
+  <rect x="290" y="190" width="170" height="70" rx="8" fill="#161b22" stroke="#58a6ff"/>
+  <text x="375" y="220" fill="#79c0ff" font-size="15" text-anchor="middle" font-weight="600">systemd-journald</text>
+  <text x="375" y="242" fill="#8b949e" font-size="12" text-anchor="middle">diario binario indexado</text>
+
+  <line x1="460" y1="75" x2="545" y2="75" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="460" y1="225" x2="545" y2="225" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="375" y1="190" x2="375" y2="113" stroke="#8b949e" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a)"/>
+  <text x="440" y="155" fill="#8b949e" font-size="11" text-anchor="start">a veces reenvía</text>
+
+  <rect x="550" y="40" width="190" height="70" rx="8" fill="#161b22" stroke="#3fb950"/>
+  <text x="645" y="68" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">/var/log/syslog</text>
+  <text x="645" y="88" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">/var/log/auth.log</text>
+  <text x="645" y="104" fill="#8b949e" font-size="11" text-anchor="middle">texto: grep, tail -F</text>
+
+  <rect x="550" y="190" width="190" height="70" rx="8" fill="#161b22" stroke="#3fb950"/>
+  <text x="645" y="220" fill="#3fb950" font-size="14" text-anchor="middle" font-weight="600">/var/log/journal/</text>
+  <text x="645" y="242" fill="#8b949e" font-size="11" text-anchor="middle">se lee con journalctl</text>
+
+  <line x1="740" y1="75" x2="790" y2="75" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="795" y="40" width="90" height="70" rx="8" fill="#161b22" stroke="#e3b341"/>
+  <text x="840" y="70" fill="#e3b341" font-size="14" text-anchor="middle" font-weight="600">logrotate</text>
+  <text x="840" y="90" fill="#8b949e" font-size="11" text-anchor="middle">rota y</text>
+  <text x="840" y="104" fill="#8b949e" font-size="11" text-anchor="middle">comprime</text>
+
+  <line x1="740" y1="225" x2="790" y2="225" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="795" y="190" width="90" height="70" rx="8" fill="#161b22" stroke="#e3b341"/>
+  <text x="840" y="220" fill="#e3b341" font-size="13" text-anchor="middle" font-weight="600">journald</text>
+  <text x="840" y="238" fill="#8b949e" font-size="11" text-anchor="middle">se limita</text>
+  <text x="840" y="252" fill="#8b949e" font-size="11" text-anchor="middle">solo</text>
+
+  <text x="450" y="302" fill="#8b949e" font-size="12" text-anchor="middle">Dos caminos que pueden convivir: el de texto (archivos) y el binario (journal).</text>
+</svg>

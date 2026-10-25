@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 270" role="img" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <title>Un .tar.gz son dos pasos: tar agrupa muchos archivos en uno y gzip lo comprime; sha256sum guarda una huella aparte</title>
+  <rect width="900" height="270" fill="#0d1117"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8b949e"/></marker>
+  </defs>
+
+  <rect x="20" y="60" width="150" height="110" rx="8" fill="#161b22" stroke="#30363d"/>
+  <text x="95" y="86" fill="#f0f6fc" font-size="15" text-anchor="middle" font-weight="600">datos/</text>
+  <text x="95" y="112" fill="#8b949e" font-size="13" text-anchor="middle">docs/a.txt</text>
+  <text x="95" y="132" fill="#8b949e" font-size="13" text-anchor="middle">docs/b.txt</text>
+  <text x="95" y="152" fill="#8b949e" font-size="13" text-anchor="middle">img/relleno.dat</text>
+
+  <line x1="170" y1="115" x2="225" y2="115" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <text x="198" y="104" fill="#58a6ff" font-size="12" text-anchor="middle">tar -c</text>
+
+  <rect x="230" y="75" width="150" height="80" rx="8" fill="#161b22" stroke="#58a6ff"/>
+  <text x="305" y="104" fill="#79c0ff" font-size="15" text-anchor="middle" font-weight="600">datos.tar</text>
+  <text x="305" y="128" fill="#8b949e" font-size="12" text-anchor="middle">un solo archivo</text>
+  <text x="305" y="145" fill="#8b949e" font-size="12" text-anchor="middle">sin comprimir</text>
+
+  <line x1="380" y1="115" x2="435" y2="115" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <text x="408" y="104" fill="#58a6ff" font-size="12" text-anchor="middle">gzip</text>
+
+  <rect x="440" y="75" width="170" height="80" rx="8" fill="#161b22" stroke="#3fb950"/>
+  <text x="525" y="104" fill="#3fb950" font-size="15" text-anchor="middle" font-weight="600">datos.tar.gz</text>
+  <text x="525" y="128" fill="#8b949e" font-size="12" text-anchor="middle">menos bytes</text>
+  <text x="525" y="145" fill="#8b949e" font-size="12" text-anchor="middle">tar -czf hace los dos pasos</text>
+
+  <line x1="610" y1="115" x2="665" y2="115" stroke="#8b949e" stroke-width="2" marker-end="url(#a)"/>
+  <text x="638" y="104" fill="#58a6ff" font-size="11" text-anchor="middle">sha256sum</text>
+
+  <rect x="670" y="75" width="210" height="80" rx="8" fill="#161b22" stroke="#d2a8ff"/>
+  <text x="775" y="104" fill="#d2a8ff" font-size="15" text-anchor="middle" font-weight="600">datos.tar.gz.sha256</text>
+  <text x="775" y="128" fill="#8b949e" font-size="12" text-anchor="middle">la huella, aparte del archivo</text>
+  <text x="775" y="145" fill="#8b949e" font-size="12" text-anchor="middle">sha256sum -c la comprueba</text>
+
+  <rect x="230" y="190" width="380" height="56" rx="8" fill="#161b22" stroke="#e3b341"/>
+  <text x="420" y="214" fill="#e3b341" font-size="13" text-anchor="middle" font-weight="600">Una copia que no se ha restaurado nunca</text>
+  <text x="420" y="233" fill="#8b949e" font-size="12" text-anchor="middle">es una esperanza, no una copia de seguridad</text>
+</svg>

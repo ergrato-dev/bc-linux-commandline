@@ -41,6 +41,11 @@ explica en profundidad.
 | `chsh -l` (listar shells) | **no existe** (`chsh` viene de `passwd`); usa `cat /etc/shells` | `chsh` no viene instalado (paquete `util-linux-user`) | funciona (`util-linux`) | [01](../bootcamp/week-01-terminal_shell_y_primeros_pasos/) |
 | Paquete `bash-completion` | `bash-completion` | `bash-completion` | `bash-completion` (repositorio `extra`) | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
 | Paquete `screen` | `screen` | **desde EPEL** (`dnf install epel-release` antes) | `screen` | [17](../bootcamp/week-17-personalizacion_del_entorno_y_productividad/) |
+| `bzip2`, `xz` y `zstd` en la imagen mínima | ausentes (`apt-get install bzip2 xz-utils zstd`) | ausentes (`dnf install bzip2 xz zstd`) | **ya instalados** | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
+| Paquete de `xz` | `xz-utils` | `xz` | `xz` | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
+| Registros de texto del sistema | `syslog` y `auth.log` (los escribe `rsyslog`, ausente en la imagen mínima) | `messages` y `secure` con `rsyslog`; en `rhel-lab` mínima no hay ninguno | solo el diario de `journald`; no hay `rsyslog` | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
+| `/var/log/journal` (diario persistente) | existe | **ausente** en `rhel-lab`: con `Storage=auto` el diario es volátil | existe en `arch-lab` | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
+| Paquete `logrotate` | `logrotate` (ausente en la imagen mínima) | `logrotate` (repositorio `baseos`) | `logrotate` (repositorio `core`) | [18](../bootcamp/week-18-archivado_compresion_y_registros_del_sistema/) |
 
 ## Por qué esto y no una semana por distro
 

@@ -1,0 +1,132 @@
+{
+  "semana": "18",
+  "titulo": "Archivado, compresion y registros del sistema",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "toolkit-shellcheck-limpio",
+      "descripcion": "shellcheck no reporta ningun hallazgo sobre toolkit.sh",
+      "cmd": "shellcheck ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 10"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk18-org && mkdir -p /tmp/wk18-org && touch /tmp/wk18-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk18-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk18-lr.log && ~/bin/toolkit.sh logreport /tmp/wk18-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk18-reg && mkdir -p /tmp/wk18-reg && printf 'ERROR x\\n' > /tmp/wk18-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk18-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk18-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk18-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk18-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk18-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk18-reg/d1.dup && printf 'igual\\n' > /tmp/wk18-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk18-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-11-12",
+      "descripcion": "Los subcomandos acctaudit, pkgcheck y netcheck siguen funcionando (regresion de las Semanas 11 y 12)",
+      "cmd": "rm -rf /tmp/wk18-etc && mkdir -p /tmp/wk18-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk18-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk18-etc/group && printf '/bin/bash\\n' > /tmp/wk18-etc/shells && set -o pipefail; ~/bin/toolkit.sh acctaudit /tmp/wk18-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado' && ~/bin/toolkit.sh netcheck localhost | grep -q 'fallos: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-13-17",
+      "descripcion": "Los subcomandos snapshot, healthcheck, guard, schedule y dotfiles siguen funcionando (regresion de las Semanas 13 a 17)",
+      "cmd": "set -o pipefail; [ \"$(~/bin/toolkit.sh snapshot --umbral 100 | wc -l)\" = 11 ] && ~/bin/toolkit.sh healthcheck | grep -q 'resumen: 3 de 3 ok' && ~/bin/toolkit.sh guard -- echo hola-guard 2>/dev/null | grep -q hola-guard && { ~/bin/toolkit.sh guard -- false 2>/dev/null; [ $? -eq 2 ]; } && ~/bin/toolkit.sh schedule check '*/15 9-17 * * 1-5' | grep -q 'ejecuciones por dia: 36' && rm -rf /tmp/wk18-reg/dot && mkdir -p /tmp/wk18-reg/dot/repo /tmp/wk18-reg/dot/home && printf 'a\\n' > /tmp/wk18-reg/dot/repo/bashrc && ~/bin/toolkit.sh dotfiles link --repo /tmp/wk18-reg/dot/repo --home /tmp/wk18-reg/dot/home >/dev/null && ~/bin/toolkit.sh dotfiles status --repo /tmp/wk18-reg/dot/repo --home /tmp/wk18-reg/dot/home | grep -q 'resumen: ok=1 falta=0 conflicto=0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "backup-create-archivo-y-suma",
+      "descripcion": "backup create crea el .tar.gz y su .sha256 en el directorio de copias",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest >/dev/null && ls /tmp/wk18/dest/proy-*.tar.gz >/dev/null && ls /tmp/wk18/dest/proy-*.tar.gz.sha256 >/dev/null && tar -tzf /tmp/wk18/dest/proy-*.tar.gz | grep -qx 'proy/sub/b.txt'",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 5"
+    },
+    {
+      "id": "backup-create-exclude",
+      "descripcion": "backup create --exclude deja fuera del archivo lo que casa con el patron",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest --exclude cache >/dev/null && tar -tzf /tmp/wk18/dest/proy-*.tar.gz | grep -qx 'proy/a.txt' && ! tar -tzf /tmp/wk18/dest/proy-*.tar.gz | grep -q cache",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 5"
+    },
+    {
+      "id": "backup-create-dry-run",
+      "descripcion": "backup create --dry-run anuncia el archivo y no escribe nada",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest/nuevo --dry-run | grep -q '\\[dry-run\\] crearia' && test ! -e /tmp/wk18/dest/nuevo",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 5"
+    },
+    {
+      "id": "backup-create-origen-inexistente",
+      "descripcion": "backup create sale con codigo 1 si el origen no existe",
+      "cmd": "~/bin/toolkit.sh backup create /tmp/wk18-no-existe --dest /tmp/wk18-dest 2>/dev/null",
+      "assert": "exit=1",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 3"
+    },
+    {
+      "id": "backup-create-nombre-invalido",
+      "descripcion": "backup create rechaza con codigo 1 un nombre que intenta salir del directorio de copias",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest --name ../fuera 2>/dev/null; [ $? -eq 1 ] && test -z \"$(ls -A /tmp/wk18/dest)\" && test ! -e /tmp/wk18/fuera-*",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 3"
+    },
+    {
+      "id": "backup-verify-detecta-corrupcion",
+      "descripcion": "backup verify da ok sobre una copia buena y sale con codigo 2 cuando el archivo ha cambiado",
+      "cmd": "set -o pipefail; rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest >/dev/null && a=$(ls /tmp/wk18/dest/proy-*.tar.gz) && ~/bin/toolkit.sh backup verify \"$a\" | grep -q '^ok ' && printf 'zz' >> \"$a\"; ~/bin/toolkit.sh backup verify \"$a\" 2>/dev/null; [ $? -eq 2 ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 6"
+    },
+    {
+      "id": "backup-list-cuenta",
+      "descripcion": "backup list muestra cada copia con su tamano y termina con copias: N",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && printf 'x' > /tmp/wk18/dest/s-20250101-000000.tar.gz && printf 'x' > /tmp/wk18/dest/s-20250102-000000.tar.gz && printf 'ignorado' > /tmp/wk18/dest/notas.txt && ~/bin/toolkit.sh backup list --dest /tmp/wk18/dest",
+      "assert": "stdout~copias: 2$",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 7"
+    },
+    {
+      "id": "backup-restore-ida-y-vuelta",
+      "descripcion": "backup restore devuelve un directorio identico al origen",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest --exclude cache >/dev/null && mkdir /tmp/wk18/out && ~/bin/toolkit.sh backup restore /tmp/wk18/dest/proy-*.tar.gz --to /tmp/wk18/out >/dev/null && diff -r -x cache /tmp/wk18/src/proy /tmp/wk18/out/proy",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 8"
+    },
+    {
+      "id": "backup-restore-destino-no-vacio",
+      "descripcion": "backup restore sale con codigo 1 si el destino ya tiene contenido y no lo toca",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && ~/bin/toolkit.sh backup create /tmp/wk18/src/proy --dest /tmp/wk18/dest >/dev/null && mkdir /tmp/wk18/out && printf 'mio\\n' > /tmp/wk18/out/propio && ~/bin/toolkit.sh backup restore /tmp/wk18/dest/proy-*.tar.gz --to /tmp/wk18/out 2>/dev/null; [ $? -eq 1 ] && [ \"$(ls -A /tmp/wk18/out)\" = propio ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 8"
+    },
+    {
+      "id": "backup-restore-ruta-peligrosa",
+      "descripcion": "backup restore sale con codigo 2 ante un archivo con rutas ..  y no escribe fuera del destino",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && printf 'e\\n' > /tmp/wk18/e && tar -czf /tmp/wk18/dest/ev-20250101-000000.tar.gz -C /tmp/wk18 --transform 's,^,../fuera/,' e 2>/dev/null && (cd /tmp/wk18/dest && sha256sum ev-20250101-000000.tar.gz > ev-20250101-000000.tar.gz.sha256) && mkdir /tmp/wk18/out && ~/bin/toolkit.sh backup restore /tmp/wk18/dest/ev-20250101-000000.tar.gz --to /tmp/wk18/out 2>/dev/null; [ $? -eq 2 ] && test ! -e /tmp/wk18/fuera && test -z \"$(ls -A /tmp/wk18/out)\"",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 4"
+    },
+    {
+      "id": "backup-prune-conserva",
+      "descripcion": "backup prune --keep 2 borra las copias mas antiguas de la serie y deja las dos ultimas con sus sumas",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && for d in 01 02 03 04; do printf 'x' > /tmp/wk18/dest/s-202501$d-000000.tar.gz; printf 'h' > /tmp/wk18/dest/s-202501$d-000000.tar.gz.sha256; done; printf 'y' > /tmp/wk18/dest/otra-20250101-000000.tar.gz && ~/bin/toolkit.sh backup prune --name s --keep 2 --dest /tmp/wk18/dest >/dev/null && [ \"$(ls /tmp/wk18/dest | tr '\\n' ' ')\" = 'otra-20250101-000000.tar.gz s-20250103-000000.tar.gz s-20250103-000000.tar.gz.sha256 s-20250104-000000.tar.gz s-20250104-000000.tar.gz.sha256 ' ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 9"
+    },
+    {
+      "id": "backup-prune-dry-run",
+      "descripcion": "backup prune --dry-run ensena lo que borraria y no borra nada",
+      "cmd": "rm -rf /tmp/wk18 && mkdir -p /tmp/wk18/src/proy/sub /tmp/wk18/src/proy/cache /tmp/wk18/dest && printf 'uno\\n' > /tmp/wk18/src/proy/a.txt && printf 'dos\\n' > /tmp/wk18/src/proy/sub/b.txt && printf 'x\\n' > /tmp/wk18/src/proy/cache/c.tmp && for d in 01 02 03; do printf 'x' > /tmp/wk18/dest/s-202501$d-000000.tar.gz; done; ~/bin/toolkit.sh backup prune --name s --keep 1 --dest /tmp/wk18/dest --dry-run | grep -q '\\[dry-run\\] borrado s-20250101-000000.tar.gz' && [ \"$(ls /tmp/wk18/dest | wc -l)\" = 3 ]",
+      "assert": "exit0",
+      "pista": "2-practicas/04-backup-a-mano.md, paso 9"
+    }
+  ]
+}

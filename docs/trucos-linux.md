@@ -227,6 +227,19 @@ primero).
 - `find ~ -maxdepth 1 -type l -printf '%f -> %l\n'` lista los enlaces de tu home
   y a dónde apuntan: quién cuelga de tu repositorio de dotfiles, de un vistazo.
 
+
+## Semana 18 — Archivado, compresión y registros del sistema
+
+- `tar -cf - -C origen . | tar -xf - -C destino` copia un árbol **conservando
+  permisos y enlaces**, sin archivo intermedio: la tubería hace de `.tar`. Un
+  `600` sigue siendo `600` al otro lado.
+- `sha256sum --quiet -c archivo.sha256` no imprime nada cuando todo va bien y
+  solo nombra lo que falla: ideal para un `cron`, donde el silencio significa
+  «correcto». (El código de salida es `1` si algo falla.)
+- `tar -xzf archivo.tgz --one-top-level=salida` mete **todo** dentro de
+  `salida/`, aunque el archivo traiga los ficheros sueltos en la raíz y
+  ensucie tu directorio actual (lo que se conoce como *tarbomb*).
+
 ---
 
 [← Volver al índice de documentación](README.md)
