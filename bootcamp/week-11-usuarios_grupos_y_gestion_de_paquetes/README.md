@@ -112,6 +112,6 @@ si un paquete está instalado, con el gestor de la máquina).
 
 | Anterior | Actual | Siguiente |
 |---|:--:|---|
-| [← Semana 10](../week-10-gestion_de_procesos_y_senales/README.md) | Semana 11 | [Índice del bootcamp →](../README.md) |
+| [← Semana 10](../week-10-gestion_de_procesos_y_senales/README.md) | Semana 11 | [Semana 12 →](../week-12-redes_desde_la_linea_de_comandos/README.md) |
 
 [← Volver al índice del bootcamp](../README.md)

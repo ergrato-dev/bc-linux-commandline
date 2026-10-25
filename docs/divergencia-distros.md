@@ -25,6 +25,12 @@ explica en profundidad.
 | Quitar paquete y su configuración | `apt remove` (conserva config, estado `rc`) / `apt purge` | `dnf remove` (config modificada queda como `.rpmsave`; no hay `purge`) | `pacman -R` (`.pacsave`) / `pacman -Rn` | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
 | Dónde vive la firma del paquete | En el **índice** del repositorio (`InRelease`); un `.deb` suelto no se verifica | En **cada `.rpm`** (`rpm -K` lo comprueba) | En cada paquete (`SigLevel` de `pacman.conf`) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
 | Base de datos de paquetes instalados | `/var/lib/dpkg/status` (texto) | `/var/lib/rpm/rpmdb.sqlite` (SQLite) | `/var/lib/pacman/local/` (un directorio por paquete) | [11](../bootcamp/week-11-usuarios_grupos_y_gestion_de_paquetes/) |
+| Paquete de `ip` y `ss` | `iproute2` (ausente en `ubuntu-lab`/`debian-lab` mínimas) | `iproute` | `iproute2` | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
+| Paquete de `dig`, `host` y `nslookup` | `bind9-dnsutils` (el nombre `dnsutils` es un alias) | `bind-utils` | `bind` | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
+| `nc` (netcat) | `netcat-openbsd` (netcat de OpenBSD) | `nmap-ncat` (**Ncat**: las opciones básicas `-z`/`-v` coinciden, el resto no) | `openbsd-netcat` | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
+| Cliente SSH (`ssh`, `scp`) | `openssh-client` | `openssh-clients` | `openssh` (cliente y servidor juntos) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
+| Servicio del servidor SSH | `ssh` (`ssh.service`); servidor en `openssh-server` | `sshd` (`sshd.service`) | `sshd` (`sshd.service`) | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
+| Configuración de red persistente | Ubuntu: `netplan`; Debian: `ifupdown` o `systemd-networkd` | NetworkManager (`nmcli`) | `systemd-networkd` o NetworkManager, a elegir | [12](../bootcamp/week-12-redes_desde_la_linea_de_comandos/) |
 
 ## Por qué esto y no una semana por distro
 

@@ -1,0 +1,40 @@
+<svg viewBox="0 0 900 462" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-ssh d-ssh">
+  <title id="t-ssh">SSH: confianza en dos direcciones con claves públicas</title>
+  <desc id="d-ssh">El cliente guarda su clave privada y su clave pública en ~/.ssh y un archivo known_hosts con las huellas de los servidores que conoce. El servidor guarda sus claves de host en /etc/ssh y un archivo authorized_keys con las claves públicas que pueden entrar. Flecha A: el servidor se demuestra al cliente, que compara la huella con known_hosts. Flecha B: el cliente se demuestra al servidor, que valida con authorized_keys. La clave privada nunca viaja.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="462" fill="#0d1117"/>
+  <text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">SSH confía en dos direcciones: cada lado guarda la clave pública del otro</text>
+  <rect x="30" y="60" width="360" height="250" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="210" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#79c0ff" font-weight="bold">Cliente (ubuntu-lab, usuario ana)</text>
+  <rect x="50" y="100" width="320" height="52" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="210" y="122" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#f85149">~/.ssh/id_ed25519</text>
+  <text x="210" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">clave PRIVADA · modo 600 · nunca sale de aquí</text>
+  <rect x="50" y="164" width="320" height="52" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="210" y="186" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#3fb950">~/.ssh/id_ed25519.pub</text>
+  <text x="210" y="206" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">clave pública · se puede compartir</text>
+  <rect x="50" y="228" width="320" height="64" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="210" y="250" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#d2a8ff">~/.ssh/known_hosts</text>
+  <text x="210" y="270" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">huellas de los servidores que ya conoces</text>
+  <text x="210" y="284" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">(las anota la primera vez que te conectas)</text>
+  <rect x="510" y="60" width="360" height="250" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="690" y="86" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#e3b341" font-weight="bold">Servidor (debian-lab, sshd)</text>
+  <rect x="530" y="100" width="320" height="52" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="690" y="122" text-anchor="middle" font-family="monospace" font-size="12" fill="#f85149">/etc/ssh/ssh_host_ed25519_key</text>
+  <text x="690" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">clave PRIVADA del servidor · solo root</text>
+  <rect x="530" y="164" width="320" height="52" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="690" y="186" text-anchor="middle" font-family="monospace" font-size="12" fill="#3fb950">/etc/ssh/ssh_host_ed25519_key.pub</text>
+  <text x="690" y="206" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">su huella es la que anota tu known_hosts</text>
+  <rect x="530" y="228" width="320" height="64" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="690" y="250" text-anchor="middle" font-family="monospace" font-size="12.5" fill="#d2a8ff">~ana/.ssh/authorized_keys</text>
+  <text x="690" y="270" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">claves públicas que pueden entrar como ana</text>
+  <text x="690" y="284" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">(tú las copias aquí una vez)</text>
+  <path d="M510,130 L394,130" stroke="#3fb950" stroke-width="2" marker-end="url(#fl)"/>
+  <text x="450" y="118" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#3fb950" font-weight="bold">A</text>
+  <path d="M394,250 L506,250" stroke="#e3b341" stroke-width="2" marker-end="url(#fl)"/>
+  <text x="450" y="240" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#e3b341" font-weight="bold">B</text>
+  <rect x="30" y="330" width="840" height="112" rx="6" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="50" y="356" text-anchor="start" font-family="sans-serif" font-size="12.5" fill="#3fb950">A · El servidor se demuestra al cliente: el cliente compara la huella con known_hosts.</text>
+  <text x="50" y="376" text-anchor="start" font-family="sans-serif" font-size="12" fill="#8b949e">Huella distinta (contenedor recreado, o alguien en medio) = REMOTE HOST IDENTIFICATION HAS CHANGED.</text>
+  <text x="50" y="402" text-anchor="start" font-family="sans-serif" font-size="12.5" fill="#e3b341">B · El cliente se demuestra al servidor: firma un reto con la privada; el servidor lo valida</text>
+  <text x="50" y="422" text-anchor="start" font-family="sans-serif" font-size="12.5" fill="#e3b341">con la pública guardada en authorized_keys. La privada nunca viaja por la red.</text>
+</svg>

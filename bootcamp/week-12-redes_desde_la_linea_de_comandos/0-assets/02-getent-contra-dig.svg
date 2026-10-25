@@ -1,0 +1,35 @@
+<svg viewBox="0 0 900 474" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-dns d-dns">
+  <title id="t-dns">Dos caminos para resolver un nombre: getent frente a dig</title>
+  <desc id="d-dns">A la izquierda, los programas normales (ping, curl, ssh, getent hosts) pasan por NSS, que según nsswitch.conf consulta primero el archivo /etc/hosts y después el servidor DNS de resolv.conf. A la derecha, dig, host y nslookup se saltan NSS y /etc/hosts y preguntan directamente al servidor DNS. Por eso una entrada escrita solo en /etc/hosts la ve getent pero no dig.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="474" fill="#0d1117"/>
+  <text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Dos formas de resolver un nombre: no siempre dan lo mismo</text>
+  <rect x="30" y="64" width="400" height="46" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="230" y="84" text-anchor="middle" font-family="monospace" font-size="13" fill="#79c0ff">ping · curl · ssh · apt · getent hosts</text>
+  <text x="230" y="101" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">programas normales</text>
+  <path d="M230,110 L230,138" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="30" y="142" width="400" height="60" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="230" y="164" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#d2a8ff" font-weight="bold">NSS: /etc/nsswitch.conf</text>
+  <text x="230" y="186" text-anchor="middle" font-family="monospace" font-size="13" fill="#f0f6fc">hosts: files dns</text>
+  <path d="M230,202 L230,230" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="30" y="234" width="400" height="56" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="230" y="256" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#3fb950" font-weight="bold">1.º files: /etc/hosts</text>
+  <text x="230" y="276" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">¿está escrito a mano? si sí, termina aquí</text>
+  <path d="M230,290 L230,318" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="30" y="322" width="400" height="56" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="230" y="344" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#3fb950" font-weight="bold">2.º dns: /etc/resolv.conf</text>
+  <text x="230" y="364" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">pregunta al servidor «nameserver»</text>
+  <rect x="470" y="64" width="400" height="46" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="670" y="84" text-anchor="middle" font-family="monospace" font-size="13" fill="#e3b341">dig · host · nslookup</text>
+  <text x="670" y="101" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">herramientas de diagnóstico DNS</text>
+  <path d="M670,110 L670,322" stroke="#e3b341" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#fl)"/>
+  <text x="682" y="200" text-anchor="start" font-family="sans-serif" font-size="11" fill="#e3b341">se salta NSS y /etc/hosts:</text>
+  <text x="682" y="216" text-anchor="start" font-family="sans-serif" font-size="11" fill="#e3b341">pregunta directo al servidor DNS</text>
+  <rect x="470" y="322" width="400" height="56" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="670" y="344" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#e3b341" font-weight="bold">servidor DNS</text>
+  <text x="670" y="364" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#8b949e">(en el laboratorio, 127.0.0.11 de Docker)</text>
+  <path d="M430,350 L466,350" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="30" y="398" width="840" height="56" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="450" y="420" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#f0f6fc">Entrada de /etc/hosts sin existir en DNS: getent la ve, dig no.</text>
+  <text x="450" y="440" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#f85149" font-weight="bold">Para saber qué ve tu programa, usa getent; para saber qué dice el DNS, usa dig.</text>
+</svg>

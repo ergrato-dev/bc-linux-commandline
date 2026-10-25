@@ -1,0 +1,47 @@
+<svg viewBox="0 0 900 522" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-capas d-capas">
+  <title id="t-capas">Las cinco capas del diagnóstico de red, de abajo hacia arriba</title>
+  <desc id="d-capas">Cinco filas apiladas: interfaz (ip -br link), ruta (ip route), DNS (getent hosts), TCP (ss, nc -z) y aplicación (curl -i). Cada fila muestra la pregunta de la capa, el comando que la contesta y el síntoma típico cuando falla. Una flecha baja de cada capa a la siguiente: un fallo en una capa explica los de las capas de arriba, así que se arregla primero la más baja que falle.</desc>
+  <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8b949e"/></marker></defs>
+  <rect x="0" y="0" width="900" height="522" fill="#0d1117"/>
+  <text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#f0f6fc" font-weight="bold">Diagnosticar la red de abajo hacia arriba</text>
+  <text x="150" y="70" text-anchor="start" font-family="sans-serif" font-size="11" fill="#8b949e">Capa</text>
+  <text x="300" y="70" text-anchor="start" font-family="sans-serif" font-size="11" fill="#8b949e">Pregunta</text>
+  <text x="480" y="70" text-anchor="start" font-family="sans-serif" font-size="11" fill="#8b949e">Comando</text>
+  <text x="690" y="70" text-anchor="start" font-family="sans-serif" font-size="11" fill="#8b949e">Síntoma si falla</text>
+  <rect x="20" y="82" width="860" height="58" rx="6" fill="#161b22" stroke="#3fb950" stroke-width="2"/>
+  <text x="46" y="118" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#3fb950" font-weight="bold">1</text>
+  <text x="150" y="117" text-anchor="start" font-family="sans-serif" font-size="15" fill="#3fb950" font-weight="bold">Interfaz</text>
+  <text x="300" y="117" text-anchor="start" font-family="sans-serif" font-size="13" fill="#f0f6fc">¿hay enlace?</text>
+  <text x="480" y="117" text-anchor="start" font-family="monospace" font-size="12" fill="#79c0ff">ip -br link</text>
+  <text x="690" y="117" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">sin interfaz «up»</text>
+  <path d="M450,140 L450,160" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="20" y="160" width="860" height="58" rx="6" fill="#161b22" stroke="#58a6ff" stroke-width="2"/>
+  <text x="46" y="196" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#58a6ff" font-weight="bold">2</text>
+  <text x="150" y="195" text-anchor="start" font-family="sans-serif" font-size="15" fill="#58a6ff" font-weight="bold">Ruta</text>
+  <text x="300" y="195" text-anchor="start" font-family="sans-serif" font-size="13" fill="#f0f6fc">¿hay salida?</text>
+  <text x="480" y="195" text-anchor="start" font-family="monospace" font-size="12" fill="#79c0ff">ip route</text>
+  <text x="690" y="195" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">Network is unreachable</text>
+  <path d="M450,218 L450,238" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="20" y="238" width="860" height="58" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="2"/>
+  <text x="46" y="274" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#d2a8ff" font-weight="bold">3</text>
+  <text x="150" y="273" text-anchor="start" font-family="sans-serif" font-size="15" fill="#d2a8ff" font-weight="bold">DNS</text>
+  <text x="300" y="273" text-anchor="start" font-family="sans-serif" font-size="13" fill="#f0f6fc">¿el nombre resuelve?</text>
+  <text x="480" y="273" text-anchor="start" font-family="monospace" font-size="12" fill="#79c0ff">getent hosts nombre</text>
+  <text x="690" y="273" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">Could not resolve host (curl 6)</text>
+  <path d="M450,296 L450,316" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="20" y="316" width="860" height="58" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="46" y="352" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#e3b341" font-weight="bold">4</text>
+  <text x="150" y="351" text-anchor="start" font-family="sans-serif" font-size="15" fill="#e3b341" font-weight="bold">TCP</text>
+  <text x="300" y="351" text-anchor="start" font-family="sans-serif" font-size="13" fill="#f0f6fc">¿alguien escucha?</text>
+  <text x="480" y="351" text-anchor="start" font-family="monospace" font-size="12" fill="#79c0ff">ss -tln · nc -z host puerto</text>
+  <text x="690" y="351" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">refused (7) · timeout (28)</text>
+  <path d="M450,374 L450,394" stroke="#8b949e" stroke-width="2" marker-end="url(#fl)"/>
+  <rect x="20" y="394" width="860" height="58" rx="6" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="46" y="430" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#f85149" font-weight="bold">5</text>
+  <text x="150" y="429" text-anchor="start" font-family="sans-serif" font-size="15" fill="#f85149" font-weight="bold">Aplicación</text>
+  <text x="300" y="429" text-anchor="start" font-family="sans-serif" font-size="13" fill="#f0f6fc">¿responde bien?</text>
+  <text x="480" y="429" text-anchor="start" font-family="monospace" font-size="12" fill="#79c0ff">curl -i http://host:puerto/</text>
+  <text x="690" y="429" text-anchor="start" font-family="sans-serif" font-size="11.5" fill="#8b949e">404 / 500 (curl -f da 22)</text>
+  <rect x="20" y="476" width="860" height="32" rx="6" fill="#161b22" stroke="#e3b341" stroke-width="2"/>
+  <text x="450" y="497" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#e3b341">Un fallo abajo explica los de arriba: arregla siempre la capa más baja que falle.</text>
+</svg>

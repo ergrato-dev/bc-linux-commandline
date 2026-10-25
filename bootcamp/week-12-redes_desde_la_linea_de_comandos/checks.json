@@ -1,0 +1,118 @@
+{
+  "semana": "12",
+  "titulo": "Redes desde la linea de comandos",
+  "checks": [
+    {
+      "id": "toolkit-sigue-ejecutable",
+      "descripcion": "toolkit.sh sigue existiendo y ejecutable",
+      "cmd": "test -x ~/bin/toolkit.sh",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Como entregarlo"
+    },
+    {
+      "id": "regresion-semanas-01-05",
+      "descripcion": "Los subcomandos doctor, inventory, organize, audit y logreport siguen funcionando (regresion de las Semanas 01-05)",
+      "cmd": "~/bin/toolkit.sh doctor | grep -qE 'bash.*[0-9]+[.][0-9]+' && (cd /tmp && ~/bin/toolkit.sh inventory | grep -q 'ruta: /tmp') && rm -rf /tmp/wk12-org && mkdir -p /tmp/wk12-org && touch /tmp/wk12-org/a.sh && ~/bin/toolkit.sh organize /tmp/wk12-org | grep -q dry-run && ~/bin/toolkit.sh audit /tmp | grep -qE 'umask actual: [0-9]+' && printf 'INFO ok\\n' > /tmp/wk12-lr.log && ~/bin/toolkit.sh logreport /tmp/wk12-lr.log | grep -q 'lineas totales: 1'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semanas-06-10",
+      "descripcion": "Los subcomandos logscan, topcount, sumfield, finddupes y procwatch siguen funcionando (regresion de las Semanas 06-10)",
+      "cmd": "rm -rf /tmp/wk12-reg && mkdir -p /tmp/wk12-reg && printf 'ERROR x\\n' > /tmp/wk12-reg/a.log && ~/bin/toolkit.sh logscan /tmp/wk12-reg | grep -qE 'archivos [.]log: 1' && printf 'root:login:ok\\nroot:login:ok\\nadmin:login:ok\\n' > /tmp/wk12-reg/e.txt && ~/bin/toolkit.sh topcount /tmp/wk12-reg/e.txt | grep -q 'entradas validas: 3' && printf 'norte:150\\nsur:200\\n' > /tmp/wk12-reg/v.txt && ~/bin/toolkit.sh sumfield /tmp/wk12-reg/v.txt | grep -q 'suma total: 350' && printf 'igual\\n' > /tmp/wk12-reg/d1.dup && printf 'igual\\n' > /tmp/wk12-reg/d2.dup && ~/bin/toolkit.sh finddupes /tmp/wk12-reg --ext dup | grep -q 'grupos de duplicados: 1' && ~/bin/toolkit.sh procwatch patron-de-prueba-que-no-existe | grep -q 'coincidencias: 0'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "regresion-semana-11",
+      "descripcion": "Los subcomandos acctaudit y pkgcheck siguen funcionando (regresion de la Semana 11)",
+      "cmd": "rm -rf /tmp/wk12-etc && mkdir -p /tmp/wk12-etc && printf 'root:x:0:0:root:/root:/bin/bash\\n' > /tmp/wk12-etc/passwd && printf 'root:x:0:\\n' > /tmp/wk12-etc/group && printf '/bin/bash\\n' > /tmp/wk12-etc/shells && ~/bin/toolkit.sh acctaudit /tmp/wk12-etc | grep -q 'sin hallazgos' && ~/bin/toolkit.sh pkgcheck bash | grep -q 'estado: instalado'",
+      "assert": "exit0",
+      "pista": "3-proyecto/README.md, seccion Que anade esta capa"
+    },
+    {
+      "id": "netcheck-exit-1-sin-host",
+      "descripcion": "netcheck sale con codigo 1 si no se le pasa ningun host",
+      "cmd": "~/bin/toolkit.sh netcheck",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 1 de cmd_netcheck"
+    },
+    {
+      "id": "netcheck-exit-1-puerto-invalido",
+      "descripcion": "netcheck sale con codigo 1 si el puerto no es un entero entre 1 y 65535",
+      "cmd": "~/bin/toolkit.sh netcheck localhost 99999",
+      "assert": "exit=1",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 1 de cmd_netcheck"
+    },
+    {
+      "id": "netcheck-interfaz",
+      "descripcion": "netcheck encuentra una interfaz activa aparte de lo",
+      "cmd": "~/bin/toolkit.sh netcheck localhost",
+      "assert": "stdout~ok interfaz: [a-z0-9]+ [(]up[)]",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 2"
+    },
+    {
+      "id": "netcheck-ruta-por-defecto",
+      "descripcion": "netcheck muestra la ruta por defecto con su gateway en notacion decimal",
+      "cmd": "~/bin/toolkit.sh netcheck localhost",
+      "assert": "stdout~ok ruta por defecto: [a-z0-9]+ via [0-9]+[.][0-9]+[.][0-9]+[.][0-9]+",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 3"
+    },
+    {
+      "id": "netcheck-dns-resuelve",
+      "descripcion": "netcheck resuelve un nombre que existe (localhost) a una direccion IPv4",
+      "cmd": "~/bin/toolkit.sh netcheck localhost",
+      "assert": "stdout~ok dns: localhost -> 127[.]0[.]0[.]1",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 4"
+    },
+    {
+      "id": "netcheck-dns-falla",
+      "descripcion": "netcheck informa fallo de DNS para un nombre que no existe",
+      "cmd": "~/bin/toolkit.sh netcheck no-existe.invalid",
+      "assert": "stdout~fallo dns: no-existe[.]invalid no resuelve",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 4"
+    },
+    {
+      "id": "netcheck-ip-literal",
+      "descripcion": "netcheck no consulta DNS cuando el destino ya es una IP",
+      "cmd": "~/bin/toolkit.sh netcheck 127.0.0.1",
+      "assert": "stdout~dns: no aplica [(]IP literal[)]",
+      "pista": "1-teoria/03-dns-desde-la-linea-de-comandos.md"
+    },
+    {
+      "id": "netcheck-tcp-abierto",
+      "descripcion": "netcheck detecta un puerto TCP que esta escuchando",
+      "cmd": "perl -MIO::Socket::INET -e 'my $s=IO::Socket::INET->new(Listen=>5,LocalAddr=>q(127.0.0.1),LocalPort=>18212,ReuseAddr=>1) or die; sleep 4' & sleep 0.5; ~/bin/toolkit.sh netcheck localhost 18212",
+      "assert": "stdout~ok tcp: localhost:18212 abierto",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 5"
+    },
+    {
+      "id": "netcheck-tcp-cerrado",
+      "descripcion": "netcheck detecta un puerto TCP donde no escucha nadie",
+      "cmd": "~/bin/toolkit.sh netcheck localhost 18999",
+      "assert": "stdout~fallo tcp: localhost:18999 cerrado o sin respuesta",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 5"
+    },
+    {
+      "id": "netcheck-tcp-omitido-sin-dns",
+      "descripcion": "netcheck omite la prueba TCP cuando el DNS ya fallo",
+      "cmd": "~/bin/toolkit.sh netcheck no-existe.invalid 80",
+      "assert": "stdout~tcp: omitido [(]sin IP[)]",
+      "pista": "1-teoria/06-diagnostico-por-capas.md"
+    },
+    {
+      "id": "netcheck-exit-0-todo-ok",
+      "descripcion": "netcheck sale con codigo 0 y confirma el puerto abierto cuando todas las capas responden",
+      "cmd": "set -o pipefail; perl -MIO::Socket::INET -e 'my $s=IO::Socket::INET->new(Listen=>5,LocalAddr=>q(127.0.0.1),LocalPort=>18213,ReuseAddr=>1) or die; sleep 4' & sleep 0.5; ~/bin/toolkit.sh netcheck localhost 18213 | grep -q 'ok tcp: localhost:18213 abierto'",
+      "assert": "exit0",
+      "pista": "2-practicas/04-netcheck-a-mano.md, paso 6"
+    },
+    {
+      "id": "netcheck-exit-2-con-fallo",
+      "descripcion": "netcheck sale con codigo 2 si alguna capa falla",
+      "cmd": "~/bin/toolkit.sh netcheck localhost 18999",
+      "assert": "exit=2",
+      "pista": "3-proyecto/starter/toolkit.sh, TODO 6 de cmd_netcheck"
+    }
+  ]
+}

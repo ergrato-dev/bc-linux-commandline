@@ -136,6 +136,24 @@ primero).
 - `getent passwd 1000` busca por **UID numérico** (y `getent group 27` por
   GID): la forma de traducir el número que ves en `ls -n` a un nombre.
 
+## Semana 12 — Redes desde la línea de comandos
+
+- `getent -s dns hosts nombre` consulta **solo** la fuente `dns` de NSS, y
+  `getent -s files hosts nombre` solo `/etc/hosts`: separa "es mi archivo
+  local" de "es el DNS" sin salir de `getent`.
+- `ss -tni state established` añade por conexión los contadores internos
+  de TCP (`rtt`, `cwnd`, `mss`): el tiempo de ida y vuelta real de una
+  conexión viva, sin `ping`.
+- `ssh -J servidor-intermedio usuario@destino` salta por un servidor
+  intermedio con una sola orden (*ProxyJump*): llega a una máquina que solo
+  se ve desde el intermedio.
+- `ssh -o ControlMaster=auto -o ControlPath=/tmp/cm-%r@%h:%p -o ControlPersist=30 host`
+  reutiliza **una** conexión para las siguientes: tres `ssh` seguidos
+  tardaron 0,56 s sin ella y 0,21 s con ella en el laboratorio.
+- `sed -i` falla sobre `/etc/hosts` dentro de un contenedor (`Device or
+  resource busy`) porque Docker lo monta como archivo: se escribe **dentro**
+  con `>>` o `cat >`, y se restaura con `cp`.
+
 ---
 
 [← Volver al índice de documentación](README.md)
